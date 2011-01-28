@@ -1,0 +1,1 @@
+<?php   $session = $this->get_session();    if($session->check(true)){        echo "<div class='rfloat'>";      echo "Identificado como ".$this->get_session()->get_var_session('name')." <a href='/logout/'>logout</a>";    echo "</div>";      }else{        if ($this->getMain() != "vlogin")      echo "<a href='/login/'>login</a>";      }  ?>

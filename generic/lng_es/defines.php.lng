@@ -1,0 +1,91 @@
+/*
+   Project:         framework
+   Section:         test
+   Version:         1
+   Modication Date: 20-09-2010
+   
+   PENDING REVISION!
+*/
+
+
+
+/*Users*/
+identificate=Introduce tus datos de acceso
+users=usuarios
+user=usuario
+username=Nombre de usuario
+password=Contraseña
+name=Nombre
+lastname=Apellidos
+repite_password=Repite el password
+/*Users*/
+
+
+/*formularios*/
+confirm_delete=¿Estás seguro de borrar este registro?
+wait=Espera un momento, por favor
+return_to_menu=Volver al inicio
+list_of=Listado de %0%
+return_to=Volver a %0%
+create_a=Crear %0%
+edit_a=Modificar %0%
+siguiente=Siguiente
+anterior=Anterior
+view=Ver
+modify=Modificar
+delete=Eliminar
+new_item=Crear una nuevo registro
+no_items=No existen registros creados.
+return=Volver atrás
+options=Opciones
+view=Ver
+edit=Editar
+delete=Eliminar
+created=Creado
+updated=Modificado
+image_actual=Imagén actual
+file_actual=Archivo actual
+/*formularios*/
+
+
+/*Mensajes modelo*/
+session_expirada=La sesión ha expirado. Vuelve a identificarte.
+session_incorrecta=Para ver este contenido debes identificarte.
+/*Mensajes modelo*/
+
+
+/*ERRORES VALIDACION PHP*/
+text_field_string_range_not_valid=Los datos introducidos no están en el rango permitido
+text_field_null=Es obligatorio introducir un valor
+text_field_numeric_not_numeric=Los datos introducidos no son un número válido
+referencia_taken=Hay otro inmueble con la misma referencia
+username_not_is_a_email=El nombre de usuario debe ser un email válido
+username_taken=El nombre de usuario está ocupado, elige otro
+telefono_taken=El número de telefono está ocupado por otro usuario, elige otro
+must_checked=Debes marcar este campo
+must_select_a_value=Debes elegir un valor del desplegable
+not_file_extension_allowed=El archivo no tiene la extensión correcta
+/*FI ERRORES VALIDACION PHP*/
+
+/*ERRORES VALIDACION FORMULARIOS JAVASCRIPT*/
+required_js=Este campo es obligatorio.
+remote_js=Ya se está utilizando, escoge otro.
+email_js=Introduce un email válido.
+url_js=Introduce una url válida.
+date_js=Introduce una fecha válida.
+dateiso_js=Introduce una fecha en formato ISO.
+datede_js=
+number_js=Introduce un número válido.
+numberde_js=
+digits_js=Introduce sólo dígitos
+creditcard_js=Introduce un número de targeta válido.
+equalto_js=Introduce otra vez el mismo valor.
+accept_js=Introduce un valor con extensión válida.
+maxlength_js=Introduce no más de {0} carácteres.
+minlength_js=Introduce por lo menos {0} carácteres.
+rangelength_js=Introduce un valor entre {0} and {1} carácteres.
+range_js=Introduce un valor entre {0} y {1}.
+max_js=Introduce un valor más pequeño o igual a {0}.
+min_js=Introduce un valor más grande o igual a {0}.
+combosearchmissed=Has olvidado campos por marcar!
+/*FI ERRORES VALIDACION FORMULARIOS JAVASCRIPT*/

@@ -1,0 +1,44 @@
+RewriteEngine On
+
+
+#Redirigir a www.framework.com si ve de framework.com
+RewriteCond %{HTTP_HOST} ^framework.com$
+RewriteRule ^(.*)$ http://www.framework.com/$1 [R=301,L]
+
+
+#Reglas htaccess para login
+RewriteRule ^login$ /login/ [R] 
+RewriteRule ^login/$ /login.php [QSA,L]
+#Fi Reglas htaccess para login
+
+
+#Reglas htaccess para login
+RewriteRule ^logout$ /logout/ [R] 
+RewriteRule ^logout/$ /logout.php [QSA,L]
+#Fi Reglas htaccess para login
+
+
+#Reglas htaccess para usuarios
+RewriteRule ^admin/users/create$ /admin/users/create/ [R] 
+RewriteRule ^admin/users/create/$ /admin/users_create.php [QSA,L]
+
+RewriteRule ^admin/users/list$ /admin/users/list/ [R] 
+RewriteRule ^admin/users/list/$ /admin/users_list.php?pag=1 [QSA,L] 
+RewriteRule ^admin/users/list/([0-9]+)$ /admin/users_list/$1/ [R] 
+RewriteRule ^admin/users/list/([0-9]+)/$ /admin/users_list.php?pag=$1 [QSA,L] 
+
+RewriteRule ^admin/users/edit$ /admin/users/edit/ [R] 
+RewriteRule ^admin/users/edit/$ /admin/users/list/ [R] 
+RewriteRule ^admin/users/edit/([0-9]+)$ /admin/users/edit/$1/ [R] 
+RewriteRule ^admin/users/edit/([0-9]+)/$ /admin/users_edit.php?id=$1 [QSA,L] 
+
+RewriteRule ^admin/users$ /admin/users/ [R] 
+RewriteRule ^admin/users/$ /admin/users/list/ [R] 
+RewriteRule ^admin/users/([0-9]+)$ /admin/users/$1/ [R] 
+RewriteRule ^admin/users/([0-9]+)/$ /admin/users.php?id=$1 [QSA,L]
+
+RewriteRule ^admin/users/delete$ /admin/users/delete/ [R] 
+RewriteRule ^admin/users/delete/$ /admin/users/list/ [R] 
+RewriteRule ^admin/users/delete/([0-9]+)$ /admin/users/delete/$1/ [R] 
+RewriteRule ^admin/users/delete/([0-9]+)/$ /admin/users_actions.php?id=$1&a=delete [QSA,L]
+#Fi Reglas htaccess para usuarios
