@@ -21,6 +21,7 @@ $webform_relational = '
                 "type"                  : "webform_relational",
                 "stripped"              : "name",
                 "relation_stripped"     : true,
+                "relation_multilang"    : false, 
                 "campos"                : {
             
                             "name" : {                                        
@@ -1309,6 +1310,8 @@ $text .=  "class C".$arrayjson['name']." { ".$sl;
     }
     
       $text .= $tab.$tab."\$con = new cdatabase(array('host'=>HOST, 'user'=>USER, 'dbname'=>DBNAME, 'password'=>PASSWORD), DBDRIVER );".$sl;
+
+      $text .= $sl.$tab.$tab."\$max_rows = '';".$sl;
       
       //Creamos la query para obtener el item
       $text .=  $sl.$tab.$tab."\$query = \"SELECT id, ";
@@ -2701,12 +2704,12 @@ $text = "<?php ". $sl;
 $text .= "require_once('config.php'); $sl";
 $text .= "require_once(PATH_ROOT_CLASES . 'c".$arrayjson['name'].".php'); $sl";
 $text .= "require_once(PATH_ROOT_CLASES . 'cpagelayout_frontend.php'); $sl";
-$text .= "require_once(PATH_ROOT_CLASES . 'cutils.php'); $sl $sl";
-$text .= "require_once(PATH_ROOT_CLASES . 'cimagen.php'); $sl $sl";
-
+$text .= "require_once(PATH_ROOT_CLASES . 'cutils.php'); $sl";
+$text .= "require_once(PATH_ROOT_CLASES . 'cimagen.php'); $sl";
 if ( $arrayjson['type'] == 'webform_relational')  {
   $text .= "require_once(PATH_ROOT_CLASES . 'c".$name_of_relation.".php'); $sl";
 }
+$text .= "//#NO-BORRAR#//".$sl.$sl;
 
 $text .="// Definimos las seccins del layout $sl";
 $text .="\$names_section = array( $sl";
@@ -2776,6 +2779,7 @@ $text .=$sl.$sl."\$layout	= new Cpagelayout_frontend( \$names_section ); ";
    $text .=$sl.$tab."\$layout->set_var('return', \$return);";
    $text .=$sl.$tab."\$layout->set_var('rid', \$".$name_of_relation."_id);";
   }
+  $text .= $sl.$tab."//#NO-BORRAR2#//";
 
 $text .=$sl."\$layout->Display();";
 
@@ -3329,6 +3333,7 @@ if ($result){
 $text = "<?php ". $sl;
 
 $text .= $sl."\$item = \$this->get_var('item');";
+$text .= $sl."//#NO-BORRAR#//";
 
 if ( $arrayjson['type'] == 'webform_relational')  {
   $text .= $sl."\$return = \$this->get_var('return');";
@@ -3346,13 +3351,9 @@ foreach ($arrayjson['campos'] as $index => $value ){
       $aux = '';
     
       if ( $value['multilanguage']){
-        
-        foreach ($array_languages as $item ) {
           
-          $text .= $sl."echo \"<b>".ucfirst($index."_".$item)." :</b> \".\$item['".$index."_".$item."'].\" <br /><br /> \"; ";  
+        $text .= $sl."echo \"<b>".ucfirst($index."_\".Cutils::get_actual_lng().\"")." :</b> \".\$item['".$index."_'.Cutils::get_actual_lng()].\" <br /><br /> \"; ";  
           
-        }
-        
       } else {
         
         $text .= $sl."echo \"<b>".ucfirst($index)." :</b> \".\$item['$index'].\" <br /><br /> \"; ";  
@@ -3387,6 +3388,9 @@ foreach ($arrayjson['campos'] as $index => $value ){
 }
 $text .= $sl."echo \"<b>Created :</b> \".\$item['created'].\" <br /><br />\"; ";
 $text .= $sl."echo \"<b>Updated :</b> \".\$item['updated'].\" <br /><br />\"; ";
+
+
+$text .= $sl.$sl."//#NO-BORRAR2#//";
 
 if ( $arrayjson['type'] == 'webform_relational')  {
   $text .= $sl.$sl."echo \"<br /> <a href='/".$arrayjson['name']."/list/\$return/'>\".\$this->translate('return').\"</a>\";  ";
@@ -3984,9 +3988,12 @@ if ($cambios){
   
       //Añadimos una columna a la vista
       
-      if ( isset( $arrayjson['relation_stripped'] ) ) 
-        $aux = "echo \"<td><a href='/".$arrayjson['name']."/list/\".\$item['stripped_'.Cutils::get_actual_lng()].\"/'>Link a ".$arrayjson['name']." (\".C".$arrayjson['name']."::count_".$arrayjson['name']."(\$item['id']).\")</a></td>\";\n //#NO-BORRAR#// "; 
-      else
+      if (  $arrayjson['relation_stripped']) {
+         if ( $arrayjson['relation_multilang'] )
+           $aux = "echo \"<td><a href='/".$arrayjson['name']."/list/\".\$item['stripped_'.Cutils::get_actual_lng()].\"/'>Link a ".$arrayjson['name']." (\".C".$arrayjson['name']."::count_".$arrayjson['name']."(\$item['id']).\")</a></td>\";\n //#NO-BORRAR#// "; 
+         else 
+           $aux = "echo \"<td><a href='/".$arrayjson['name']."/list/\".\$item['stripped'].\"/'>Link a ".$arrayjson['name']." (\".C".$arrayjson['name']."::count_".$arrayjson['name']."(\$item['id']).\")</a></td>\";\n //#NO-BORRAR#// "; 
+       }else
         $aux = "echo \"<td><a href='/".$arrayjson['name']."/list/\".\$item['id'].\"/'>Link a ".$arrayjson['name']." (\".C".$arrayjson['name']."::count_".$arrayjson['name']."(\$item['id']).\")</a></td> \n //#NO-BORRAR#//\"; "; 
       
       
@@ -4008,9 +4015,13 @@ if ($cambios){
       
       //admin
           
-      if ( isset( $arrayjson['relation_stripped'] ) ) 
-        $aux = "echo \"<td><a href='/admin/".$arrayjson['name']."/list/\".\$item['stripped_'.Cutils::get_actual_lng()].\"/'>Link a ".$arrayjson['name']." (\".C".$arrayjson['name']."::count_".$arrayjson['name']."(\$item['id']).\")</a></td>\";\n //#NO-BORRAR#// "; 
-      else
+      if ( $arrayjson['relation_stripped'] ) {
+        if ( $arrayjson['relation_multilang'] )  
+          $aux = "echo \"<td><a href='/admin/".$arrayjson['name']."/list/\".\$item['stripped_'.Cutils::get_actual_lng()].\"/'>Link a ".$arrayjson['name']." (\".C".$arrayjson['name']."::count_".$arrayjson['name']."(\$item['id']).\")</a></td>\";\n //#NO-BORRAR#// "; 
+        else
+          $aux = "echo \"<td><a href='/admin/".$arrayjson['name']."/list/\".\$item['stripped'].\"/'>Link a ".$arrayjson['name']." (\".C".$arrayjson['name']."::count_".$arrayjson['name']."(\$item['id']).\")</a></td>\";\n //#NO-BORRAR#// "; 
+        
+      } else
         $aux = "echo \"<td><a href='/admin/".$arrayjson['name']."/list/\".\$item['id'].\"/'>Link a ".$arrayjson['name']." (\".C".$arrayjson['name']."::count_".$arrayjson['name']."(\$item['id']).\")</a></td> \n //#NO-BORRAR#//\"; "; 
       
       
@@ -4030,6 +4041,73 @@ if ($cambios){
         echo "<li>Error en <u> v".$name_of_relation."_list.php</u> a&ntilde;adiendo esta columna en las opciones <br>$tab<i>".htmlentities($aux)."</i> </li>";
         
         
+       //en ver añadimos las relaciones
+       //añadimos la clase y añadimos la llamada para obtener las relaciones
+      $file = file_get_contents(PATH_ROOT."/".$name_of_relation.".php");
+      $new_file = str_replace('//#NO-BORRAR#//', "require_once(PATH_ROOT_CLASES . 'c".$arrayjson['name'].".php');\n", $file);
+      $new_file = str_replace('//#NO-BORRAR2#//', "\$layout->set_var('relation_list', C".$arrayjson['name']."::item_list(\$id, ''));", $new_file);
+      
+      
+      $archivo=fopen(PATH_ROOT.$name_of_relation.".php" , "w");
+      if ($archivo) {
+        $result = fputs ($archivo, $new_file);
+      }
+      fclose ($archivo);
+  
+      if ($result){ 
+        echo "<li>En <u>".$name_of_relation.".php</u> a&ntilde;adido <i>require_once(PATH_ROOT_CLASES . 'c".$arrayjson['name'].".php');</i> y añadida variable para pasar a vista con el listado de relaciones </li>";
+      }else{
+        echo "<li>Error en <u>".$name_of_relation.".php</u> en a&ntilde;adir <i>require_once(PATH_ROOT_CLASES . 'c".$arrayjson['name'].".php');</i> </li>";
+      } 
+      
+       //añadimos las relaciones en la vista
+      $file = file_get_contents(PATH_ROOT."/vistas/frontend/main/v".$name_of_relation.".php");
+      $new_file = str_replace('//#NO-BORRAR#//', "\$relation_list = \$this->get_var('relation_list');\n", $file);
+      
+      $new_text = "echo \"<h2>Relaciones</h2>\";";
+      
+      
+      $new_text .= $sl.$sl."if (\$relation_list['total']){ ";
+      
+       $new_text .= $sl.$sl.$tab."echo \"Total de relaciones: \".\$relation_list['total'].\"<br/>\"; ";
+      
+      $new_text .= $sl.$sl.$tab."foreach (\$relation_list['item'] as \$relation){ ";
+      
+           foreach ($arrayjson['campos'] as $index => $value ){ 
+             
+            if ( isset($value['multilanguage'])){
+              
+              if ( $value['multilanguage']){
+                $new_text .= $sl.$tab.$tab."echo  \$relation['".$index."_'.Cutils::get_actual_lng()] .\" -- \";";  
+              }else {
+                $new_text .= $sl.$tab.$tab."echo  \$relation['$index'].\" -- \";"; 
+              }
+              
+            } else {
+              $new_text .= $sl.$tab.$tab."echo  \$relation['$index'].\" -- \";"; 
+            }
+              
+           } 
+          $new_text .= $sl.$tab.$tab."echo \"<br />\" ;"; 
+
+        $new_text .= $sl.$tab."}";
+      $new_text .= $sl."}else{";
+      $new_text .= $sl.$tab."echo \"No existen relaciones.<br/>\";";
+      $new_text .= $sl."}";
+      $new_file = str_replace('//#NO-BORRAR2#//', $new_text, $new_file);
+      
+      
+      $archivo=fopen(PATH_ROOT."/vistas/frontend/main/v".$name_of_relation.".php" , "w");
+      if ($archivo) {
+        $result = fputs ($archivo, $new_file);
+      }
+      fclose ($archivo);
+  
+      if ($result){ 
+        echo "<li>En <u>".$name_of_relation.".php</u> a&ntilde;adido <i>require_once(PATH_ROOT_CLASES . 'c".$arrayjson['name'].".php');</i> y añadida variable para pasar a vista con el listado de relaciones </li>";
+      }else{
+        echo "<li>Error en <u>".$name_of_relation.".php</u> en a&ntilde;adir <i>require_once(PATH_ROOT_CLASES . 'c".$arrayjson['name'].".php');</i> </li>";
+      }         
       
     echo "</ul>";
     

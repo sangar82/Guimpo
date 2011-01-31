@@ -181,6 +181,7 @@ error_logger("NOCACHE_CONSULTA_PERRETORNAR: #$query#. VARIABLE PERRETORNAR: #".v
                $perRetornar=array();
                
                $i=0;
+               
                while( $queryContent = mysql_fetch_array( $result ) )
                {
                    $perRetornar[$i]=$queryContent;
