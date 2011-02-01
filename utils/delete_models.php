@@ -26,7 +26,10 @@
         
         $aux = explode("_", $ima);
         
-        $aux2 = explode(".", $aux[count($aux) - 1]);
+        if ( count($aux) == 3)
+          $aux2 = explode(".", $aux[count($aux) - 1]);
+        else if (count($aux) == 4)
+          $aux2 = explode(".", $aux[count($aux) - 2]."_".$aux[count($aux) - 1] );
         
         if ($aux2[0] != "user"  and  $aux2[0] != "login") 
           echo "<option value='".$aux2[0]."'>".$aux2[0]."</option>";
@@ -37,12 +40,16 @@
     
     echo "<input type='checkbox' value='1' name='restore'>  &nbsp;  Restaurar archivos <br/><br/>";
     
+    echo "<input type='hidden' name='send' value='1' />";
+    
     echo "<input type='submit' value='Borrar'>";
     
   echo "</form>";
   
   
   $model = isset($_REQUEST['model']) ?  $_REQUEST['model']  :  "";
+  $restore = isset($_REQUEST['restore']) ?  $_REQUEST['restore']  :  "0";
+  $send   = isset($_REQUEST['send']) ?  $_REQUEST['send']  :  "0";
     
   if ($model){
     
@@ -66,7 +73,6 @@
     unlink(PATH_ROOT . "/vistas/frontend/main/v".$_REQUEST['model'].".php");
   }
   
-  $restore = isset($_REQUEST['restore']) ?  $_REQUEST['restore']  :  "0";
   
   if ($restore){
     copy(PATH_ROOT . "/utils/temp/vtop.php", PATH_ROOT . "/vistas/frontend/top/vtop.php")  ;
@@ -74,6 +80,10 @@
     copy(PATH_ROOT . "/utils/temp/.htaccess", PATH_ROOT . "/.htaccess")  ;
   }
   
+  if ($send){
+    echo "<script>document.location = '/utils/delete_models.php'</script>";
+  }
+
   ?>
 </body>
 </html>

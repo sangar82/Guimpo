@@ -528,15 +528,10 @@ if ( $tabla ){
   
   if ($result){
     
-    //Contamos el numero de archivos para contar la migración
-    $dir = "../bd/migrations/";
-    $dh  = opendir($dir);
-    while (false !== ($nombre_archivo = readdir($dh))) {
-       $archivos[] = $nombre_archivo;
-    }
+    //contamos el numero de migraciones
+    $archivos =  glob(PATH_ROOT."/bd/migrations/{migration_*.php}",GLOB_BRACE);
     
-    $total_archivos = count($archivos);
-    $total = $total_archivos-2; 
+    $total = count($archivos) + 1;
     
     $nmig = ((int)$total < 9) ? "0".((int)$total+1) : (int)$total+1;
     
