@@ -253,6 +253,31 @@ error_logger("NOCACHE_CONSULTA_PERRETORNAR: #$query#. VARIABLE PERRETORNAR: #".v
     }
     
     
+    function drop($query, &$msgError = '')
+    {
+        controlFirstWord($query, "drop");
+        switch ($this->driver)
+        {
+            case "postgresql":
+                $perRetornar=@pg_query($query);
+                if (!$perRetornar)
+                {
+                	$msgError = @pg_last_error($this->connection);
+									error_logger("Error al ejecutar la consulta. CONSULTA: $query. ERROR: $msgError.","ERROR");
+									$perRetornar = false;
+                }
+                break;
+            case "mysql":
+                $perRetornar=mysql_query($query);
+                break;
+            default:
+                $perRetornar=null;
+                break;
+        }
+        return $perRetornar;
+    }
+    
+    
     function update($query, &$msgError = '')
     {
         controlFirstWord($query, "update");

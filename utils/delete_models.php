@@ -9,6 +9,7 @@
   <?php
   
   require_once("../config.php");
+  require_once(PATH_ROOT_CLASES."/cdatabase.php");
    
   
   
@@ -38,7 +39,7 @@
     
     echo "</select><br /><br />";
     
-    echo "<input type='checkbox' value='1' name='restore'>  &nbsp;  Restaurar archivos <br/><br/>";
+    echo "<input type='checkbox' value='1' name='restore' id='restore'>  <label for='restore'>Restaurar archivos</label> <br/><br/>";
     
     echo "<input type='hidden' name='send' value='1' />";
     
@@ -71,6 +72,13 @@
   
     unlink(PATH_ROOT . "/vistas/frontend/main/v".$_REQUEST['model']."_list.php");
     unlink(PATH_ROOT . "/vistas/frontend/main/v".$_REQUEST['model'].".php");
+    
+    //borramos la tabla de la base de datos
+    $con = new cdatabase(array('host'=>HOST, 'user'=>USER, 'dbname'=>DBNAME, 'password'=>PASSWORD), DBDRIVER );
+    
+    $query = "drop table ".$_REQUEST['model'].";";
+
+    $item = $con->drop($query);
   }
   
   

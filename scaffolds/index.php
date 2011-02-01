@@ -529,9 +529,9 @@ if ( $tabla ){
   if ($result){
     
     //contamos el numero de migraciones
-    $archivos =  glob(PATH_ROOT."/bd/migrations/{migration_*.php}",GLOB_BRACE);
+    $archivos =  glob(PATH_ROOT."/bd/migrations/{migration_*}",GLOB_BRACE);
     
-    $total = count($archivos) + 1;
+    $total = count($archivos);
     
     $nmig = ((int)$total < 9) ? "0".((int)$total+1) : (int)$total+1;
     
@@ -3487,7 +3487,7 @@ if ( $arrayjson['type'] == 'webform')  {
   $text .=  $slht."RewriteRule ^admin/".$arrayjson['name']."/create$ /admin/".$arrayjson['name']."/create/ [R]  ";
   $text .=  $slht."RewriteRule ^admin/".$arrayjson['name']."/create/$ /admin/".$name_of_relation."/list/ [R] ";
   $text .=  $slht."RewriteRule ^admin/".$arrayjson['name']."/create/([a-z0-9-]+)$ /admin/".$arrayjson['name']."_create/$1/ [R] ";
-  if ( isset( $arrayjson['relation_stripped'] ) ) 
+  if (  $arrayjson['relation_stripped']  ) 
     $text .=  $slht."RewriteRule ^admin/".$arrayjson['name']."/create/([a-z0-9-]+)/$ /admin/".$arrayjson['name']."_create.php?stripped=$1 [QSA,L] ";
   else 
     $text .=  $slht."RewriteRule ^admin/".$arrayjson['name']."/create/([a-z0-9-]+)/$ /admin/".$arrayjson['name']."_create.php?".$name_of_relation."_id=$1 [QSA,L] ";
@@ -3495,7 +3495,7 @@ if ( $arrayjson['type'] == 'webform')  {
   $text .=  $slht.$slht."RewriteRule ^".$arrayjson['name']."/list$ /".$arrayjson['name']."/list/ [R] ";
   $text .=  $slht."RewriteRule ^".$arrayjson['name']."/list/$ /".$name_of_relation."/list/ [R] ";
   $text .=  $slht."RewriteRule ^".$arrayjson['name']."/list/([a-z0-9-]+)$ /".$arrayjson['name']."_list/$1/ [R] ";
-  if ( isset( $arrayjson['relation_stripped'] ) ) {
+  if ( $arrayjson['relation_stripped']  ) {
     $text .=  $slht."RewriteRule ^".$arrayjson['name']."/list/([a-z0-9-]+)/$ /".$arrayjson['name']."_list.php?stripped=$1&pag=1 [QSA,L] ";
     $text .=  $slht."RewriteRule ^".$arrayjson['name']."/list/([a-z0-9-]+)/([0-9]+)$ /".$arrayjson['name']."_list/$1/$2/ [R] ";
     $text .=  $slht."RewriteRule ^".$arrayjson['name']."/list/([a-z0-9-]+)/([0-9]+)/$ /".$arrayjson['name']."_list.php?stripped=$1&pag=$2 [QSA,L] ";
@@ -3508,7 +3508,7 @@ if ( $arrayjson['type'] == 'webform')  {
   $text .=  $slht.$slht."RewriteRule ^admin/".$arrayjson['name']."/list$ /admin/".$arrayjson['name']."/list/ [R] ";
   $text .=  $slht."RewriteRule ^admin/".$arrayjson['name']."/list/$ /admin/".$name_of_relation."/list/ [R] ";
   $text .=  $slht."RewriteRule ^admin/".$arrayjson['name']."/list/([a-z0-9-]+)$ /admin/".$arrayjson['name']."_list/$1/ [R] ";
-  if ( isset( $arrayjson['relation_stripped'] ) ) {
+  if ( $arrayjson['relation_stripped']  ) {
     $text .=  $slht."RewriteRule ^admin/".$arrayjson['name']."/list/([a-z0-9-]+)/$ /admin/".$arrayjson['name']."_list.php?stripped=$1&pag=1 [QSA,L] ";
     $text .=  $slht."RewriteRule ^admin/".$arrayjson['name']."/list/([a-z0-9-]+)/([0-9]+)$ /admin/".$arrayjson['name']."_list/$1/$2/ [R] ";
     $text .=  $slht."RewriteRule ^admin/".$arrayjson['name']."/list/([a-z0-9-]+)/([0-9]+)/$ /admin/".$arrayjson['name']."_list.php?stripped=$1&pag=$2 [QSA,L] ";
@@ -3521,50 +3521,79 @@ if ( $arrayjson['type'] == 'webform')  {
   $text .=  $slht.$slht."RewriteRule ^admin/".$arrayjson['name']."/edit$ /admin/".$arrayjson['name']."/edit/ [R] ";
   $text .=  $slht."RewriteRule ^admin/".$arrayjson['name']."/edit/$ /admin/".$arrayjson['name']."/list/ [R] ";
   $text .=  $slht."RewriteRule ^admin/".$arrayjson['name']."/edit/([a-z0-9-]+)/([a-z0-9-]+)$ /admin/".$arrayjson['name']."/edit/$1/$2/ [R] ";
-  if ( isset($arrayjson['stripped'] ) ) {
-    
-    if ( isset( $arrayjson['relation_stripped'] ) ) 
-      $text .=  $slht."RewriteRule ^admin/".$arrayjson['name']."/edit/([a-z0-9-]+)/([a-z0-9-]+)/$  /admin/".$arrayjson['name']."_edit.php?stripped_id=$1&stripped=$2 [QSA,L] ";
-    else
-      $text .=  $slht."RewriteRule ^admin/".$arrayjson['name']."/edit/([a-z0-9-]+)/([a-z0-9-]+)/$  /admin/".$arrayjson['name']."_edit.php?".$name_of_relation."_id=$1&stripped=$2 [QSA,L] ";
   
-  }else { 
+  if (isset ($arrayjson['stripped']) ) {
 
-    if ( isset( $arrayjson['relation_stripped'] ) ) 
-      $text .=  $slht."RewriteRule ^admin/".$arrayjson['name']."/edit/([a-z0-9-]+)/([a-z0-9-]+)/$  /admin/".$arrayjson['name']."_edit.php?stripped_id=$1&id=$2 [QSA,L] ";
-    else
-      $text .=  $slht."RewriteRule ^admin/".$arrayjson['name']."/edit/([a-z0-9-]+)/([a-z0-9-]+)/$  /admin/".$arrayjson['name']."_edit.php?".$name_of_relation."_id=$1&id=$2 [QSA,L] ";
+     if ( $arrayjson['stripped']  ) {
+      
+      if (  $arrayjson['relation_stripped']  ) 
+        $text .=  $slht."RewriteRule ^admin/".$arrayjson['name']."/edit/([a-z0-9-]+)/([a-z0-9-]+)/$  /admin/".$arrayjson['name']."_edit.php?stripped_id=$1&stripped=$2 [QSA,L] ";
+      else
+        $text .=  $slht."RewriteRule ^admin/".$arrayjson['name']."/edit/([a-z0-9-]+)/([a-z0-9-]+)/$  /admin/".$arrayjson['name']."_edit.php?".$name_of_relation."_id=$1&stripped=$2 [QSA,L] ";
+    
+    }else { 
   
-  }
+      if (  $arrayjson['relation_stripped']  ) 
+        $text .=  $slht."RewriteRule ^admin/".$arrayjson['name']."/edit/([a-z0-9-]+)/([a-z0-9-]+)/$  /admin/".$arrayjson['name']."_edit.php?stripped_id=$1&id=$2 [QSA,L] ";
+      else
+        $text .=  $slht."RewriteRule ^admin/".$arrayjson['name']."/edit/([a-z0-9-]+)/([a-z0-9-]+)/$  /admin/".$arrayjson['name']."_edit.php?".$name_of_relation."_id=$1&id=$2 [QSA,L] ";
+    
+      }
+   
+    }else { 
+  
+      if (  $arrayjson['relation_stripped']  ) 
+        $text .=  $slht."RewriteRule ^admin/".$arrayjson['name']."/edit/([a-z0-9-]+)/([a-z0-9-]+)/$  /admin/".$arrayjson['name']."_edit.php?stripped_id=$1&id=$2 [QSA,L] ";
+      else
+        $text .=  $slht."RewriteRule ^admin/".$arrayjson['name']."/edit/([a-z0-9-]+)/([a-z0-9-]+)/$  /admin/".$arrayjson['name']."_edit.php?".$name_of_relation."_id=$1&id=$2 [QSA,L] ";
+    
+      }
     
   $text .=  $slht.$slht."RewriteRule ^".$arrayjson['name']."$ /".$arrayjson['name']."/ [R] ";
   $text .=  $slht."RewriteRule ^".$arrayjson['name']."/$ /".$name_of_relation."/list/ [R] ";
   $text .=  $slht."RewriteRule ^".$arrayjson['name']."/([a-z0-9-]+)/([a-z0-9-]+)$ /".$arrayjson['name']."/$1/$2/ [R] ";
-  if ( isset($arrayjson['stripped'] ) ) {
-    if ( isset( $arrayjson['relation_stripped'] ) ) 
-      $text .=  $slht."RewriteRule ^".$arrayjson['name']."/([a-z0-9-]+)/([a-z0-9-]+)/$ /".$arrayjson['name'].".php?stripped_id=$1&stripped=$2 [QSA,L] ";
-    else 
-      $text .=  $slht."RewriteRule ^".$arrayjson['name']."/([a-z0-9-]+)/([a-z0-9-]+)/$ /".$arrayjson['name'].".php?".$name_of_relation."_id=$1&stripped=$2 [QSA,L] ";
-  }else{
-    
-    $text .=  $slht."RewriteRule ^".$arrayjson['name']."/([a-z0-9-]+)/([a-z0-9-]+)/$ /".$arrayjson['name'].".php?".$name_of_relation."_id=$1&id=$2 [QSA,L] ";
   
-  }
+  if (isset ($arrayjson['stripped']) ) {
+
+    if ( $arrayjson['stripped']  ) {
+      
+      if (  $arrayjson['relation_stripped']  ) 
+        $text .=  $slht."RewriteRule ^".$arrayjson['name']."/([a-z0-9-]+)/([a-z0-9-]+)/$ /".$arrayjson['name'].".php?stripped_id=$1&stripped=$2 [QSA,L] ";
+      else 
+        $text .=  $slht."RewriteRule ^".$arrayjson['name']."/([a-z0-9-]+)/([a-z0-9-]+)/$ /".$arrayjson['name'].".php?".$name_of_relation."_id=$1&stripped=$2 [QSA,L] ";
+        
+    }else{
+      $text .=  $slht."RewriteRule ^".$arrayjson['name']."/([a-z0-9-]+)/([a-z0-9-]+)/$ /".$arrayjson['name'].".php?".$name_of_relation."_id=$1&id=$2 [QSA,L] ";
+    }
+    
+  }else{
+      $text .=  $slht."RewriteRule ^".$arrayjson['name']."/([a-z0-9-]+)/([a-z0-9-]+)/$ /".$arrayjson['name'].".php?".$name_of_relation."_id=$1&id=$2 [QSA,L] ";
+    }
+  
+
 
   $text .=  $slht.$slht."RewriteRule ^admin/".$arrayjson['name']."$ /admin/".$arrayjson['name']."/ [R] ";
   $text .=  $slht."RewriteRule ^admin/".$arrayjson['name']."/$ /admin/".$name_of_relation."/list/ [R] ";
   $text .=  $slht."RewriteRule ^admin/".$arrayjson['name']."/([a-z0-9-]+)/([a-z0-9-]+)$ /admin/".$arrayjson['name']."/$1/$2/ [R] ";
-  if ( isset($arrayjson['stripped'] ) ) {
-    if ( isset( $arrayjson['relation_stripped'] ) ) 
-      $text .=  $slht."RewriteRule ^admin/".$arrayjson['name']."/([a-z0-9-]+)/([a-z0-9-]+)/$ /admin/".$arrayjson['name'].".php?stripped_id=$1&stripped=$2 [QSA,L] ";
-    else 
-      $text .=  $slht."RewriteRule ^admin/".$arrayjson['name']."/([a-z0-9-]+)/([a-z0-9-]+)/$ /admin/".$arrayjson['name'].".php?".$name_of_relation."_id=$1&stripped=$2 [QSA,L] ";
+
+  if (isset ($arrayjson['stripped']) ) {
+
+      if ( $arrayjson['stripped']  ) {
+    
+        if (  $arrayjson['relation_stripped']  ) 
+          $text .=  $slht."RewriteRule ^admin/".$arrayjson['name']."/([a-z0-9-]+)/([a-z0-9-]+)/$ /admin/".$arrayjson['name'].".php?stripped_id=$1&stripped=$2 [QSA,L] ";
+        else 
+          $text .=  $slht."RewriteRule ^admin/".$arrayjson['name']."/([a-z0-9-]+)/([a-z0-9-]+)/$ /admin/".$arrayjson['name'].".php?".$name_of_relation."_id=$1&stripped=$2 [QSA,L] ";
+          
+      }else{
+        $text .=  $slht."RewriteRule ^admin/".$arrayjson['name']."/([a-z0-9-]+)/([a-z0-9-]+)/$ /admin/".$arrayjson['name'].".php?".$name_of_relation."_id=$1&id=$2 [QSA,L] ";
+      }
+        
   }else{
-    
-    $text .=  $slht."RewriteRule ^admin/".$arrayjson['name']."/([a-z0-9-]+)/([a-z0-9-]+)/$ /admin/".$arrayjson['name'].".php?".$name_of_relation."_id=$1&id=$2 [QSA,L] ";
+        $text .=  $slht."RewriteRule ^admin/".$arrayjson['name']."/([a-z0-9-]+)/([a-z0-9-]+)/$ /admin/".$arrayjson['name'].".php?".$name_of_relation."_id=$1&id=$2 [QSA,L] ";
+      }
   
-  }
-    
+     
   $text .=  $slht.$slht."RewriteRule ^admin/".$arrayjson['name']."/delete$ /admin/".$arrayjson['name']."/delete/ [R] ";
   $text .=  $slht."RewriteRule ^admin/".$arrayjson['name']."/delete/$ /admin/".$arrayjson['name']."/list/ [R] ";
   $text .=  $slht."RewriteRule ^admin/".$arrayjson['name']."/delete/([a-z0-9-]+)/([a-z0-9-]+)$ /admin/".$arrayjson['name']."/delete/$1/$2/ [R] ";
@@ -3989,7 +4018,7 @@ if ($cambios){
          else 
            $aux = "echo \"<td><a href='/".$arrayjson['name']."/list/\".\$item['stripped'].\"/'>Link a ".$arrayjson['name']." (\".C".$arrayjson['name']."::count_".$arrayjson['name']."(\$item['id']).\")</a></td>\";\n //#NO-BORRAR#// "; 
        }else
-        $aux = "echo \"<td><a href='/".$arrayjson['name']."/list/\".\$item['id'].\"/'>Link a ".$arrayjson['name']." (\".C".$arrayjson['name']."::count_".$arrayjson['name']."(\$item['id']).\")</a></td> \n //#NO-BORRAR#//\"; "; 
+        $aux = "echo \"<td><a href='/".$arrayjson['name']."/list/\".\$item['id'].\"/'>Link a ".$arrayjson['name']." (\".C".$arrayjson['name']."::count_".$arrayjson['name']."(\$item['id']).\")</a></td>\"; \n //#NO-BORRAR#//\"; "; 
       
       
       $file = file_get_contents(PATH_ROOT."/vistas/frontend/main/v".$name_of_relation."_list.php");
@@ -4017,7 +4046,7 @@ if ($cambios){
           $aux = "echo \"<td><a href='/admin/".$arrayjson['name']."/list/\".\$item['stripped'].\"/'>Link a ".$arrayjson['name']." (\".C".$arrayjson['name']."::count_".$arrayjson['name']."(\$item['id']).\")</a></td>\";\n //#NO-BORRAR#// "; 
         
       } else
-        $aux = "echo \"<td><a href='/admin/".$arrayjson['name']."/list/\".\$item['id'].\"/'>Link a ".$arrayjson['name']." (\".C".$arrayjson['name']."::count_".$arrayjson['name']."(\$item['id']).\")</a></td> \n //#NO-BORRAR#//\"; "; 
+        $aux = "echo \"<td><a href='/admin/".$arrayjson['name']."/list/\".\$item['id'].\"/'>Link a ".$arrayjson['name']." (\".C".$arrayjson['name']."::count_".$arrayjson['name']."(\$item['id']).\")</a></td>\"; \n //#NO-BORRAR#//\"; "; 
       
       
       $file = file_get_contents(PATH_ROOT."/vistas/backend/main/v".$name_of_relation."_list.php");
