@@ -243,6 +243,10 @@ class Cform_construct
 						         $obj->set_value('');
 						         break;
 						         
+						       case 'datepicker':
+						          $obj->set_value(Cutils::to_spanish_dates($value));
+						         break;
+						         
 						       case 'submit': 
 						       case 'hidden':
 						         break;

@@ -62,6 +62,48 @@ $webform_relational = '
 
 ';
 
+
+
+$webform = '{
+                "name"        : "categoria",
+                "type"        : "webform",
+                "stripped"    : "name",
+                "campos"      : {
+            
+                            "name" : {                                        
+                                        "class"         : "",
+                                        "value"         : "",
+                                        "mandatory"     : "1",
+                                        "type"          : "text",
+                                        "minlength"     : "1",
+                                        "maxlength"     : "60",
+                                        "size"          : "60", 
+                                        "disabled"      : "false", 
+                                        "readonly"      : "false",
+                                        "tabindex"      : "0",
+                                        "multilanguage" : false
+                                         },
+                                         
+                            "fecha" : {                                        
+                                        "class"         : "datepicker",
+                                        "value"         : "",
+                                        "mandatory"     : "1",
+                                        "type"          : "datepicker",
+                                        "minlength"     : "1",
+                                        "maxlength"     : "60",
+                                        "size"          : "60", 
+                                        "disabled"      : "false", 
+                                        "readonly"      : "false",
+                                        "tabindex"      : "0",
+                                        "multilanguage" : false
+                                         }
+
+
+                          }
+             }';
+
+
+/*
 $webform = '{
                 "name"        : "categoria",
                 "type"        : "webform",
@@ -202,6 +244,7 @@ $webform = '{
                           }
              }';
 
+*/
 
 //Recogemos las opciones
 $toshow         = ( isset($_REQUEST['t']))              ?   $webform_relational          : $webform;
@@ -333,6 +376,16 @@ foreach ($arrayjson['campos'] as $index => $value ){
         
            
         break;
+        
+    case 'datepicker':
+      
+        if (DBDRIVER == "postgresql"){  
+          $sql_table .= $index." date , ";
+        }else if (DBDRIVER == "mysql"){
+          $sql_table .= $index."  date , ";
+        }
+      
+      break;    
 
     case 'image':
     case 'file':
@@ -1804,7 +1857,15 @@ $text .= "class Cform_construct_".$arrayjson['name']." extends  Cform_construct 
 	         
 	        break;
 	        	        
-	      case 'numeric':
+	      case 'datepicker':
+	        
+  	        $text .= $sl.$sl.$tab.$tab. "\$obj = new Cform_datepicker('".$index."',\$this->get_form_name().'_".$index."', 'datepicker ".$value['class']."', '', '".$value['value']."', ".$value['mandatory'].", 'text', 10, 10, 10);";
+  	        $text .= $sl.$tab.$tab."\$this->m_form_object->add_inputs(\$obj,\$obj->get_id());";
+  	        
+	        break;
+
+	        
+	       case 'numeric':
 	        
 	        $text .= $sl.$sl.$tab.$tab. "\$obj = new Cform_numeric('".$index."',\$this->get_form_name().'_".$index."', '".$value['class']."', '', '".$value['value']."', ".$value['mandatory'].", 'text', ".$value['minlength'].", ".$value['maxlength'].", ".$value['size'].");";
 	      	$text .= $sl.$tab.$tab."\$this->m_form_object->add_inputs(\$obj,\$obj->get_id());";
@@ -1992,6 +2053,11 @@ $text .= "class Cform_construct_".$arrayjson['name']." extends  Cform_construct 
                 $text .= "\$ruta_archivo, ";
                 break;
                 
+              
+              case 'datepicker':
+                  $text .= "Cutils::to_english_dates(\$item['$index']), ";
+                break;
+                
                 
               default:
                 
@@ -2165,6 +2231,11 @@ $text .= "class Cform_construct_".$arrayjson['name']." extends  Cform_construct 
                 $text .= "\$ruta_archivo, ";
                 break;
                 
+                
+              case 'datepicker':
+                  $text .= "Cutils::to_english_dates(\$item['$index']), ";
+                break;
+                
               
               default:
                 
@@ -2324,6 +2395,8 @@ if ( $arrayjson['type'] == 'webform_relational')  {
 }
 
 $write_validation = true;
+$only1datapicker = true;
+$writeinfodatapicker = false;
 
 //Miramos si hay una imagen para pasarle al validador la special class
 foreach ($arrayjson['campos'] as $index => $value ){
@@ -2358,6 +2431,31 @@ foreach ($arrayjson['campos'] as $index => $value ){
       $write_validation = false;
       
       break;
+      
+    case 'datepicker':
+      
+      if ($only1datapicker){
+        
+        
+        $textdatapicker =$sl.$sl."//Añadimos las llamadas javascript para mostrar el datapicker";
+        $textdatapicker .=$sl."\$lng = Cutils::get_actual_lng();";
+        
+        $textdatapicker .=$sl."\$heredocaux  =<<< html";
+          $textdatapicker .=$sl."<script>";
+          	$textdatapicker .=$sl.$tab."$(function() {";
+          	     $textdatapicker .=$sl.$tab.$tab."$.datepicker.setDefaults($.datepicker.regional['\$lng']); ";
+        		$textdatapicker .=$sl.$tab.$tab."$( \".datepicker\" ).datepicker( {dateFormat: 'dd-mm-yy'} ); ";
+        	$textdatapicker .=$sl.$tab."});";
+          $textdatapicker .=$sl."</script>";
+        $textdatapicker .=$sl."html;";
+        
+        $textdatapicker .=$sl.$sl."\$heredoc .= \$heredocaux;";
+        
+        $only1datapicker = false;
+        $writeinfodatapicker = true;
+      }
+      
+      break;
 
   }
 }
@@ -2370,11 +2468,27 @@ if ($write_validation){
   
 }
 
+//si existe un datepicker lo ponemos despues de la llamada a heredoc
+if ($writeinfodatapicker){
+  
+  $text .= $textdatapicker;
+  
+}
+
 
 $text .=$sl.$sl."\$layout	= new Cpagelayout_backend( \$names_section ); ";
 
   $text .=$sl.$tab."\$layout->set_page_link_blocker(true);";
   $text .=$sl.$tab."\$layout->set_page_forms(\$array_forms);";
+  
+  if ($writeinfodatapicker){
+    	$text .=$sl.$tab."\$layout->set_page_styles(array(PATH_ROOT_CSS.'cupertino/jquery-ui-1.8.9.custom.css'));";
+	$text .=$sl.$tab."\$layout->set_page_js_scripts(array(PATH_ROOT_JS.'jquery-ui-1.8.9.custom.min.js'));";
+	$text .=$sl.$tab."if (\$lng != 'en'){";
+	 $text .=$sl.$tab.$tab."\$layout->set_page_js_scripts(array(PATH_ROOT_JS.'ui/jquery.ui.datepicker-'.\$lng.'.js'));";
+	$text .=$sl.$tab."}";
+  }
+  
   $text .=$sl.$tab."\$layout->set_page_heredoc(\$heredoc);";
 
   $text .=$sl.$tab."\$layout->set_var('form_type', 'new');";
@@ -2499,6 +2613,9 @@ if ( $arrayjson['type'] == 'webform_relational')  {
   
 }
 
+$only1datapicker = true;
+$writeinfodatapicker = false;
+
 //Miramos si hay una imagen para pasarle al validador la special class
 foreach ($arrayjson['campos'] as $index => $value ){
   
@@ -2507,6 +2624,32 @@ foreach ($arrayjson['campos'] as $index => $value ){
     case 'image':
         $special_class = ', \'image\' '; 
       break;
+      
+    case 'datepicker':
+      
+      if ($only1datapicker){
+        
+        
+        $textdatapicker =$sl.$sl."//Añadimos las llamadas javascript para mostrar el datapicker";
+        $textdatapicker .=$sl."\$lng = Cutils::get_actual_lng();";
+        
+        $textdatapicker .=$sl."\$heredocaux  =<<< html";
+          $textdatapicker .=$sl."<script>";
+          	$textdatapicker .=$sl.$tab."$(function() {";
+          	     $textdatapicker .=$sl.$tab.$tab."$.datepicker.setDefaults($.datepicker.regional['\$lng']); ";
+        		$textdatapicker .=$sl.$tab.$tab."$( \".datepicker\" ).datepicker( {dateFormat: 'dd-mm-yy'} ); ";
+        	$textdatapicker .=$sl.$tab."});";
+          $textdatapicker .=$sl."</script>";
+        $textdatapicker .=$sl."html;";
+        
+        $textdatapicker .=$sl.$sl."\$heredoc .= \$heredocaux;";
+        
+        $only1datapicker = false;
+        $writeinfodatapicker = true;
+      }
+      
+      break;      
+
       
     default:
       
@@ -2520,11 +2663,26 @@ $text .=$sl.$sl."//incluimos la validacion por javascript";
 $text .=$sl."\$heredoc = Cutils::get_scripts_heredoc_form_validation(\$array_forms $special_class);";
 
 
+if ($writeinfodatapicker){
+  
+  $text .= $textdatapicker;
+  
+}
+
 $text .=$sl.$sl."\$layout	= new Cpagelayout_backend( \$names_section ); ";
 
   $text .=$sl.$tab."\$layout->set_page_link_blocker(true);";
   $text .=$sl.$tab."\$layout->set_page_forms(\$array_forms);";
   $text .=$sl.$tab."\$layout->set_page_heredoc(\$heredoc);";
+  
+  if ($writeinfodatapicker){
+    $text .=$sl.$tab."\$layout->set_page_styles(array(PATH_ROOT_CSS.'cupertino/jquery-ui-1.8.9.custom.css'));";
+    $text .=$sl.$tab."\$layout->set_page_js_scripts(array(PATH_ROOT_JS.'jquery-ui-1.8.9.custom.min.js'));";
+    $text .=$sl.$tab."if (\$lng != 'en'){";
+      $text .=$sl.$tab.$tab."\$layout->set_page_js_scripts(array(PATH_ROOT_JS.'ui/jquery.ui.datepicker-'.\$lng.'.js'));";
+    $text .=$sl.$tab."}";
+  }
+  
   $text .=$sl.$tab."\$layout->set_var('form_type', 'edit');";
   $text .=$sl.$tab."\$layout->set_var('id', \$id);";
   $text .=$sl.$tab."\$layout->set_var('table', '".$arrayjson['name']."');";
@@ -2943,7 +3101,7 @@ $text .= $sl."else";
 $text .= $sl.$sl."\$form = \$this->get_form_by_name('cform".$arrayjson['name']."'); ";
 $text .= $sl."\$form->open_form_display();";
    
-$text .= $sl.$sl."echo \"<table>\";";
+$text .= $sl.$sl."echo \"<table class='formtable'>\";";
 
  foreach ($arrayjson['campos'] as $index => $value ){
   
@@ -3003,7 +3161,7 @@ $text .= $sl.$sl."echo \"<table>\";";
       $text .= $sl.$tab."echo \"</tr>\"; ";
       
       break;
-      
+ 
       
     default:
       
@@ -3068,7 +3226,7 @@ $text .= $sl.$sl."echo \"<table>\";";
   $text .= $sl.$tab."echo \"</tr>\";";
   
   
-$text .= $sl.$sl."echo \"</table>\";";
+$text .= $sl.$sl."echo \"</table class='formtable'>\";";
 $text .= $sl.$sl."\$form->close_form_display();";
 
 $text .= $sl.$sl."?>".$sl;  
@@ -3201,7 +3359,11 @@ $text .= $sl.$sl."if (\$items){";
               
               $aux_text_img .= $sl.$tab.$tab.$tab.$tab."echo \"<td>\".Carchivo::show_file(\$item['$index']).\"</td>\"; ";
               break;
+
+            case 'datepicker':
               
+              $aux_text .= $sl.$tab.$tab.$tab.$tab."echo \"<td>\".Cutils::to_spanish_dates(\$item['$index']).\"</td>\"; ";
+              break;              
             
             default:
               
