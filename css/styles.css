@@ -6,7 +6,7 @@ body, table, input, radio, select, textarea {
   color:#444;
 }
 
-td { 
+.formtable td { 
   vertical-align:top;
   height:50px;
 }

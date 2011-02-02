@@ -11,6 +11,7 @@ include_once('cform_hidden.php');
 include_once('cform_numeric.php');
 include_once('cform_image.php');
 include_once('cform_doc.php');
+include_once('cform_datepicker.php');
 
 /*
 include_once('cform_label.php');

@@ -150,14 +150,30 @@ class Cpagebase
 	
 	function set_page_js_scripts($js_scripts){
 	  
-	  $this->m_js_scripts = $js_scripts;
+	  if (is_array($js_scripts)){
+	    
+	    	foreach ($js_scripts as $js_script){
+	    	  $this->add_js_scripts($js_script);
+          }
+             
+	  }else{
+	     $this->add_js_scripts($js_scripts);
+	  }
 	  
 	}
 	
 	
 	function set_page_styles($styles){
 	  
-	  $this->m_styles 	= $styles;
+	  if (is_array($styles)){
+	    
+	    	foreach ($styles as $style){
+	    	  $this->add_styles($style);
+          }   
+          
+	  }else{
+	     $this->add_styles($styles);
+	  }
 	  
 	}
 	

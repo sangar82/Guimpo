@@ -4798,3 +4798,13 @@
  IP user: [127.0.0.1] 
  Error Message: [UNDEFINED (return) IN THE FILE (/Applications/MAMP/htdocs/GuimpoPHP/generic/lng_en/defines.php.lng).] 
 =+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=
+ Error Stamp: [313239363536383038372e3137] 
+ Error Level: [ERROR] 
+ Remote Host: [www.guimpo.com] 
+ Remote URI: [/admin/categoria_create.php] 
+ Request Method: [POST] 
+ POST Variables: [cformcategoria_name_es=rewjrjk&cformcategoria_name_ca=kjdflñ&cformcategoria_name_en=dskafj&cformcategoria_inici=2002-21-21&cformcategoria_submit=Enviar] 
+ Timestamp: [01/02/2011 14:48:07] 
+ IP user: [127.0.0.1] 
+ Error Message: [Error al ejecutar la consulta. CONSULTA: INSERT INTO categoria (name_es, name_ca, name_en, inici, stripped_es, stripped_ca, stripped_en) VALUES ('rewjrjk', 'kjdfl&ntilde;', 'dskafj', '2002-21-21', 'rewjrjk', 'kjdfln', 'dskafj'). ERROR: Table 'framework.categoria' doesn't exist.] 
+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=

@@ -511,53 +511,26 @@ HTML;
   }
  
   
-  static function get_last_page_from_referer($url){
-    
-    // http://www.framework.com/categoria/list/        count 5
-    // http://www.framework.com/categoria/list/2      count 5
-
-    //   1            2                           3                   4         5        6
-    // http://www.framework.com/categoria_gallery/list/categoria1/
-    // http://www.framework.com/categoria_gallery/list/categoria1/2
-    
-    // http://www.framework.com/categoria_gallery/list/1/
-    // http://www.framework.com/categoria_gallery/list/1/2
-    
-  
-     $referer =  $_SERVER['HTTP_REFERER'];
-     
-     $split = split("/", $referer);
-     
-     print_r($split);
-     die();
-     
-     $count_split = count($split);
-     
-     $last = $split[$count_split - 1];
-     
-     $after_last = $split[$count_split - 2];
-     
-     $last = '';
-     
-     if (is_numeric($last)){
-       
-       if (is_numeric($after_last)){
-         
-         $pag = $last;
-         
-       }else{
-         $pag = '';
-       }
-    
+  static function to_spanish_dates($date){
+    //guarrada maxima
+    if ($date != 1){
+      list( $a, $m, $d ) = explode( "-", $date );
+      return "$d-$m-$a";
     }
-    
-    if ($last){
-      $url = $url."/".$pag."/";
-    }
-    
-    return $url;
+  }
   
-  } //end cutils
+  
+  static function to_english_dates($date){
+    list( $d, $m, $a ) = explode( "-", $date );
+    return "$a-$m-$d";
+  }
+  
+  static function to_gregorian_dates_array($date){
+    list( $d, $m, $a ) = explode( "-", $date );
+    $ret = array($m, $d, $a);
+  
+    return $ret;
+  }
 
-}
+}//end cutils
 ?>
