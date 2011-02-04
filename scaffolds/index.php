@@ -84,18 +84,19 @@ $webform = '{
                                         "multilanguage" : false
                                          },
                                          
-                            "fecha" : {                                        
-                                        "class"         : "datepicker",
+                            "descripcion" : {
+                                        "class"         : "",
                                         "value"         : "",
-                                        "mandatory"     : "1",
-                                        "type"          : "datepicker",
-                                        "minlength"     : "1",
-                                        "maxlength"     : "60",
-                                        "size"          : "60", 
+                                        "mandatory"     : "0",
+                                        "type"          : "textarea",
+                                        "cols"          : "57",
+                                        "rows"          : "8",
+                                        "minlength"     : "0",
+                                        "maxlength"     : "500",
                                         "disabled"      : "false", 
                                         "readonly"      : "false",
                                         "tabindex"      : "0",
-                                        "multilanguage" : false
+                                        "multilanguage" : true
                                          }
 
 
@@ -146,6 +147,20 @@ $webform = '{
                                         "disabled"   : "false", 
                                         "readonly"   : "false",
                                         "tabindex"   : "0" },
+                                        
+                            "fecha" : {                                        
+                                        "class"         : "datepicker",
+                                        "value"         : "",
+                                        "mandatory"     : "1",
+                                        "type"          : "datepicker",
+                                        "minlength"     : "1",
+                                        "maxlength"     : "60",
+                                        "size"          : "60", 
+                                        "disabled"      : "false", 
+                                        "readonly"      : "false",
+                                        "tabindex"      : "0",
+                                        "multilanguage" : false
+                                         },
                                         
                             "idioma" : {                                        
                                         "class"               : "",
@@ -1959,6 +1974,11 @@ $text .= "class Cform_construct_".$arrayjson['name']." extends  Cform_construct 
 	   $text .= $sl.$tab.$tab."\$this->m_form_object->add_inputs(\$obj,\$obj->get_id());";  
 	  }
 	  
+	  
+        	$text .= $sl.$sl.$tab.$tab. " //creacion token seguretat (anti csrf) ";
+        	$text .= $sl.$tab.$tab. "\$this->create_token();";
+	  
+	  
 	  // Boton de envio
 		$text .= $sl.$sl.$tab.$tab. "\$obj = new Cform_button_submit('submit',\$this->get_form_name().'_submit','Enviar'); ";
 		$text .= $sl.$tab.$tab. "\$this->m_form_object->add_inputs(\$obj,\$obj->get_id()); ";
@@ -1982,17 +2002,20 @@ $text .= "class Cform_construct_".$arrayjson['name']." extends  Cform_construct 
       
     $text .= $sl.$sl.$tab.$tab."}else{";
     
-      $text .= $sl.$sl.$tab.$tab.$tab."//Creamos el formulario y le asignamos los valores";
-			$text .= $sl.$tab.$tab.$tab."\$this->get_and_fill_submited_params();";
-			
-			$text .= $sl.$sl.$tab.$tab.$tab."//validamos el formulario";
-			$text .= $sl.$tab.$tab.$tab."if (\$this->validate()){";
-			
-			 	$text .= $sl.$sl.$tab.$tab.$tab.$tab."//obtenemos los valores del formulario para hacer el save";
-				$text .= $sl.$tab.$tab.$tab.$tab."\$item = \$this->fill_array_to_save();";
+    	     $text .= $sl.$sl.$tab.$tab.$tab."//valida token antiCSRF";
+		$text .= $sl.$tab.$tab.$tab."\$this->validate_token();";
+    
+          $text .= $sl.$sl.$tab.$tab.$tab."//Creamos el formulario y le asignamos los valores";
+		$text .= $sl.$tab.$tab.$tab."\$this->get_and_fill_submited_params();";
+		
+		$text .= $sl.$sl.$tab.$tab.$tab."//validamos el formulario";
+		$text .= $sl.$tab.$tab.$tab."if (\$this->validate()){";
+		
+	 	$text .= $sl.$sl.$tab.$tab.$tab.$tab."//obtenemos los valores del formulario para hacer el save";
+		$text .= $sl.$tab.$tab.$tab.$tab."\$item = \$this->fill_array_to_save();";
 				
 				
-			  foreach ($arrayjson['campos'] as $index => $value ){
+	     foreach ($arrayjson['campos'] as $index => $value ){
 	    
 	       switch ($value['type']){
 	         
@@ -3214,6 +3237,8 @@ $text .= $sl.$sl."echo \"<table class='formtable'>\";";
         $text .= $sl.$tab.$tab.$tab.$tab."echo  \$form->get_form_object('return')->display(true); ";
       }
       
+      $text .= $sl.$tab.$tab."echo \$form->get_form_object('ts')->display(true); ";
+      
       $text .= $sl.$tab.$tab."echo  \$form->get_form_object('submit')->display(true);";
       
       if ( $arrayjson['type'] == 'webform_relational')  {
@@ -3445,6 +3470,9 @@ $text .= $sl.$sl."}else";
     $text .= $sl.$sl.$tab."echo \" <br><br><a href='/".$name_of_relation."/list/'>\".\$this->translate('return_to', array('".$name_of_relation."')).\" </a>\"; ";
   } else if ( $arrayjson['type'] == 'webform')  {
     $text .= $sl.$tab."echo \"\".\$this->translate('no_items').\" <a href='/".$arrayjson['name']."/create/'>\".\$this->translate('new_item').\"</a>\"; ";
+    
+    $text .= $sl.$sl.$tab."echo \"<br/><br/><a href='/'>Volver al inicio</a>\"";
+    
   }
 $text .= $sl."?>";
 

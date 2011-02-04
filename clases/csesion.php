@@ -5,7 +5,7 @@ require_once('cusers.php');
 	class Csesion{
 		
 	  private $m_frase = "s3gureTaT";
-		private $m_frase2 = "tok3nitZanT";
+	  private $m_frase2 = "tok3nitZanT";
 		
 		
 		function Csesion(){

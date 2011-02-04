@@ -531,6 +531,11 @@ class Cform_construct
 	  
       $name_obj_mod = split("_", $name_obj);
       
+      if ($name_obj_mod[count($name_obj_mod) - 1] == 'ts'){
+        return $name_obj_mod[count($name_obj_mod) - 1];
+        die();
+      }
+      
       if ($this->get_form_name() == $name_obj_mod[0]."_".$name_obj_mod[1])
         $init = 2;
       else 
@@ -551,20 +556,57 @@ class Cform_construct
 	
 	
 	//TOKENS
-	function validate_token()
-	{
-		$token = isset($_POST['ts']) ? $_POST['ts'] : '';
-		if( $token != md5($this->get_form_name().'t0k3n_ANTI_CSRF'.session_id()) )
-		{
-			loguejar_csrf('',md5($this->get_form_name().'t0k3n_ANTI_CSRF'.session_id()));
-		}
+	function validate_token(){
+	  
+        $token = isset($_POST['ts']) ? $_POST['ts'] : '';
+        
+        if( $token != md5($this->get_form_name().'t0k3n_ANTI_CSRF'.session_id()) ){
+        	$this->loguejar_csrf('',md5($this->get_form_name().'t0k3n_ANTI_CSRF'.session_id()));
+        }
+        
 	}
-	function create_token()
-	{
-		$token = md5($this->get_form_name() . 't0k3n_ANTI_CSRF' . session_id());
-		$csrf = new Cform_input_hidden_field('ts', 'ts', '', '', $token);
-		$this->m_form_object->add_inputs($csrf,$csrf->get_id());
-	}
+	
+    function create_token(){
+    
+      $token = md5($this->get_form_name() . 't0k3n_ANTI_CSRF' . session_id());
+      $csrf = new Cform_hidden('ts', 'ts', '', '', $token);
+      $this->m_form_object->add_inputs($csrf,$csrf->get_id());
+    
+    }
+    
+    function loguejar_csrf($pagina='',$token_real){//[!]intent de jaking (CSRF)
+	
+      	if($pagina=='') $pagina = $this->obtenir_doc_php();
+      	
+      	//primer mirem si esta loguejat
+      	$luser = false;
+      	$ses = new Csesion();
+      	
+      	if($ses->check(true)){
+      		$luser = $ses->get_var_session('username');
+      	}
+      	
+      	echo "<span style='color:red'>Petición incorrecta. Ha habido cambios internos en el formulario</span>";
+      	
+      	$str_msg = "Intento de CSRF en '$pagina'. TOKEN valid = '$token_real'. ".(($luser)?"USERNAME:'".$luser."'":"");
+      	
+      	error_logger($str_msg,'ALERT','HACK');
+      	
+      	exit();
+      }
+      
+      
+      function obtenir_doc_php($url=''){
+        
+      	$php = ($url!='')?$url:htmlentities($_SERVER['PHP_SELF'],ENT_QUOTES);
+      	if(strpos($php,'/')!==false) 
+      	{
+      		$aux = split('/',$php);
+      		$php = $aux[count($aux)-1];
+      	}	
+      	return $php;
+      	
+      }
 	
 
 	

@@ -86,6 +86,15 @@
     copy(PATH_ROOT . "/utils/temp/vtop.php", PATH_ROOT . "/vistas/frontend/top/vtop.php")  ;
     copy(PATH_ROOT . "/utils/temp/vadmin_index.php", PATH_ROOT . "/vistas/backend/main/vadmin_index.php")  ;
     copy(PATH_ROOT . "/utils/temp/.htaccess", PATH_ROOT . "/.htaccess")  ;
+    
+    //borramos las migraciones
+    $archivos =  glob(PATH_ROOT."/bd/migrations/{migration_*}",GLOB_BRACE);
+    
+    foreach ($archivos as $archivo){
+      if ($archivo != PATH_ROOT."/bd/migrations/migration_01_users.sql" )
+        unlink ($archivo);
+    }
+    
   }
   
   if ($send){

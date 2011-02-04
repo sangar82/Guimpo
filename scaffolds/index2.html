@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>jQuery UI Droppable - Shopping Cart Demo</title>
+	<link rel="stylesheet" href="http://www.guimpo.com/css/cupertino/jquery-ui-1.8.9.custom.css?1">
+	<script src="http://www.guimpo.com/js/jquery.js?1"></script>
+	<script src="http://www.guimpo.com/js/jquery-ui-1.8.9.custom.min.js?1"></script>
+
+	<link rel="stylesheet" href="../demos.css">
+	<style>
+
+
+	.demo{
+		width:800px;
+		height:auto;
+		margin:0px auto;
+	}
+	
+	#forms{
+		width:200px;
+		height:auto;
+		float:left;
+	}
+	
+	#forms div, .drops{
+		width:200px;
+		height:50px;
+		line-height:50px;
+		font-family:verdana;
+		padding:5px;
+		text-align:center;
+		font-size:14px;
+		font-weight:bold;
+		display:block;
+		float:left;
+		border:1px #0070A3 solid;
+		color:#0070A3;
+		margin-bottom:5px;
+		cursor:pointer;
+	}
+	
+	#cart { 
+		width: 300px; 
+		float: right; 
+	}
+	
+	/* style the list to maximize the droppable hitarea */
+	#cart ol { 
+		margin: 0;
+		padding: 1em 0 1em 3em; 
+	}	
+	
+	.ui-widget-content{
+	 height:auto;
+	}
+	
+	
+	</style>
+	<script>
+	$(function() {
+		$( "#catalog" ).accordion();
+		$( "#forms div" ).draggable({
+			helper: "clone"
+		});
+		$( "#cart ol" ).droppable({
+			activeClass: "ui-state-default",
+			hoverClass: "ui-state-hover",
+			accept: ":not(.ui-sortable-helper)",
+			drop: function( event, ui ) {
+				$( this ).find( ".placeholder" ).remove();
+				$( "<li class='drops'></li>" ).text( ui.draggable.text() ).appendTo( this );
+			}
+		}).sortable({
+			items: "li:not(.placeholder)",
+			sort: function() {
+				// gets added unintentionally by droppable interacting with sortable
+				// using connectWithSortable fixes this, but doesn't allow you to customize active/hoverClass options
+				$( this ).removeClass( "ui-state-default" );
+			}
+		});
+	});
+	</script>
+</head>
+<body>
+
+<div class="demo">
+	
+	<div id='forms'>
+
+		<div id='text' class='forms_items'>Text</div>
+		<div id='textarea' class='forms_items'>Textarea</div>
+		<div id='select' class='forms_items'>Select</div>
+
+	</div>
+
+<div id="cart">
+
+	<div id='box' class="ui-widget-content">
+		<ol>
+			<li class="placeholder">Add your items here</li>
+		</ol>
+	</div>
+</div>
+
+
+
+</div><!-- End demo -->
+
+
+
+</body>
+</html>
