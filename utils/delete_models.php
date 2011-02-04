@@ -95,12 +95,37 @@
         unlink ($archivo);
     }
     
+    eliminar_recursivo_contenido_de_directorio(PATH_ROOT."/img/uploads");
+    
   }
   
   if ($send){
     echo "<script>document.location = '/utils/delete_models.php'</script>";
   }
 
+  function eliminar_recursivo_contenido_de_directorio($carpeta){
+    
+    $directorio = opendir($carpeta);
+    
+    while ($archivo = readdir($directorio)){
+      
+      if( $archivo !='.' && $archivo !='..' ){ //comprobamos si es un directorio o un archivo
+        
+        if ( is_dir( $carpeta.'/'.$archivo ) ){
+          
+          //si es un directorio, volvemos a llamar a la función para que elimine el contenido del mismo
+          eliminar_recursivo_contenido_de_directorio( $carpeta.'/'.$archivo );
+          rmdir($carpeta.'/'.$archivo); //borrar el directorio cuando esté vacío
+        
+        }
+        else //si no es un directorio, lo borramos
+          unlink($carpeta.'/'.$archivo);
+          
+      }
+    }
+    closedir($directorio);
+  } 
+  
   ?>
 </body>
 </html>

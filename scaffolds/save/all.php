@@ -138,7 +138,24 @@ $scaffold = '{
                                         "size"       : "60", 
                                         "disabled"   : "false", 
                                         "readonly"   : "false",
-                                        "tabindex"   : "0" }
+                                        "tabindex"   : "0" },
+
+	                            "fecha" : {                                        
+                                        "class"         : "datepicker",
+                                        "value"         : "",
+                                        "mandatory"     : "1",
+                                        "type"          : "datepicker",
+                                        "minlength"     : "1",
+                                        "maxlength"     : "60",
+                                        "size"          : "60", 
+                                        "disabled"      : "false", 
+                                        "readonly"      : "false",
+                                        "tabindex"      : "0",
+                                        "multilanguage" : false
+
+                                         }
+																			
+																			
                           }
              }';
 
