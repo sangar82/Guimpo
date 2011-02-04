@@ -84,6 +84,7 @@ $webform = '{
                                         "multilanguage" : false
                                          },
                                          
+<<<<<<< HEAD
                             "descripcion" : {
                                         "class"         : "",
                                         "value"         : "",
@@ -97,6 +98,20 @@ $webform = '{
                                         "readonly"      : "false",
                                         "tabindex"      : "0",
                                         "multilanguage" : true
+=======
+                            "fecha" : {                                        
+                                        "class"         : "datepicker",
+                                        "value"         : "",
+                                        "mandatory"     : "1",
+                                        "type"          : "datepicker",
+                                        "minlength"     : "1",
+                                        "maxlength"     : "60",
+                                        "size"          : "60", 
+                                        "disabled"      : "false", 
+                                        "readonly"      : "false",
+                                        "tabindex"      : "0",
+                                        "multilanguage" : false
+>>>>>>> 7ba14e554f0e04cb7a1e4d94aab9b59e0f6ff6b1
                                          }
 
 
