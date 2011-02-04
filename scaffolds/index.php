@@ -96,7 +96,8 @@ $webform = '{
                                         "disabled"      : "false", 
                                         "readonly"      : "false",
                                         "tabindex"      : "0",
-                                        "multilanguage" : true}
+                                        "multilanguage" : true,
+                                        "ckeditor"      : true}
 
 
                           }
@@ -2416,9 +2417,10 @@ if ( $arrayjson['type'] == 'webform_relational')  {
   
 }
 
-$write_validation = true;
-$only1datapicker = true;
-$writeinfodatapicker = false;
+$write_validation         = true;
+$only1datapicker          = true;
+$writeinfodatapicker    = false;
+$writeckeditor             = false;
 
 //Miramos si hay una imagen para pasarle al validador la special class
 foreach ($arrayjson['campos'] as $index => $value ){
@@ -2478,25 +2480,76 @@ foreach ($arrayjson['campos'] as $index => $value ){
       }
       
       break;
+      
+      
+    case 'textarea':
+      
+      if ( $value['ckeditor']){
+      
+        $writeckeditor  = true;
+        
+        if ( $value['multilanguage']){
+         
+          $ckeditor = $sl.$sl."\$path = PATH_ROOT_INCLUDES;";
+          $ckeditor .= $sl."\$heredoc .=<<< html";
+              $ckeditor .= $sl.$sl.$tab."<script type=\"text/javascript\">";
+              
+                $ckeditor .= $sl.$sl.$tab.$tab."//<![CDATA[";
+                $ckeditor .= $sl.$tab.$tab."window.onload = function(){";
+          
+                  foreach ($array_languages as $item ) {
+                  
+                    $ckeditor .= $sl.$tab.$tab.$tab."CKEDITOR.replace( '".$index."_".$item."', {filebrowserUploadUrl : \"{\$path}ckupload.php\"});";
+                    
+                  }    
+          
+            	 $ckeditor .= $sl.$tab.$tab."} ";  
+                 $ckeditor .= $sl.$tab.$tab." //]]>";
+                
+                $ckeditor .= $sl.$sl.$tab."</script>";
+            
+           $ckeditor .= $sl.$sl."html;";             
+          
+        } else {
 
+          $ckeditor = $sl.$sl."\$path = PATH_ROOT_INCLUDES;";
+          $ckeditor .= $sl.$sl."\$heredoc .=<<< html";
+              $ckeditor .= $sl.$sl.$tab."<script type=\"text/javascript\">";
+              
+                $ckeditor .= $sl.$sl.$tab.$tab."//<![CDATA[";
+                $ckeditor .= $sl.$tab.$tab."window.onload = function(){";
+          
+                  $ckeditor .= $sl.$tab.$tab.$tab."CKEDITOR.replace( '$index', {filebrowserUploadUrl : \"{\$path}ckupload.php\"});";
+
+          	 $ckeditor .= $sl.$tab.$tab."} ";  
+               $ckeditor .= $sl.$tab.$tab." //]]>";
+              
+              $ckeditor .= $sl.$sl.$tab."</script>";
+          
+         $ckeditor .= $sl.$sl."html;";
+             
+        }
+    }
+    break; 
   }
 }
 
 
+
 if ($write_validation){
-  
   $text .=$sl.$sl."//incluimos la validacion por javascript";
   $text .=$sl."\$heredoc = Cutils::get_scripts_heredoc_form_validation(\$array_forms);";
-  
 }
 
 //si existe un datepicker lo ponemos despues de la llamada a heredoc
 if ($writeinfodatapicker){
-  
   $text .= $textdatapicker;
-  
 }
 
+//Si existe un textarea con ckeditor insertamos el javascript
+if ($writeckeditor){
+   $text .= $ckeditor;
+}
 
 $text .=$sl.$sl."\$layout	= new Cpagelayout_backend( \$names_section ); ";
 
@@ -2509,6 +2562,10 @@ $text .=$sl.$sl."\$layout	= new Cpagelayout_backend( \$names_section ); ";
 	$text .=$sl.$tab."if (\$lng != 'en'){";
 	 $text .=$sl.$tab.$tab."\$layout->set_page_js_scripts(array(PATH_ROOT_JS.'ui/jquery.ui.datepicker-'.\$lng.'.js'));";
 	$text .=$sl.$tab."}";
+  }
+  
+  if ($writeckeditor){
+    $text .=$sl.$tab."\$layout->set_page_js_scripts(array(PATH_ROOT_JS.'ckeditor/ckeditor.js'));";
   }
   
   $text .=$sl.$tab."\$layout->set_page_heredoc(\$heredoc);";
@@ -2672,6 +2729,55 @@ foreach ($arrayjson['campos'] as $index => $value ){
       
       break;      
 
+    case 'textarea':
+      
+      if ( $value['ckeditor']){
+      
+        $writeckeditor  = true;
+        
+        if ( $value['multilanguage']){
+         
+          $ckeditor = $sl.$sl."\$path = PATH_ROOT_INCLUDES;";
+          $ckeditor .= $sl."\$heredoc .=<<< html";
+              $ckeditor .= $sl.$sl.$tab."<script type=\"text/javascript\">";
+              
+                $ckeditor .= $sl.$sl.$tab.$tab."//<![CDATA[";
+                $ckeditor .= $sl.$tab.$tab."window.onload = function(){";
+          
+                  foreach ($array_languages as $item ) {
+                  
+                    $ckeditor .= $sl.$tab.$tab.$tab."CKEDITOR.replace( '".$index."_".$item."', {filebrowserUploadUrl : \"{\$path}ckupload.php\"});";
+                    
+                  }    
+          
+            	 $ckeditor .= $sl.$tab.$tab."} ";  
+                 $ckeditor .= $sl.$tab.$tab." //]]>";
+                
+                $ckeditor .= $sl.$sl.$tab."</script>";
+            
+           $ckeditor .= $sl.$sl."html;";             
+          
+        } else {
+
+          $ckeditor = $sl.$sl."\$path = PATH_ROOT_INCLUDES;";
+          $ckeditor .= $sl.$sl."\$heredoc .=<<< html";
+              $ckeditor .= $sl.$sl.$tab."<script type=\"text/javascript\">";
+              
+                $ckeditor .= $sl.$sl.$tab.$tab."//<![CDATA[";
+                $ckeditor .= $sl.$tab.$tab."window.onload = function(){";
+          
+                  $ckeditor .= $sl.$tab.$tab.$tab."CKEDITOR.replace( '$index', {filebrowserUploadUrl : \"{\$path}ckupload.php\"});";
+
+          	 $ckeditor .= $sl.$tab.$tab."} ";  
+               $ckeditor .= $sl.$tab.$tab." //]]>";
+              
+              $ckeditor .= $sl.$sl.$tab."</script>";
+          
+         $ckeditor .= $sl.$sl."html;";
+             
+        }
+    }
+    break; 
       
     default:
       
@@ -2686,10 +2792,14 @@ $text .=$sl."\$heredoc = Cutils::get_scripts_heredoc_form_validation(\$array_for
 
 
 if ($writeinfodatapicker){
-  
   $text .= $textdatapicker;
-  
 }
+
+//Si existe un textarea con ckeditor insertamos el javascript
+if ($writeckeditor){
+   $text .= $ckeditor;
+}
+
 
 $text .=$sl.$sl."\$layout	= new Cpagelayout_backend( \$names_section ); ";
 
@@ -2703,6 +2813,10 @@ $text .=$sl.$sl."\$layout	= new Cpagelayout_backend( \$names_section ); ";
     $text .=$sl.$tab."if (\$lng != 'en'){";
       $text .=$sl.$tab.$tab."\$layout->set_page_js_scripts(array(PATH_ROOT_JS.'ui/jquery.ui.datepicker-'.\$lng.'.js'));";
     $text .=$sl.$tab."}";
+  }
+  
+  if ($writeckeditor){
+    $text .=$sl.$tab."\$layout->set_page_js_scripts(array(PATH_ROOT_JS.'ckeditor/ckeditor.js'));";
   }
   
   $text .=$sl.$tab."\$layout->set_var('form_type', 'edit');";

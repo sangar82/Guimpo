@@ -95,7 +95,11 @@
         unlink ($archivo);
     }
     
+    //borramos las posibles imagenes subidas
     eliminar_recursivo_contenido_de_directorio(PATH_ROOT."/img/uploads");
+    
+    //creamos la carpeta de subidas de ckeditor
+    mkdir(PATH_ROOT."/img/uploads/ckeditor");
     
   }
   
