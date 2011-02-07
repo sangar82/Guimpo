@@ -1,8 +1,0 @@
-*.lock
-*.DS_Store
-*.swp
-*.out
-img/uploads/*.*
-img/uploads/ckeditor/*.*
-log/errors/
-
