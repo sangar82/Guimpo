@@ -274,19 +274,315 @@ $cambios        = ( isset($_REQUEST['cambios']))        ?   $_REQUEST['cambios']
 
 
 if ($scaffold == ""){
+  
+echo "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">";
+echo "<html xmlns=\"http://www.w3.org/1999/xhtml\">";
+
+echo "<head>";
+
+  echo "<meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />";
+  echo "<meta http-equiv='expires' content='1200' />";
+  echo "<meta http-equiv='content-language' content='es' />";
+  echo "<link href='http://www.guimpo.com/css/styles.css?1' rel='stylesheet' type='text/css' />";
+  echo "<link rel='stylesheet' href='http://www.guimpo.com/css/cupertino/jquery-ui-1.8.9.custom.css?1'>";
+  echo "<script language='JavaScript' charset='UTF-8' src='http://www.guimpo.com/js/jquery.js?1'></script>";
+  echo "<script src='http://www.guimpo.com/js/jquery-ui-1.8.9.custom.min.js?1'></script>";
+  echo "<script>$(function() {\$('#examples').accordion({autoHeight: false,navigation: true, collapsible:true, active:false});});</script>";
+  echo "<style>.ui-widget-content{font-size:12px;}</style>";
+  
+echo "</head>";
+
+echo "<body>";
+
+echo "<div  id='cont'>";
+  
   echo "<h3>MVCgenerator</h3>";
+  
   echo "<form method='POST'>";
-    echo "<textarea name='scaffold' cols='155' rows='40'>$toshow</textarea><br />";
-    echo "<b>BD</b><input type='checkbox' name='secuencia' id='secuencia'> <label for='secuencia'>Crear secuencia</label>";
-    echo "&nbsp;&nbsp; <input type='checkbox' name='tabla' id='tabla'> <label for='tabla'>Crear tabla</label>";
-    echo "&nbsp;&nbsp; <input type='checkbox' name='droptabla' id='droptabla'> <label for='droptabla'>Drop tabla</label>";
-    echo "<br><br><input type='checkbox' name='htaccess' id='htaccess'><label for='htaccess'>Modificar htaccess</label>";
-    //echo "&nbsp;&nbsp;<input type='checkbox' name='frontend' id='frontend'><label for='frontend'>Crear en frontend</label>";
-    echo "&nbsp;&nbsp;<input type='checkbox' name='cambios' id='cambios'><label for='cambios'>Cambios en el codigo</label>";
-    echo "&nbsp;&nbsp;<input type='checkbox' name='admin' id='admin'><label for='admin'>Crear en admin</label>";
-    echo "<br /><br /><input type='submit' value='Crear'>";
+  
+    echo "<div style='width:1300px;height:auto;'>";
+  
+      echo "<textarea name='scaffold' cols='100' rows='40' style='float:left;'>$toshow</textarea>";
+      
+      echo "<div id='examples' style='width:300px;float:left;margin-left:30px;'>";
+    ?>
+    
+<h3><a href="#">Text</a></h3>
+<div>
+<pre>
+"name" : {
+  "class"      : "",
+  "value"      : "",
+  "mandatory"  : "1",
+  "type"       : "text",
+  "minlength"  : "1",
+  "maxlength"  : "60",
+  "size"       : "60", 
+  "disabled"   : "false", 
+  "readonly"   : "false",
+  "tabindex"   : "0" }
+</pre>
+</div>
+	
+<h3><a href="#">Textarea</a></h3>
+<div>
+<pre>
+"descripcion" : {
+  "class"      : "",
+  "value"      : "",
+  "mandatory"  : "0",
+  "type"       : "textarea",
+  "cols"       : "57",
+  "rows"       : "8",
+  "minlength"  : "0",
+  "maxlength"  : "500",
+  "disabled"   : "false", 
+  "readonly"   : "false",
+  "tabindex"   : "0" }
+</pre>
+</div>
+
+<h3><a href="#">Textarea with CKeditor</a></h3>
+<div>
+<pre>
+"descripcion" : {
+  "class"         : "",
+  "value"         : "",
+  "mandatory"     : "0",
+  "type"          : "textarea",
+  "cols"          : "57",
+  "rows"          : "8",
+  "minlength"     : "0",
+  "maxlength"     : "500",
+  "disabled"      : "false", 
+  "readonly"      : "false",
+  "tabindex"      : "0",
+  "multilanguage" : true,
+  "ckeditor"      : true}
+</pre>
+</div>	
+	
+<h3><a href="#">Numeric</a></h3>
+<div>
+<pre>
+"cantidad" : {
+  "class"      : "",
+  "value"      : "",
+  "mandatory"  : "1",
+  "type"       : "numeric",
+  "minlength"  : "-4",
+  "maxlength"  : "1000",
+  "size"       : "60", 
+  "disabled"   : "false", 
+  "readonly"   : "false",
+  "tabindex"   : "0" }
+</pre>
+</div>	
+	
+<h3><a href="#">Checkbox</a></h3>
+<div>
+<pre>
+"publico" : {
+  "class"      : "",
+  "value"      : "1",
+  "mandatory"  : "0",
+  "type"       : "checkbox",
+  "checked"    : "false",
+  "disabled"   : "false", 
+  "readonly"   : "false",
+  "tabindex"   : "0"}
+
+</pre>
+</div>	
+	
+<h3><a href="#">Select</a></h3>
+<div>
+<pre>
+"idioma" : {
+  "class"               : "",
+  "mandatory"           : "1",
+  "type"                : "select",
+  "with_language"       : "0",
+  "default_language"    : "es",
+  "with_default_value"  : "1",
+  "lng"                 : "es",
+  "size"                : "1", 
+  "multiple"            : "false", 
+  "disabled"            : "false", 
+  "readonly"            : "false",
+  "tabindex"            : "0", 
+  "options"             : {
+      "castellano" : {
+        "text"      : "Castellano",                                        
+        "selected"  : "true",
+        "value"     : "castellano"}, 
+      "ingles" : {
+        "text"      : "Ingles",                                        
+        "selected"  : "false",
+        "value"     : "ingles"}
+   }
+}
+</pre>
+</div>	
+
+<h3><a href="#">Select from BD</a></h3>
+<div>
+<pre>
+"poblacion" : {                                        
+  "class"               : "",
+  "mandatory"           : "1",
+  "type"                : "selectbd",
+  "with_language"       : "0",
+  "default_language"    : "es",
+  "with_default_value"  : "1",
+  "lng"                 : "es",
+  "size"                : "1", 
+  "multiple"            : "false", 
+  "disabled"            : "false", 
+  "readonly"            : "false",
+  "tabindex"            : "0", 
+  "options"             : {
+    "table" : "poblaciones",
+    "idshow":  "id",
+    "nameshow": "poblacion",
+    "queryoptions": "",
+    "default":""}
+} 
+</pre>
+</div>	
+	
+<h3><a href="#">Radio Buttons</a></h3>
+<div>
+<pre>
+"tipo" : {
+"type"       : "radio",
+"mandatory"  : "0",
+"options"    : {
+
+  "masculino" : {
+  "class"      : "",
+  "value"      : "masculino",                                        
+  "checked"    : "true",
+  "disabled"   : "false", 
+  "readonly"   : "false",
+  "tabindex"   : "0"}, 
+  
+  "femenino" : {
+  "class"      : "",
+  "value"      : "femenino",
+  "checked"    : "false",
+  "disabled"   : "false", 
+  "readonly"   : "false",
+  "tabindex"   : "0"} 
+  }
+} 
+</pre>
+</div>	
+	
+<h3><a href="#">Upload an image</a></h3>
+<div>
+<pre>
+"image" : {
+  "class"      : "",
+  "value"      : "",
+  "mandatory"  : "0",
+  "type"       : "image",
+  "minlength"  : "0",
+  "maxlength"  : "200",
+  "size"       : "60", 
+  "disabled"   : "false", 
+  "readonly"   : "false",
+  "tabindex"   : "0" }
+</pre>
+</div>	
+	
+<h3><a href="#">Upload a file</a></h3>
+<div>
+<pre>
+"file" : {
+  "class"      : "",
+  "value"      : "",
+  "mandatory"  : "0",
+  "extensions" : "pdf,doc",
+  "type"       : "file",
+  "minlength"  : "0",
+  "maxlength"  : "200",
+  "size"       : "60", 
+  "disabled"   : "false", 
+  "readonly"   : "false",
+  "tabindex"   : "0" }
+</pre>
+</div>
+	
+<h3><a href="#">Datepicker</a></h3>
+<div>
+<pre>
+"fecha" : {
+  "class"         : "datepicker",
+  "value"         : "",
+  "mandatory"     : "1",
+  "type"          : "datepicker",
+  "minlength"     : "1",
+  "maxlength"     : "60",
+  "size"          : "60", 
+  "disabled"      : "false", 
+  "readonly"      : "false",
+  "tabindex"      : "0",
+  "multilanguage" : false}
+</pre>
+</div>
+
+<h3><a href="#">Hidden</a></h3>
+<div>
+<pre>
+"post_id" : {
+  "class"      : "",
+  "value"      : "relation_id",
+  "mandatory"  : "1",
+  "type"       : "hidden",
+  "maxlength"  : "200"}
+</pre>
+</div>
+	
+	
+  
+   <?php
+      echo "</div>";
+    
+    echo "</div>";
+    
+    echo "<div style='clear:both;'></div>";
+    
+    echo "<div class='options'>";
+    
+      echo "<b>BD</b><input type='checkbox' name='secuencia' id='secuencia'> <label for='secuencia'>Crear secuencia</label>";
+      
+      echo "&nbsp;&nbsp; <input type='checkbox' name='tabla' id='tabla'> <label for='tabla'>Crear tabla</label>";
+      
+      echo "&nbsp;&nbsp; <input type='checkbox' name='droptabla' id='droptabla'> <label for='droptabla'>Drop tabla</label>";
+      
+      echo "<br><br><input type='checkbox' name='htaccess' id='htaccess'><label for='htaccess'>Modificar htaccess</label>";
+      
+      //echo "&nbsp;&nbsp;<input type='checkbox' name='frontend' id='frontend'><label for='frontend'>Crear en frontend</label>";
+  
+      echo "&nbsp;&nbsp;<input type='checkbox' name='cambios' id='cambios'><label for='cambios'>Cambios en el codigo</label>";
+      
+      echo "&nbsp;&nbsp;<input type='checkbox' name='admin' id='admin'><label for='admin'>Crear en admin</label>";
+      
+      echo "<br /><br /><input type='submit' value='Crear'>";
+    
+    echo "</div>";
+    
   echo "</form>";
+  
+  echo "</div>";
+  
+  echo "</body>";
+  
+  echo "</html>";
+  
   die();
+  
 }
  
 
