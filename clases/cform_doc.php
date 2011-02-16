@@ -21,7 +21,7 @@ class Cform_doc extends Cform_file
 	  
 		Cform_doc::Cform_file($id, $name, $class, $label, $value, $mandatory, "file", $minlenght, $maxlenght, $size);
 		
-		$this->add_class("image");
+		$this->add_class("doc");
 			
 	}
 	

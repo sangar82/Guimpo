@@ -1,0 +1,1 @@
+CREATE TABLE categoria (id INT(9) NOT NULL AUTO_INCREMENT PRIMARY KEY ,name  varchar(60)  DEFAULT '' NOT NULL, dfas  varchar(200)  DEFAULT '' , image_es varchar(200) DEFAULT '' , image_ca varchar(200) DEFAULT '' , image_en varchar(200) DEFAULT '' , stripped varchar(200)  DEFAULT '' , created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,updated TIMESTAMP NOT NULL);

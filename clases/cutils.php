@@ -128,7 +128,8 @@ class Cutils{
 	}
 
 	
-  function get_scripts_heredoc_form_validation($form, $special_class = '', $special_rules = '', $aux = '', $aux2 = '')
+	
+  function get_scripts_heredoc_form_validation($form, $special_class = '', $special_rules = '')
   {
   		$path_js = PATH_ROOT_JS;
   		$path_include = PATH_ROOT_INCLUDES;
@@ -136,296 +137,76 @@ class Cutils{
   		
   		$heredoc = <<< HTML
   		<script src='{$path_include}jquery.validate.php?lng=es' type='text/javascript'></script>
-  		<script>		
+  		<script>	
     			$(document).ready(function(){
 HTML;
-  			  //por cada formulario incluimos su validacion			
-  				foreach ($form as $index => $value)
-  				{
-  				 $heredoc .=  "$('#{$index}').validate($special_rules);";
+  			     //por cada formulario incluimos su validacion			
+  				foreach ($form as $index => $value){
+  				 
+  				  $heredoc .=  "$('#{$index}').validate($special_rules);";
+  				  
   				}
+  				
   				//$heredoc .=  "$('#{$index}').validate({errorLabelContainer: \"#error1\",wrapper: \"li\" });";
   				
-  				if ($special_class)
-  				{
-  					if ($special_class == "image")
-  					{
+                     if ($special_class){
+                       
+                       $heredoc .= "jQuery.validator.addClassRules({";
+  				  
+                       $special_class = explode(",", $special_class);
+                       
+                       foreach ($special_class as $special){
+                         
+                          if ($special == "image"){
   						$heredoc .= <<< HTML
-  							jQuery.validator.addClassRules({
-  							  image: 
-  							  {
+  						      image: {
   							    required: false,
   							    accept: "jpg|jpeg|gif|png"
-  							  }
-  							});
-  		
-  		  			
+  							  },
 HTML;
-  					} else if ($special_class == "requiredimage"){
+  					} else if ($special == "requiredimage"){
   						$heredoc .= <<< HTML
-  							jQuery.validator.addClassRules({
-  							  image: 
-  							  {
+  						       image: {
   							    required: true,
   							    accept: "jpg|jpeg|gif|png"
-  							  }
-  							});
-  		
-  		  			
+  							  },
 HTML;
-  					} else if ($special_class == "doc"){
+  					} else if ($special == "doc"){
   						$heredoc .= <<< HTML
-  							jQuery.validator.addClassRules({
-  							  image: 
-  							  {
+  						       doc: {
   							    required: false,
   							    accept: "doc|pdf"
-  							  }
-  							});
-  		
-  		  			
+  							  },
 HTML;
-  					} else if ($special_class == "requireddoc"){
+  					} else if ($special == "requireddoc"){
   						$heredoc .= <<< HTML
-  							jQuery.validator.addClassRules({
-  							  image: 
-  							  {
+  						       doc: {
   							    required: true,
   							    accept: "doc|pdf"
-  							  }
-  							});
-  		
-  		  			
+  							  },
 HTML;
-  					}
-  					else if ($special_class == "mcalidad")
-  					{
+  					}else if ($special_class == "repassword"){
   						$heredoc .= <<< HTML
-  							jQuery.validator.addClassRules({
-  							  mcalidad:
-  							  {
-  							    required: true,
-  							    accept: "pdf"
-  							  }
-  							});
-  		
-  		  			
-HTML;
-   				
-  					}
-  					else if ($special_class == "planos")
-  					{
-  						$heredoc .= <<< HTML
-  							jQuery.validator.addClassRules({
-  							  mcalidad:
-  							  {
-  							    required: true,
-  							    accept: "pdf|jpg|jpeg|gif|png"
-  							  }
-  							});
-  		
-  		  			
-HTML;
-   				
-  					}
-  					else if ($special_class == "repassword")
-  					{
-  						$heredoc .= <<< HTML
-  							jQuery.validator.addClassRules({
-  							  password_again:
-  							  {
+  							  password_again: {
   							    equalTo: "#password"
-  							  }
-  							});
-  		
-  		  			
+  							  },
 HTML;
    				
   					}
-  					else if ($special_class == "username")
-  					{
-  						$heredoc .= <<< HTML
-  
-  							jQuery.validator.addClassRules({
-  							  user:
-  							  {
-  							  	required: true,
-    								remote: "includes/check_email.php"
-  							  }
-  							});
-  		
-  		  			
-HTML;
-   				
-  					}
-  					else if ($special_class == "referencia_privada")
-  					{
-  						if ($aux)
-  						{
-  							$id_inmueble = "&id_inmueble=$aux";	
-  						}
-  						else 
-  						{
-  							$id_inmueble = "";
-  						}
-  						
-  						if ($aux2)
-  						{
-  							$id_usuario = "?id_usuario=$aux2";	
-  						}
-  						else 
-  						{
-  							$id_usuario = "";
-  						}
-  						
-  						$heredoc .= <<< HTML
-  
-  							jQuery.validator.addClassRules({
-  							  rprivate:
-  							  {
-  							  	required: true,
-    								remote: "includes/check_referencia.php{$id_usuario}{$id_inmueble}"
-  							  }
-  							});
-  		
-  		  			
-HTML;
-   			
-  					}
-  					else if ($special_class == "referencia_privada_promocion")
-  					{
-  						if ($aux)
-  						{
-  							$id_promocion = "&id_promocion=$aux";	
-  						}
-  						else 
-  						{
-  							$id_promocion = "";
-  						}
-  						
-  						if ($aux2)
-  						{
-  							$id_usuario = "?id_usuario=$aux2";	
-  						}
-  						else 
-  						{
-  							$id_usuario = "";
-  						}
-  						
-  						$heredoc .= <<< HTML
-  
-  							jQuery.validator.addClassRules({
-  							  rprivatepromo:
-  							  {
-  							  	required: true,
-    								remote: "includes/check_referencia_promo.php{$id_usuario}{$id_promocion}"
-  							  }
-  							});
-  		
-  		  			
-HTML;
-   				
-  					}
-  					else if ($special_class == "username-repassword")
-  					{
-  						$heredoc .= <<< HTML
-  
-  							jQuery.validator.addClassRules({
-  							  user:
-  							  {
-  							  	required: true,
-    								remote: "includes/check_email.php"
-  							  },
-  							  password_again:
-  							  {
-  							    equalTo: "#new_password"
-  							  }
-  							});
-  		
-  		  			
-HTML;
-   				
-  					}
-  					else if ($special_class == "username-repassword-admin")
-  					{
-  						$heredoc .= <<< HTML
-  
-  							jQuery.validator.addClassRules({
-  							  user:
-  							  {
-  							  	required: true,
-    								remote: "../includes/check_email.php"
-  							  },
-  							  password_again:
-  							  {
-  							    equalTo: "#new_password"
-  							  }
-  							});
-  		
-  		  			
-HTML;
-   				
-  					}
-  					else if ($special_class == "username-repassword-telefono")
-  					{
-  						$heredoc .= <<< HTML
-  
-  							jQuery.validator.addClassRules({
-  							  user:
-  							  {
-  							  	required: true,
-    								remote: "/includes/check_email.php"
-  							  },
-  							  password_again:
-  							  {
-  							    equalTo: "#new_password"
-  							  },
-  							  telf:
-  							  {
-  							 	  digits: true,
-    								remote: "/includes/check_telefono.php"	
-  							  }, 
-  							  telf_alt:
-  							  {
-  							  	digits: true,
-  							  	remote: "/includes/check_telefono.php"
-  							  }
-  							  
-  							});			
-HTML;
-  					}
-  					
-  					else if ($special_class == "repassword-telefono-admin")
-  					{
-  						$heredoc .= <<< HTML
-  
-  							jQuery.validator.addClassRules({
-  							  password_again:
-  							  {
-  							    equalTo: "#new_password"
-  							  },
-  							  telf:
-  							  {
-  							 	  digits: true,
-    								remote: "../includes/check_telefono.php?id_usuario=$aux"	
-  							  }, 
-  							  telf_alt:
-  							  {
-  							  	digits: true,
-  							  	remote: "../includes/check_telefono.php?id_usuario=$aux"
-  							  }
-  							  
-  							});			
-HTML;
-  					}
+                         
+                         
+                       }
+                       $heredoc = substr( $heredoc, 0, -1 );
+                       $heredoc .= "});";
+                       
   				}
   				
   		$heredoc .= "});</script>";
   				
   	return $heredoc;
-  }
-  
-  
+  }	
+	
+
   
 	/**
 	* Devuelve un array con los lenguages de la aplicación definidos en config.php
