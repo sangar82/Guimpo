@@ -44,39 +44,3 @@ RewriteRule ^admin/users/delete/([0-9]+)$ /admin/users/delete/$1/ [R]
 RewriteRule ^admin/users/delete/([0-9]+)/$ /admin/users_actions.php?id=$1&a=delete [QSA,L]
 #Fi Reglas htaccess para usuarios
 
-
-
-#Reglas htaccess para categoria
-RewriteRule ^admin/categoria/create$ /admin/categoria/create/ [R] 
-RewriteRule ^admin/categoria/create/$ /admin/categoria_create.php [QSA,L] 
-
-RewriteRule ^admin/categoria/list$ /admin/categoria/list/ [R] 
-RewriteRule ^admin/categoria/list/$ /admin/categoria_list.php?pag=1 [QSA,L] 
-RewriteRule ^admin/categoria/list/([0-9]+)$ /admin/categoria_list/$1/ [R] 
-RewriteRule ^admin/categoria/list/([0-9]+)/$ /admin/categoria_list.php?pag=$1 [QSA,L] 
-
-RewriteRule ^categoria/list$ /categoria/list/ [R] 
-RewriteRule ^categoria/list/$ /categoria_list.php?pag=1 [QSA,L] 
-RewriteRule ^categoria/list/([0-9]+)$ /categoria_list/$1/ [R] 
-RewriteRule ^categoria/list/([0-9]+)/$ /categoria_list.php?pag=$1 [QSA,L] 
-
-RewriteRule ^admin/categoria/edit$ /admin/categoria/edit/ [R] 
-RewriteRule ^admin/categoria/edit/$ /admin/categoria/list/ [R] 
-RewriteRule ^admin/categoria/edit/([a-z0-9-]+)$ /admin/categoria/edit/$1/ [R] 
-RewriteRule ^admin/categoria/edit/([a-z0-9-]+)/$ /admin/categoria_edit.php?stripped=$1 [QSA,L] 
-
-RewriteRule ^admin/categoria$ /admin/categoria/ [R] 
-RewriteRule ^admin/categoria/$ /admin/categoria/list/ [R] 
-RewriteRule ^admin/categoria/([a-z0-9-]+)$ /admin/categoria/$1/ [R] 
-RewriteRule ^admin/categoria/([a-z0-9-]+)/$ /admin/categoria.php?stripped=$1 [QSA,L] 
-
-RewriteRule ^categoria$ /categoria/ [R] 
-RewriteRule ^categoria/$ /categoria/list/ [R] 
-RewriteRule ^categoria/([a-z0-9-]+)$ /categoria/$1/ [R] 
-RewriteRule ^categoria/([a-z0-9-]+)/$ /categoria.php?stripped=$1 [QSA,L] 
-
-RewriteRule ^admin/categoria/delete$ /admin/categoria/delete/ [R] 
-RewriteRule ^admin/categoria/delete/$ /admin/categoria/list/ [R] 
-RewriteRule ^admin/categoria/delete/([0-9]+)$ /admin/categoria/delete/$1/ [R] 
-RewriteRule ^admin/categoria/delete/([0-9]+)/$ /admin/categoria_actions.php?id=$1&a=delete [QSA,L] 
-#Fin reglas htaccess para categoria
