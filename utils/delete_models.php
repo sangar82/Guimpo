@@ -101,6 +101,10 @@
     //creamos la carpeta de subidas de ckeditor
     mkdir(PATH_ROOT."/img/uploads/ckeditor");
     
+    //copiamos los archivos de ignore
+    copy(PATH_ROOT . "/utils/temp/ignore.txt", PATH_ROOT . "/img/uploads/ignore.txt")  ;
+    copy(PATH_ROOT . "/utils/temp/ignore.txt", PATH_ROOT . "/img/uploads/ckeditor/ignore.txt")  ;
+    
   }
   
   if ($send){

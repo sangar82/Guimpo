@@ -314,6 +314,7 @@ echo "<div  id='cont'>";
   "class"      : "",
   "value"      : "",
   "mandatory"  : "1",
+  "multilanguage" : false,
   "type"       : "text",
   "minlength"  : "1",
   "maxlength"  : "60",
@@ -331,6 +332,7 @@ echo "<div  id='cont'>";
   "class"      : "",
   "value"      : "",
   "mandatory"  : "0",
+  "multilanguage" : false,
   "type"       : "textarea",
   "cols"       : "57",
   "rows"       : "8",
@@ -349,6 +351,7 @@ echo "<div  id='cont'>";
   "class"         : "",
   "value"         : "",
   "mandatory"     : "0",
+  "multilanguage" : false,
   "type"          : "textarea",
   "cols"          : "57",
   "rows"          : "8",
@@ -486,6 +489,7 @@ echo "<div  id='cont'>";
   "class"      : "",
   "value"      : "",
   "mandatory"  : "0",
+  "multilanguage" : false,
   "type"       : "image",
   "minlength"  : "0",
   "maxlength"  : "200",
@@ -503,6 +507,7 @@ echo "<div  id='cont'>";
   "class"      : "",
   "value"      : "",
   "mandatory"  : "0",
+  "multilanguage" : false, 
   "extensions" : "pdf,doc",
   "type"       : "file",
   "minlength"  : "0",
@@ -3260,10 +3265,23 @@ foreach ($arrayjson['campos'] as $index => $value ){
         $special_class = ', \'image\' '; 
       break;
       
+    case 'file':
+      
+      if ( $value['mandatory'])
+        $special_class = ', \'requireddoc\' ';
+      else 
+        $special_class = ', \'doc\' '; 
+        
+      $text .=$sl.$sl."//incluimos la validacion por javascript";
+      $text .=$sl."\$heredoc = Cutils::get_scripts_heredoc_form_validation(\$array_forms $special_class);";
+      
+      $write_validation = false;
+      
+      break;
+      
     case 'datepicker':
       
       if ($only1datapicker){
-        
         
         $textdatapicker =$sl.$sl."//Añadimos las llamadas javascript para mostrar el datapicker";
         $textdatapicker .=$sl."\$lng = Cutils::get_actual_lng();";
