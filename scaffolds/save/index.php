@@ -646,8 +646,6 @@ foreach ($arrayjson['campos'] as $index => $value ){
   switch ($value['type']){
     
     case 'text':
-    case 'image':
-    case 'file':
       
         if ( $value['multilanguage']){
           
@@ -699,6 +697,21 @@ foreach ($arrayjson['campos'] as $index => $value ){
         }
       
       break;    
+
+    case 'image':
+    case 'file':
+        
+        if (DBDRIVER == "postgresql"){  
+          $sql_table .= $index." character varying(".$value['maxlength'].") DEFAULT ''::character varying ";
+        }else if (DBDRIVER == "mysql"){
+          $sql_table .= $index."  varchar(".$value['maxlength'].")  DEFAULT '' ";
+        }
+        
+        if ($value['mandatory'])
+         $sql_table .= "NOT NULL, ";
+        else 
+          $sql_table .= ", ";
+        break;
     
     case 'textarea':
       
@@ -942,8 +955,6 @@ $text .=  "class C".$arrayjson['name']." { ".$sl;
       
       case 'text':
       case 'textarea':
-      case 'image':
-      case 'file':
         
         if ( $value['multilanguage']){
            
@@ -1006,8 +1017,6 @@ $text .=  "class C".$arrayjson['name']." { ".$sl;
         
         case 'text':
         case 'textarea':
-        case 'image':
-        case 'file':
           
           if ( $value['multilanguage']){
            
@@ -1074,8 +1083,6 @@ $text .=  "class C".$arrayjson['name']." { ".$sl;
         
         case 'text':
         case 'textarea':
-        case 'image':
-        case 'file':
           
           if ( $value['multilanguage']){
             
@@ -1135,8 +1142,6 @@ $text .=  "class C".$arrayjson['name']." { ".$sl;
         
         case 'text':
         case 'textarea':
-        case 'image':
-        case 'file':
           
           if ( $value['multilanguage']){
             
@@ -1200,8 +1205,6 @@ $text .=  "class C".$arrayjson['name']." { ".$sl;
       
         case 'text':
         case 'textarea':
-        case 'image':
-        case 'file':
           
           if ( $value['multilanguage']){
             
@@ -1272,8 +1275,6 @@ $text .=  "class C".$arrayjson['name']." { ".$sl;
 
         case 'text':
         case 'textarea':
-        case 'image':
-        case 'file':
           
           $aux = '';
           
@@ -1331,8 +1332,6 @@ $text .=  "class C".$arrayjson['name']." { ".$sl;
           
           case 'text':
           case 'textarea':
-          case 'image':
-          case 'file':
             
             $aux = '';
           
@@ -1419,8 +1418,6 @@ $text .=  "class C".$arrayjson['name']." { ".$sl;
 
       case 'text':
       case 'textarea':
-      case 'image':
-      case 'file':
         
         $aux = '';
         
@@ -1492,22 +1489,8 @@ $text .=  "class C".$arrayjson['name']." { ".$sl;
             break;
             
           case 'image':
-          case 'file':
             
-             if ( $value['multilanguage']){
-              
-              foreach ($array_languages as $item ) {
-                
-                $text .= $sl.$tab.$tab."\$query .= (\$".$index."_".$item." !== '') $tab ? \" ".$index."_".$item."='\$".$index."_".$item."', \" : \"\" ;";
-                
-              }
-              
-             }else{
-            
-                $text .= $sl.$tab.$tab."\$query .= (\$".$index." !== '') $tab ? \"$index='\$$index', \" : \"\" ;";
-                
-             }
-             
+            $text .= $sl.$tab.$tab."\$query .= (\$".$index." !== '') $tab ? \"$index='\$$index', \" : \"\" ;";
             break;
             
           default:
@@ -1572,7 +1555,7 @@ $text .=  "class C".$arrayjson['name']." { ".$sl;
       $text.= $sl.$tab.$tab."\$result = \$con->delete(\$sql);";
       
       
-      $text .= $sl.$sl.$tab.$tab."if (\$result){";
+      $text .= $sl.$sl.$tab.$tab."if (\$result){".$sl;
         
         //Si existe tipo imagen borramos la imagen subida
         foreach ($arrayjson['campos'] as $index => $value ){
@@ -1581,53 +1564,21 @@ $text .=  "class C".$arrayjson['name']." { ".$sl;
 	         
 	           case 'image':
 	             
-	             if ( $value['multilanguage']){ 
-              
-	               $text .= $sl.$sl.$tab.$tab.$tab."//Borramos la imagen i los thumbs";
-	               
-                    foreach ($array_languages as $item ) {
-                
-    	                 
-                      $text .= $sl.$tab.$tab.$tab."Cimagen::delete(\$item['".$index."_".$item."']); ";
-                      
-                    }
-                    
-	             }else{
-	              
-	                 $text .= $sl.$sl.$tab.$tab.$tab."//Borramos la imagen i los thumbs";
-                      $text .= $sl.$tab.$tab.$tab."Cimagen::delete(\$item['$index']); ";
-                      
-	             }
-	             
+	             $text .= $sl.$sl.$tab.$tab.$tab."//Borramos la imagen i los thumbs";
+               $text .= $sl.$tab.$tab.$tab."Cimagen::delete(\$item['image']); ";
 	             break;
 	             
 	           
 	           case 'file':  
-                  
-	             if ( $value['multilanguage']){ 
-              
-                    foreach ($array_languages as $item ) {
-                
-    	                 $text .= $sl.$sl.$tab.$tab.$tab."//Borramos el archivo";
-                      $text .= $sl.$tab.$tab.$tab."Carchivo::delete(\$item['".$index."_".$item."']); ";
-                      
-                    }
-                    
-	             }else{
-	              
-	                 $text .= $sl.$sl.$tab.$tab.$tab."//Borramos el archivo";
-                      $text .= $sl.$tab.$tab.$tab."Carchivo::delete(\$item['$index']); ";
-                      
-	             }
-                  
-                  
+	             $text .= $sl.$sl.$tab.$tab.$tab."//Borramos el archivo";
+               $text .= $sl.$tab.$tab.$tab."Carchivo::delete(\$item['file']); ";
 	           break;
 	             
 	         }
 	           
 	       }
 	       
-        $text .= $sl.$sl.$tab.$tab.$tab."return true; ".$sl.$sl;
+        $text .= $sl.$sl.$tab.$tab.$tab."return true; ".$sl;
         
       $text .= $tab.$tab."}else ".$sl;
         $text .= $tab.$tab.$tab."return false;";
@@ -1650,8 +1601,6 @@ $text .=  "class C".$arrayjson['name']." { ".$sl;
         
           case 'text':
           case 'textarea':
-          case 'image':
-          case 'file':
             
             $aux = '';
             
@@ -1732,8 +1681,6 @@ $text .=  "class C".$arrayjson['name']." { ".$sl;
         
           case 'text':
           case 'textarea':
-          case 'image':
-          case 'file':
             
             $aux = '';
             
@@ -2274,28 +2221,7 @@ $text .= "class Cform_construct_".$arrayjson['name']." extends  Cform_construct 
 	        
 	      
 	      case 'image':
-	        
-	       if ( $value['multilanguage']){
           
-            $text_aux = '';
-            
-              foreach ($array_languages as $item ) {
-	        
-                  $text_aux .= $sl.$sl.$tab.$tab."if (\$this->m_type == 'new'){";
-      	         $text_aux .= $sl.$sl.$tab.$tab.$tab. "\$obj = new Cform_image('".$index."_".$item."',\$this->get_form_name().'_".$index."_".$item."', '', '', '', '".$value['mandatory']."');";
-      	         $text_aux .= $sl.$tab.$tab.$tab."\$this->m_form_object->add_inputs(\$obj,\$obj->get_id());";
-      	        $text_aux .= $sl.$sl.$tab.$tab."}else{";
-      	         $text_aux .= $sl.$sl.$tab.$tab.$tab. "\$obj = new Cform_image('".$index."_".$item."',\$this->get_form_name().'_".$index."_".$item."', '', '', '', '0');";
-      	         $text_aux .= $sl.$tab.$tab.$tab."\$this->m_form_object->add_inputs(\$obj,\$obj->get_id());";
-      	        $text_aux .= $sl.$sl.$tab.$tab."}";
-	          
-	         }
-	         
-	         $text .= $text_aux;
-            
-            
-	       }else{
-	       
 	        $text .= $sl.$sl.$tab.$tab."if (\$this->m_type == 'new'){";
 	         $text .= $sl.$sl.$tab.$tab.$tab. "\$obj = new Cform_image('".$index."',\$this->get_form_name().'_".$index."', '', '', '', '".$value['mandatory']."');";
 	         $text .= $sl.$tab.$tab.$tab."\$this->m_form_object->add_inputs(\$obj,\$obj->get_id());";
@@ -2303,34 +2229,11 @@ $text .= "class Cform_construct_".$arrayjson['name']." extends  Cform_construct 
 	         $text .= $sl.$sl.$tab.$tab.$tab. "\$obj = new Cform_image('".$index."',\$this->get_form_name().'_".$index."', '', '', '', '0');";
 	         $text .= $sl.$tab.$tab.$tab."\$this->m_form_object->add_inputs(\$obj,\$obj->get_id());";
 	        $text .= $sl.$sl.$tab.$tab."}";
-	           
-	       }
-            
 	        break;
 	        
 	       
 	      case 'file':
-
-	       if ( $value['multilanguage']){
           
-            $text_aux = '';
-            
-              foreach ($array_languages as $item ) {
-                
-      	        $text_aux .= $sl.$sl.$tab.$tab."if (\$this->m_type == 'new'){";
-      	         $text_aux .= $sl.$sl.$tab.$tab.$tab. "\$obj = new Cform_doc('".$index."_".$item."',\$this->get_form_name().'_".$index."_".$item."', '', '', '', '".$value['mandatory']."', '".$value['extensions']."');";
-      	         $text_aux .= $sl.$tab.$tab.$tab."\$this->m_form_object->add_inputs(\$obj,\$obj->get_id());";
-      	        $text_aux .= $sl.$sl.$tab.$tab."}else{";
-      	         $text_aux .= $sl.$sl.$tab.$tab.$tab. "\$obj = new Cform_doc('".$index."_".$item."',\$this->get_form_name().'_".$index."_".$item."', '', '', '', '0', '".$value['extensions']."');";
-      	         $text_aux .= $sl.$tab.$tab.$tab."\$this->m_form_object->add_inputs(\$obj,\$obj->get_id());";
-      	        $text_aux .= $sl.$sl.$tab.$tab."}";                
-                
-              }
-              
-              $text .= $text_aux;
-              
-	       }else{
-	       
 	        $text .= $sl.$sl.$tab.$tab."if (\$this->m_type == 'new'){";
 	         $text .= $sl.$sl.$tab.$tab.$tab. "\$obj = new Cform_doc('".$index."',\$this->get_form_name().'_".$index."', '', '', '', '".$value['mandatory']."', '".$value['extensions']."');";
 	         $text .= $sl.$tab.$tab.$tab."\$this->m_form_object->add_inputs(\$obj,\$obj->get_id());";
@@ -2338,9 +2241,6 @@ $text .= "class Cform_construct_".$arrayjson['name']." extends  Cform_construct 
 	         $text .= $sl.$sl.$tab.$tab.$tab. "\$obj = new Cform_doc('".$index."',\$this->get_form_name().'_".$index."', '', '', '', '0', '".$value['extensions']."');";
 	         $text .= $sl.$tab.$tab.$tab."\$this->m_form_object->add_inputs(\$obj,\$obj->get_id());";
 	        $text .= $sl.$sl.$tab.$tab."}";
-	        
-	       }
-	       
 	        break;
 	        
 	       
@@ -2421,41 +2321,15 @@ $text .= "class Cform_construct_".$arrayjson['name']." extends  Cform_construct 
 	           break;
 	           
 	         case 'image':
-	           
-	           if ( $value['multilanguage']){
-            
-	            $text .= $sl.$sl.$tab.$tab.$tab.$tab."//Creamos los objeto imagen";
-	             
-                  foreach ($array_languages as $item ) {
-      	           $text .= $sl.$tab.$tab.$tab.$tab."\$image_$item = new Cimagen(\$this->get_form_name(), 'image', '".$index."_".$item."', '".$arrayjson['name']."');";
-      	           $text .= $sl.$tab.$tab.$tab.$tab."\$ruta_img_$item = \$image_".$item."->get_url_photo_to_save();".$sl;
-                  }
-                  
-	           }else{
-      	           $text .= $sl.$tab.$tab.$tab.$tab."\$image = new Cimagen(\$this->get_form_name(), 'image', '$index', '".$arrayjson['name']."');";
-      	           $text .= $sl.$tab.$tab.$tab.$tab."\$ruta_img = \$image->get_url_photo_to_save();";
-	           }
+	           $text .= $sl.$sl.$tab.$tab.$tab.$tab."//Creamos el objeto imagen";
+	           $text .= $sl.$tab.$tab.$tab.$tab."\$image = new Cimagen(\$this->get_form_name(), 'image', '', '".$arrayjson['name']."');";
+	           $text .= $sl.$tab.$tab.$tab.$tab."\$ruta_img = \$image->get_url_photo_to_save();";
 	           break;
 
 	         case 'file':
-	           
-	           if ( $value['multilanguage']){
-            
-                  foreach ($array_languages as $item ) {
-                                       
-      	           $text .= $sl.$sl.$tab.$tab.$tab.$tab."//Creamos el objeto file";
-      	           $text .= $sl.$tab.$tab.$tab.$tab."\$archivo_$item = new Carchivo(\$this->get_form_name(), 'file', '".$index."_".$item."', '".$arrayjson['name']."');";
-      	           $text .= $sl.$tab.$tab.$tab.$tab."\$ruta_archivo_$item = \$archivo_".$item."->get_url_photo_to_save();".$sl;
-                    
-                  }
-                  
-	           }else{
-	             
-      	           $text .= $sl.$sl.$tab.$tab.$tab.$tab."//Creamos el objeto file";
-      	           $text .= $sl.$tab.$tab.$tab.$tab."\$archivo = new Carchivo(\$this->get_form_name(), 'file', '$index', '".$arrayjson['name']."');";
-      	           $text .= $sl.$tab.$tab.$tab.$tab."\$ruta_archivo = \$archivo->get_url_photo_to_save();";
-      	           
-	           }
+	           $text .= $sl.$sl.$tab.$tab.$tab.$tab."//Creamos el objeto file";
+	           $text .= $sl.$tab.$tab.$tab.$tab."\$archivo = new Carchivo(\$this->get_form_name(), 'file', '', '".$arrayjson['name']."');";
+	           $text .= $sl.$tab.$tab.$tab.$tab."\$ruta_archivo = \$archivo->get_url_photo_to_save();";
 	           break;
 	           
 	         
@@ -2463,16 +2337,16 @@ $text .= "class Cform_construct_".$arrayjson['name']." extends  Cform_construct 
 	       
 			  }
 				
-      $text .= $sl.$sl.$tab.$tab.$tab.$tab."if (\$this->m_type == 'new'){";
-  
-	$text .= $sl.$sl.$tab.$tab.$tab.$tab.$tab ."//creamos el objeto cusers";
-	$text .= $sl.$tab.$tab.$tab.$tab.$tab ."\$newitem = new C".$arrayjson['name']."('', ";
-	
-	foreach ($arrayjson['campos'] as $index => $value ){
-  
-	  switch ($value['type']){
-	    
-		  case 'text':
+				$text .= $sl.$sl.$tab.$tab.$tab.$tab."if (\$this->m_type == 'new'){";
+				  
+  				$text .= $sl.$sl.$tab.$tab.$tab.$tab.$tab ."//creamos el objeto cusers";
+  				$text .= $sl.$tab.$tab.$tab.$tab.$tab ."\$newitem = new C".$arrayjson['name']."('', ";
+  				
+  				foreach ($arrayjson['campos'] as $index => $value ){
+          
+  				  switch ($value['type']){
+  				    
+    				  case 'text':
               case 'textarea':
               
                 $aux = '';
@@ -2483,39 +2357,19 @@ $text .= "class Cform_construct_".$arrayjson['name']." extends  Cform_construct 
                     $text .= "\$item['".$index."_".$item."'], ";
                   }
                   
-      		  } else {
-      		    $text .= "\$item['$index'], ";
-      		  }
-      		  
-      		  break;
-      		  
+      				  } else {
+      				    $text .= "\$item['$index'], ";
+      				  }
+      				  
+      				  break;
+      				  
               case 'image':
-                
-                if ( $value['multilanguage']){
-      				    
-                  foreach ($array_languages as $item ) {
-                    $text .= "\$ruta_img_$item, ";
-                  }
-                  
-                }else{
-                  $text .= "\$ruta_img, ";
-                }
-                
+                $text .= "\$ruta_img, ";
                 break;
 
                 
               case 'file':
-                
-                if ( $value['multilanguage']){
-      				    
-                  foreach ($array_languages as $item ) {
-                    $text .= "\$ruta_archivo_$item, ";
-                  }
-                  
-                }else{
-                  $text .= "\$ruta_archivo, ";
-                }
-
+                $text .= "\$ruta_archivo, ";
                 break;
                 
               
@@ -2600,59 +2454,28 @@ $text .= "class Cform_construct_".$arrayjson['name']." extends  Cform_construct 
   				$text .= $sl.$tab.$tab.$tab.$tab.$tab ."if (\$newitem->save()){";
   				
   				
-        foreach ($arrayjson['campos'] as $index => $value ){
+  				foreach ($arrayjson['campos'] as $index => $value ){
 	    
   	       switch ($value['type']){
   	         
   	         case 'image':
   	           
-  	           if ( $value['multilanguage']){
-      				    
-  	             $text .= $sl.$sl.$tab.$tab.$tab.$tab.$tab.$tab ."//Subimos la imagen y creamos el thumb";
-  	             
-                  foreach ($array_languages as $item ) {
-                    
-      	           $text .= $sl.$tab.$tab.$tab.$tab.$tab.$tab ."\$result = \$image_".$item."->move();";
-      	           $text .= $sl.$tab.$tab.$tab.$tab.$tab.$tab ."if (\$result['correct'])";
-      	           $text .= $sl.$tab.$tab.$tab.$tab.$tab.$tab.$tab."\$image_".$item."->do_thumbnail();".$sl;                    
-                    
-                  }
-                  
-  	           }else{
-  	           
   	           $text .= $sl.$sl.$tab.$tab.$tab.$tab.$tab.$tab ."//Subimos la imagen y creamos el thumb";
   	           $text .= $sl.$tab.$tab.$tab.$tab.$tab.$tab ."\$result = \$image->move();";
   	           $text .= $sl.$tab.$tab.$tab.$tab.$tab.$tab ."if (\$result['correct'])";
   	           $text .= $sl.$tab.$tab.$tab.$tab.$tab.$tab.$tab."\$image->do_thumbnail();";
-  	           
-  	           }
   	           break;
 
   	         case 'file':
   	           
-  	           if ( $value['multilanguage']){
-      			
-  	             $text .= $sl.$sl.$tab.$tab.$tab.$tab.$tab.$tab ."//Subimos los archivo";
-  	             	    
-                  foreach ($array_languages as $item ) {
-                    
-      	           $text .= $sl.$tab.$tab.$tab.$tab.$tab.$tab ."\$result = \$archivo_".$item."->move();".$sl;
-                    
-                  }
-                  
-  	           }else{
-  	           
-      	           $text .= $sl.$sl.$tab.$tab.$tab.$tab.$tab.$tab ."//Subimos el archivo";
-      	           $text .= $sl.$tab.$tab.$tab.$tab.$tab.$tab ."\$result = \$archivo->move();";
-  	           
-  	           }
-  	           
+  	           $text .= $sl.$sl.$tab.$tab.$tab.$tab.$tab.$tab ."//Subimos el archivo";
+  	           $text .= $sl.$tab.$tab.$tab.$tab.$tab.$tab ."\$result = \$archivo->move();";
   	           break;
   	           
   	       }
   				}
   				
-  			   $text .= $sl.$sl.$tab.$tab.$tab.$tab.$tab.$tab ."\$this->set_info_action_form_success('Item guardado correctamente', 0); ".$sl;
+  			   $text .= $sl.$sl.$tab.$tab.$tab.$tab.$tab.$tab ."\$this->set_info_action_form_success('Item guardado correctamente', 0); ";
   				$text .= $sl.$tab.$tab.$tab.$tab.$tab ."}else {";
   				  $text .= $sl.$tab.$tab.$tab.$tab.$tab.$tab ."\$this->set_info_action_form_failed('Error creando el item', 0); ";
   				$text .= $sl.$tab.$tab.$tab.$tab.$tab ."}";
@@ -2672,50 +2495,18 @@ $text .= "class Cform_construct_".$arrayjson['name']." extends  Cform_construct 
 
 			    switch ($value['type']){
 			      
-                        case 'image':
-                          
-                          if ( $value['multilanguage']){
-  	             	    
-                            foreach ($array_languages as $item ) {
-                              
-                              $text .= $sl.$sl.$tab.$tab.$tab.$tab.$tab."//Si hay una imagen nueva borramos la anterior";
-      				    $text .= $sl.$tab.$tab.$tab.$tab.$tab."if (\$ruta_img_$item){";
-      				    $text .= $sl.$sl.$tab.$tab.$tab.$tab.$tab.$tab."Cimagen::delete(Cimagen::get_ruta_from_database('".$arrayjson['name']."', \$item['item_id'], '".$index."_".$item."'));";
-      				    $text .= $sl.$sl.$tab.$tab.$tab.$tab.$tab."}";
-      				    
-                            }
-                            
-                          }else{
-                          
-                              $text .= $sl.$sl.$tab.$tab.$tab.$tab.$tab."//Si hay una imagen nueva borramos la anterior";
-      				    $text .= $sl.$tab.$tab.$tab.$tab.$tab."if (\$ruta_img){";
-      				    $text .= $sl.$sl.$tab.$tab.$tab.$tab.$tab.$tab."Cimagen::delete(Cimagen::get_ruta_from_database('".$arrayjson['name']."', \$item['item_id'], '$index'));";
-      				    $text .= $sl.$sl.$tab.$tab.$tab.$tab.$tab."}";
-    				    
-                          }
+              case 'image':
+                $text .= $sl.$sl.$tab.$tab.$tab.$tab.$tab."//Si hay una imagen nueva borramos la anterior";
+    				    $text .= $sl.$tab.$tab.$tab.$tab.$tab."if (\$ruta_img){";
+    				    $text .= $sl.$sl.$tab.$tab.$tab.$tab.$tab.$tab."Cimagen::delete(Cimagen::get_ruta_from_id('".$arrayjson['name']."', \$item['item_id']));";
+    				    $text .= $sl.$sl.$tab.$tab.$tab.$tab.$tab."}";
     				    break;
 
     				  case 'file':
-    				    
-    				     if ( $value['multilanguage']){
-  	             	    
-                            foreach ($array_languages as $item ) {
-                              
-                              $text .= $sl.$sl.$tab.$tab.$tab.$tab.$tab."//Si hay un archivo borramos el anterior";
-      				    $text .= $sl.$tab.$tab.$tab.$tab.$tab."if (\$ruta_archivo_$item){";
-      				    $text .= $sl.$sl.$tab.$tab.$tab.$tab.$tab.$tab."Carchivo::delete(Carchivo::get_ruta_from_database('".$arrayjson['name']."', \$item['item_id'], '".$index."_".$item."'));";
-      				    $text .= $sl.$sl.$tab.$tab.$tab.$tab.$tab."}";
-                              
-                            }
-                            
-    				     }else{
-    				     
-                              $text .= $sl.$sl.$tab.$tab.$tab.$tab.$tab."//Si hay un archivo borramos el anterior";
-      				    $text .= $sl.$tab.$tab.$tab.$tab.$tab."if (\$ruta_archivo){";
-      				    $text .= $sl.$sl.$tab.$tab.$tab.$tab.$tab.$tab."Carchivo::delete(Carchivo::get_ruta_from_database('".$arrayjson['name']."', \$item['item_id'], '$index'));";
-      				    $text .= $sl.$sl.$tab.$tab.$tab.$tab.$tab."}";
-    				    
-    				     }
+                $text .= $sl.$sl.$tab.$tab.$tab.$tab.$tab."//Si hay un archivo borramos el anterior";
+    				    $text .= $sl.$tab.$tab.$tab.$tab.$tab."if (\$ruta_archivo){";
+    				    $text .= $sl.$sl.$tab.$tab.$tab.$tab.$tab.$tab."Carchivo::delete(Carchivo::get_ruta_from_id('".$arrayjson['name']."', \$item['item_id']));";
+    				    $text .= $sl.$sl.$tab.$tab.$tab.$tab.$tab."}";
     				    break;
                 
             }
@@ -2751,30 +2542,12 @@ $text .= "class Cform_construct_".$arrayjson['name']." extends  Cform_construct 
                 
               case 'image':
                 
-                if ( $value['multilanguage']){
-      				    
-                  foreach ($array_languages as $item ) {
-                    $text .= "\$ruta_img_$item, ";
-                  }
-                  
-                }else{
-                  $text .= "\$ruta_img, ";
-                }
-                
+                $text .= "\$ruta_img, ";
                 break;
 
               case 'file':
-
-                if ( $value['multilanguage']){
-      				    
-                  foreach ($array_languages as $item ) {
-                    $text .= "\$ruta_archivo_$item, ";
-                  }
-                  
-                }else{
-                  $text .= "\$ruta_archivo, ";
-                }
-                                
+                
+                $text .= "\$ruta_archivo, ";
                 break;
                 
                 
@@ -2804,53 +2577,20 @@ $text .= "class Cform_construct_".$arrayjson['name']." extends  Cform_construct 
               
   				    case 'image':
   				      
-  				      
-              			if ( $value['multilanguage']){
-                  				    
-              	             $text .= $sl.$sl.$tab.$tab.$tab.$tab.$tab.$tab ."//Subimos la imagen y creamos el thumb";
-              	             
-                              foreach ($array_languages as $item ) {
-                                
-                  	           $text .= $sl.$tab.$tab.$tab.$tab.$tab.$tab ."\$result = \$image_".$item."->move();";
-                  	           $text .= $sl.$tab.$tab.$tab.$tab.$tab.$tab ."if (\$result['correct'])";
-                  	           $text .= $sl.$tab.$tab.$tab.$tab.$tab.$tab.$tab."\$image_".$item."->do_thumbnail();".$sl;                    
-                                
-                              }
-                              
-              	           }else{
-              	           
-              	           $text .= $sl.$sl.$tab.$tab.$tab.$tab.$tab.$tab ."//Subimos la imagen y creamos el thumb";
-              	           $text .= $sl.$tab.$tab.$tab.$tab.$tab.$tab ."\$result = \$image->move();";
-              	           $text .= $sl.$tab.$tab.$tab.$tab.$tab.$tab ."if (\$result['correct'])";
-              	           $text .= $sl.$tab.$tab.$tab.$tab.$tab.$tab.$tab."\$image->do_thumbnail();";
-              	           
-              	           }
-  				      
-  				      			      
+      				  $text .= $sl.$sl.$tab.$tab.$tab.$tab.$tab.$tab."//Subimos la imagen y creamos el thumb";
+      				  $text .= $sl.$tab.$tab.$tab.$tab.$tab.$tab."\$result = \$image->move();";
+      				  $text .= $sl.$sl.$tab.$tab.$tab.$tab.$tab.$tab."if (\$result['correct'])";
+      				  $text .= $sl.$tab.$tab.$tab.$tab.$tab.$tab.$tab."\$image->do_thumbnail();";  				      
   				      break;
   				      
   				    
   				    case 'file':
   				      
-                	           if ( $value['multilanguage']){
-                    			
-                	             $text .= $sl.$sl.$tab.$tab.$tab.$tab.$tab.$tab ."//Subimos los archivo";
-                	             	    
-                                foreach ($array_languages as $item ) {
-                                  
-                    	           $text .= $sl.$tab.$tab.$tab.$tab.$tab.$tab ."\$result = \$archivo_".$item."->move();".$sl;
-                                  
-                                }
-                                
-                	           }else{
-                	           
-                    	           $text .= $sl.$sl.$tab.$tab.$tab.$tab.$tab.$tab ."//Subimos el archivo";
-                    	           $text .= $sl.$tab.$tab.$tab.$tab.$tab.$tab ."\$result = \$archivo->move();";
-                	           
-                	           }
+                $text .= $sl.$sl.$tab.$tab.$tab.$tab.$tab.$tab."//Subimos el archivo";
+      				  $text .= $sl.$tab.$tab.$tab.$tab.$tab.$tab."\$result = \$archivo->move();";
   				      break;
   				    
-                       } 
+            }
 
 				    
   				}
@@ -3801,8 +3541,6 @@ $text .= $sl.$sl."echo \"<table class='formtable'>\";";
     
     case 'text':
     case 'textarea':
-    case 'image':
-    case 'file':
       
       if ( $value['multilanguage']){
       
@@ -3872,62 +3610,23 @@ $text .= $sl.$sl."echo \"<table class='formtable'>\";";
  
  //mostramos la foto si existe un campo image 
  foreach ($arrayjson['campos'] as $index => $value ){
-   
    if ($value['type'] == 'image'){
        
-     
-        if ( $value['multilanguage']){
-      
-          foreach ($array_languages as $item ) {
-            
-             $text .= $sl.$sl.$tab.$tab.$tab."if (\$this->get_var('form_type') == 'edit'){ ";
-               $text .= $sl.$tab.$tab.$tab.$tab."echo \"<tr>\";";
-               $text .= $sl.$tab.$tab.$tab.$tab.$tab."echo \"<td>\".\$this->translate('image_actual').\" ($item)</td>\";";
-               $text .= $sl.$tab.$tab.$tab.$tab.$tab."echo \"<td><br /><br /><img src='\".Cimagen::get_thumbnail(PATH_ROOT_UPLOADS.Cimagen::get_ruta_from_database(\$this->get_var('table'), \$this->get_var('id'), '".$index."_$item')).\"' border='0'></td>\"; ";
-               $text .= $sl.$tab.$tab.$tab.$tab."echo \"</tr>\";";
-             $text .= $sl.$tab.$tab.$tab."}  ";  
-            
-          }
-         
-        }else{
-          
-        
-        $text .= $sl.$sl.$tab.$tab.$tab."if (\$this->get_var('form_type') == 'edit'){ ";
-           $text .= $sl.$tab.$tab.$tab.$tab."echo \"<tr>\";";
-           $text .= $sl.$tab.$tab.$tab.$tab.$tab."echo \"<td>\".\$this->translate('image_actual').\"</td>\";";
-           $text .= $sl.$tab.$tab.$tab.$tab.$tab."echo \"<td><br /><br /><img src='\".Cimagen::get_thumbnail(PATH_ROOT_UPLOADS.Cimagen::get_ruta_from_database(\$this->get_var('table'), \$this->get_var('id'), '$index')).\"' border='0'></td>\"; ";
-           $text .= $sl.$tab.$tab.$tab.$tab."echo \"</tr>\";";
-         $text .= $sl.$tab.$tab.$tab."}  ";  
+      $text .= $sl.$sl.$tab.$tab.$tab."if (\$this->get_var('form_type') == 'edit'){ ";
+         $text .= $sl.$tab.$tab.$tab.$tab."echo \"<tr>\";";
+         $text .= $sl.$tab.$tab.$tab.$tab.$tab."echo \"<td>\".\$this->translate('image_actual').\"</td>\";";
+         $text .= $sl.$tab.$tab.$tab.$tab.$tab."echo \"<td><br /><br /><img src='\".Cimagen::get_thumbnail(PATH_ROOT_UPLOADS.Cimagen::get_ruta_from_id(\$this->get_var('table'), \$this->get_var('id'))).\"' border='0'></td>\"; ";
+         $text .= $sl.$tab.$tab.$tab.$tab."echo \"</tr>\";";
+       $text .= $sl.$tab.$tab.$tab."}  ";  
        
-       }
-       
-   }
-   
-   if ($value['type'] == 'file'){
+   }if ($value['type'] == 'file'){
 
-      if ( $value['multilanguage']){
-      
-        foreach ($array_languages as $item ) {
-                   
-         $text .= $sl.$sl.$tab.$tab.$tab."if (\$this->get_var('form_type') == 'edit'){ ";
-           $text .= $sl.$tab.$tab.$tab.$tab."echo \"<tr>\";";
-           $text .= $sl.$tab.$tab.$tab.$tab.$tab."echo \"<td>\".\$this->translate('file_actual').\" ($item)</td>\";";
-           $text .= $sl.$tab.$tab.$tab.$tab.$tab."echo \"<td>\".Carchivo::show_file(Carchivo::get_ruta_from_database(\$this->get_var('table'), \$this->get_var('id'), '".$index."_$item')).\"</td>\"; ";
-           $text .= $sl.$tab.$tab.$tab.$tab."echo \"</tr>\";";
-         $text .= $sl.$tab.$tab.$tab."}  ";      
-          
-        }
-        
-      }else{
-     
-        $text .= $sl.$sl.$tab.$tab.$tab."if (\$this->get_var('form_type') == 'edit'){ ";
-           $text .= $sl.$tab.$tab.$tab.$tab."echo \"<tr>\";";
-           $text .= $sl.$tab.$tab.$tab.$tab.$tab."echo \"<td>\".\$this->translate('file_actual').\"</td>\";";
-           $text .= $sl.$tab.$tab.$tab.$tab.$tab."echo \"<td>\".Carchivo::show_file(Carchivo::get_ruta_from_database(\$this->get_var('table'), \$this->get_var('id'),  '$index')).\"</td>\"; ";
-           $text .= $sl.$tab.$tab.$tab.$tab."echo \"</tr>\";";
-         $text .= $sl.$tab.$tab.$tab."}  ";      
-       
-      } 
+      $text .= $sl.$sl.$tab.$tab.$tab."if (\$this->get_var('form_type') == 'edit'){ ";
+         $text .= $sl.$tab.$tab.$tab.$tab."echo \"<tr>\";";
+         $text .= $sl.$tab.$tab.$tab.$tab.$tab."echo \"<td>\".\$this->translate('file_actual').\"</td>\";";
+         $text .= $sl.$tab.$tab.$tab.$tab.$tab."echo \"<td>\".Carchivo::show_file(Carchivo::get_ruta_from_id(\$this->get_var('table'), \$this->get_var('id'))).\"</td>\"; ";
+         $text .= $sl.$tab.$tab.$tab.$tab."echo \"</tr>\";";
+       $text .= $sl.$tab.$tab.$tab."}  ";       
    }
  }
 
@@ -4086,21 +3785,13 @@ $text .= $sl.$sl."if (\$items){";
               
             case 'image':
               
-              if ( $value['multilanguage']){
-                $aux_text_img .= $sl.$tab.$tab.$tab.$tab."echo \"<td>\".Cimagen::show_thumbnail(\$item['".$index."_'.Cutils::get_actual_lng()]).\"</td>\"; ";
-              }else{
-                $aux_text_img .= $sl.$tab.$tab.$tab.$tab."echo \"<td>\".Cimagen::show_thumbnail(\$item['$index']).\"</td>\"; ";  
-              }
-              
+              $aux_text_img .= $sl.$tab.$tab.$tab.$tab."echo \"<td>\".Cimagen::show_thumbnail(\$item['$index']).\"</td>\"; ";
               break;
               
               
             case 'file':
-              if ( $value['multilanguage']){
-                $aux_text_img .= $sl.$tab.$tab.$tab.$tab."echo \"<td>\".Carchivo::show_file(\$item['".$index."_'.Cutils::get_actual_lng()]).\"</td>\"; ";
-              }else{
-                $aux_text_img .= $sl.$tab.$tab.$tab.$tab."echo \"<td>\".Carchivo::show_file(\$item['$index']).\"</td>\"; ";
-              }
+              
+              $aux_text_img .= $sl.$tab.$tab.$tab.$tab."echo \"<td>\".Carchivo::show_file(\$item['$index']).\"</td>\"; ";
               break;
 
             case 'datepicker':
@@ -4268,30 +3959,14 @@ foreach ($arrayjson['campos'] as $index => $value ){
       
     case 'image':
       
-        if ( $value['multilanguage']){
-          
-          $text .= $sl."echo \"<b>".ucfirst($index)." :</b> \".Cimagen::show_thumbnail(\$item['".$index."_'.Cutils::get_actual_lng()]).\" <br /><br /> \"; ";   
-        
-        }else{
-
-          $text .= $sl."echo \"<b>".ucfirst($index)." :</b> \".Cimagen::show_thumbnail(\$item['$index']).\" <br /><br /> \"; ";   
-          
-        }
+        $text .= $sl."echo \"<b>".ucfirst($index)." :</b> \".Cimagen::show_thumbnail(\$item['$index']).\" <br /><br /> \"; ";  
         
       break;
 
       
     case 'file':
-
-        if ( $value['multilanguage']){      
-        
-          $text .= $sl."echo \"<b>".ucfirst($index)." :</b> \".Carchivo::show_file(\$item['".$index."_'.Cutils::get_actual_lng()]).\" <br /><br /> \"; ";  
-        
-        }else{
-          
-          $text .= $sl."echo \"<b>".ucfirst($index)." :</b> \".Carchivo::show_file(\$item['$index']).\" <br /><br /> \"; ";  
-          
-        }
+      
+        $text .= $sl."echo \"<b>".ucfirst($index)." :</b> \".Carchivo::show_file(\$item['$index']).\" <br /><br /> \"; ";  
         
       break;
       

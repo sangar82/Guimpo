@@ -22,28 +22,32 @@ class Carchivo{
     $this->m_form_name = $form_name;
     
     
-    if(isset($_FILES[$this->m_form_name.'_'.$type])){
+    if(isset($_FILES[$this->m_form_name.'_'.$nombre])){
       
       $this->m_type = $type;
       
-      $this->m_archivo_type = $_FILES[$this->m_form_name.'_'.$type]['type'];
+      $this->m_archivo_type = $_FILES[$this->m_form_name.'_'.$nombre]['type'];
       
-      $this->m_size = $_FILES[$this->m_form_name.'_'.$type]['size'];
+      $this->m_size = $_FILES[$this->m_form_name.'_'.$nombre]['size'];
       
-      $this->m_tmp_name = $_FILES[$this->m_form_name.'_'.$type]['tmp_name'];
+      $this->m_tmp_name = $_FILES[$this->m_form_name.'_'.$nombre]['tmp_name'];
       
-      $this->m_error = $_FILES[$this->m_form_name.'_'.$type]['error'];
+      $this->m_error = $_FILES[$this->m_form_name.'_'.$nombre]['error'];
       
-      $x = explode('.',$_FILES[$this->m_form_name.'_'.$type]['name']);
+      $x = explode('.',$_FILES[$this->m_form_name.'_'.$nombre]['name']);
       $this->m_extensio = $x[Count($x)-1];
      
       
       if ($type == 'image'){
         
+        $this->m_name = mktime().rand(1,1000);
+        
+        /*
         if ($nombre == '')
           $this->m_name = mktime().rand(1,1000);
         else 
           $this->m_name = $nombre;
+        */
           
       }else if ($type == 'file'){
         
@@ -56,7 +60,7 @@ class Carchivo{
       $this->m_folder = $folder;
            
     }else{
-      $this->m_no_photo;
+      //$this->m_no_photo = true;
       error_logger("no entra al constructor de archivo".var_export($_FILES, true),'ERROR');
     }
     
@@ -131,6 +135,22 @@ class Carchivo{
       return false;
     
   }
+  
+  
+    static function get_ruta_from_database($table, $id, $column){
+    
+    $con = new cdatabase(array('host'=>HOST, 'user'=>USER, 'dbname'=>DBNAME, 'password'=>PASSWORD), DBDRIVER );
+    
+    $sql = "SELECT $column FROM $table WHERE id=$id";
+    
+    $result = $con->fetch_one_result($sql);
+    
+    if ($result)
+      return $result[$column];
+    else 
+      return false;
+    
+    }
   
   
   static function show_file($ruta) {

@@ -4,8 +4,8 @@ require_once('cusers.php');
 
 	class Csesion{
 		
-	  private $m_frase = "s3gureTaT";
-	  private $m_frase2 = "tok3nitZanT";
+	  private $m_frase = "s3gurwEraE@fe343r33eTaT";
+	  private $m_frase2 = "tok3nitZanT@rSDF334fd#qw|323";
 		
 		
 		function Csesion(){
@@ -241,6 +241,27 @@ require_once('cusers.php');
 			}
 			
 			return $correct;
+		}
+		
+		
+		static function redirect_if_bad_token(){
+		  
+		  if (isset($_REQUEST['ts'])){
+		    
+		    $correct = $_REQUEST['ts'] == $_SESSION['token_csrf'];
+		    
+		  }else{
+		    
+		    $correct = false;
+		    
+		  }
+		  
+		  if (!$correct){
+		    
+		    echo "<span style='color:red'>Petición incorrecta. Ha habido cambios internos en el formulario</span>";die();
+		    
+		  }
+		  
 		}
 
 		
