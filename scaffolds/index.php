@@ -2983,6 +2983,9 @@ $only1datapicker          = true;
 $writeinfodatapicker    = false;
 $writeckeditor             = false;
 
+
+$specials_validations = array();
+
 //Miramos si hay una imagen para pasarle al validador la special class
 foreach ($arrayjson['campos'] as $index => $value ){
   
@@ -2991,12 +2994,10 @@ foreach ($arrayjson['campos'] as $index => $value ){
     case 'image':
       
       if ( $value['mandatory'])
-        $special_class = ', \'requiredimage\' ';
+        $special_class =  array_push($specials_validations, "requiredimage");
       else 
-        $special_class = ', \'image\' '; 
-        
-      $text .=$sl.$sl."//incluimos la validacion por javascript";
-      $text .=$sl."\$heredoc = Cutils::get_scripts_heredoc_form_validation(\$array_forms $special_class);";
+        $special_class = array_push($specials_validations, "image"); 
+ 
       
       $write_validation = false;
       
@@ -3006,12 +3007,10 @@ foreach ($arrayjson['campos'] as $index => $value ){
     case 'file':
       
       if ( $value['mandatory'])
-        $special_class = ', \'requireddoc\' ';
+        $special_class = array_push($specials_validations, "requireddoc");
       else 
-        $special_class = ', \'doc\' '; 
+        $special_class = array_push($specials_validations, "doc"); 
         
-      $text .=$sl.$sl."//incluimos la validacion por javascript";
-      $text .=$sl."\$heredoc = Cutils::get_scripts_heredoc_form_validation(\$array_forms $special_class);";
       
       $write_validation = false;
       
@@ -3100,6 +3099,9 @@ foreach ($arrayjson['campos'] as $index => $value ){
 if ($write_validation){
   $text .=$sl.$sl."//incluimos la validacion por javascript";
   $text .=$sl."\$heredoc = Cutils::get_scripts_heredoc_form_validation(\$array_forms);";
+}else{
+  $text .=$sl.$sl."//incluimos la validacion por javascript";
+  $text .=$sl."\$heredoc = Cutils::get_scripts_heredoc_form_validation(\$array_forms,\"".implode(',',$specials_validations)."\");";
 }
 
 //si existe un datepicker lo ponemos despues de la llamada a heredoc
@@ -3111,6 +3113,7 @@ if ($writeinfodatapicker){
 if ($writeckeditor){
    $text .= $ckeditor;
 }
+
 
 $text .=$sl.$sl."\$layout	= new Cpagelayout_backend( \$names_section ); ";
 
@@ -3253,8 +3256,11 @@ if ( $arrayjson['type'] == 'webform_relational')  {
   
 }
 
+$write_validation = true;
 $only1datapicker = true;
 $writeinfodatapicker = false;
+
+$specials_validations = array();
 
 //Miramos si hay una imagen para pasarle al validador la special class
 foreach ($arrayjson['campos'] as $index => $value ){
@@ -3262,18 +3268,23 @@ foreach ($arrayjson['campos'] as $index => $value ){
   switch ($value['type']){
     
     case 'image':
-        $special_class = ', \'image\' '; 
+        
+        //una imagen en el edit, nunca podra ser obligatoria, ya que antes
+        //en el new ha sido obligatorio ponerla
+        $special_class = array_push($specials_validations, "image"); 
+ 
+      
+      $write_validation = false;
+      
       break;
+      
       
     case 'file':
       
-      if ( $value['mandatory'])
-        $special_class = ', \'requireddoc\' ';
-      else 
-        $special_class = ', \'doc\' '; 
+        //un archivo en el edit, nunca podra ser obligatorio, ya que antes
+        //en el new ha sido obligatorio ponerla        
+        $special_class = array_push($specials_validations, "doc"); 
         
-      $text .=$sl.$sl."//incluimos la validacion por javascript";
-      $text .=$sl."\$heredoc = Cutils::get_scripts_heredoc_form_validation(\$array_forms $special_class);";
       
       $write_validation = false;
       
@@ -3361,9 +3372,13 @@ foreach ($arrayjson['campos'] as $index => $value ){
 }
 
 
-$text .=$sl.$sl."//incluimos la validacion por javascript";
-$text .=$sl."\$heredoc = Cutils::get_scripts_heredoc_form_validation(\$array_forms $special_class);";
-
+if ($write_validation){
+  $text .=$sl.$sl."//incluimos la validacion por javascript";
+  $text .=$sl."\$heredoc = Cutils::get_scripts_heredoc_form_validation(\$array_forms);";
+}else{
+  $text .=$sl.$sl."//incluimos la validacion por javascript";
+  $text .=$sl."\$heredoc = Cutils::get_scripts_heredoc_form_validation(\$array_forms,\"".implode(',',$specials_validations)."\");";
+}
 
 if ($writeinfodatapicker){
   $text .= $textdatapicker;
