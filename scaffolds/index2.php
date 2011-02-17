@@ -279,8 +279,42 @@
             ttabindex   = $(this).find('.i_tabindex').val();
             
             var json = "\""+tname+"\":{\"class\":\""+tclass+"\", \"value\":\""+tvalue+"\", \"mandatory\":\""+tmandatory+"\", \"multilanguage\":\""+tmultilanguage+"\", \"cols\":\""+tcols+"\", \"rows\":\""+trows+"\", \"type\":\""+ttype+"\", \"minlength\":\""+tminlenght+"\", \"maxlength\":\""+tmaxlenght+"\", \"ckeditor\":\""+tckeditor+"\", \"disabled\":\""+tdisabled+"\", \"readonly\":\""+treadonly+"\", \"tabindex\":\""+ttabindex+"\"},";
-         
+
+          }else if ($(this).hasClass('image')){
             
+            tname  = $(this).find('.i_name').val();
+            tclass   = $(this).find('.i_class').val();
+            tvalue   = "";
+            tmandatory   = ($(this).find('.i_mandatory:checked').val() == '1') ? '1' : '0';
+            tmultilanguage   = ($(this).find('.i_multilanguage:checked').val() == '1') ? '1' : '0';
+            ttype   = "image";
+            tminlenght   = "0";
+            tmaxlenght   = "300";
+            tsize   = $(this).find('.i_size').val();
+            tdisabled   = ($(this).find('.i_disabled:checked').val() == '1') ? '1' : '0';
+            treadonly   = ($(this).find('.i_readonly:checked').val() == '1') ? '1' : '0';
+            ttabindex   = "0";
+            
+            var json = "\""+tname+"\":{\"class\":\""+tclass+"\", \"value\":\""+tvalue+"\", \"mandatory\":\""+tmandatory+"\", \"multilanguage\":\""+tmultilanguage+"\", \"type\":\""+ttype+"\", \"minlength\":\""+tminlenght+"\", \"maxlength\":\""+tmaxlenght+"\", \"disabled\":\""+tdisabled+"\", \"readonly\":\""+treadonly+"\", \"tabindex\":\""+ttabindex+"\"},";
+         
+          }else if ($(this).hasClass('file')){
+            
+            tname  = $(this).find('.i_name').val();
+            tclass   = $(this).find('.i_class').val();
+            tvalue   = "";
+            textensions   = $(this).find('.i_extensions').val();
+            tmandatory   = ($(this).find('.i_mandatory:checked').val() == '1') ? '1' : '0';
+            tmultilanguage   = ($(this).find('.i_multilanguage:checked').val() == '1') ? '1' : '0';
+            ttype   = "file";
+            tminlenght   = "0";
+            tmaxlenght   = "300";
+            tsize   = $(this).find('.i_size').val();
+            tdisabled   = ($(this).find('.i_disabled:checked').val() == '1') ? '1' : '0';
+            treadonly   = ($(this).find('.i_readonly:checked').val() == '1') ? '1' : '0';
+            ttabindex   = "0";
+            
+            var json = "\""+tname+"\":{\"class\":\""+tclass+"\", \"value\":\""+tvalue+"\", \"mandatory\":\""+tmandatory+"\",  \"extensions\":\""+textensions+"\", \"multilanguage\":\""+tmultilanguage+"\", \"type\":\""+ttype+"\", \"minlength\":\""+tminlenght+"\", \"maxlength\":\""+tmaxlenght+"\", \"disabled\":\""+tdisabled+"\", \"readonly\":\""+treadonly+"\", \"tabindex\":\""+ttabindex+"\"},";
+                     
           }else{
             
             alert('es nada');
@@ -310,6 +344,8 @@
 
 		<div id='text' class='forms_items'>Text</div>
 		<div id='textarea' class='forms_items'>Textarea</div>
+		<div id='image' class='forms_items'>Image</div>
+		<div id='file' class='forms_items'>File</div>
 
 	</div>
 
@@ -376,7 +412,7 @@
 
 <div id='templates' style='display:none'>
   
-  <div id='dialog-Text' title='Nuevo form text' style='display:none;font-size:11px;'>
+  <div id='dialog-Text' title='Nuevo campo text' style='display:none;font-size:11px;'>
     <table class='text tform' cellpadding="2" cellspacing="5">
     
     	<tr>
@@ -432,7 +468,8 @@
     </table>
   </div>
   
-  <div id='dialog-Textarea' title='Nuevo form textarea' style='display:none; font-size:11px;''>
+  
+  <div id='dialog-Textarea' title='Nuevo campo textarea' style='display:none; font-size:11px;''>
     <table class='textarea tform' cellpadding="2" cellspacing="5">
     
     	<tr>
@@ -496,6 +533,85 @@
   </div>
   
 
+    <div id='dialog-Image' title='Nuevo campo imagen' style='display:none;font-size:11px;'>
+    <table class='image tform' cellpadding="2" cellspacing="5">
+    
+    	<tr>
+    		<td width="80">Name</td><td><input type='text'  class="i_name" value='' /></td>
+    	</tr>
+
+    	<tr>
+    		<td width="80">Class</td><td><input type='text'  class="i_class"  value='' /></td>
+    	</tr>
+    	
+     	<tr>
+    		<td width="80">Size</td><td><input type='text'  class="i_size" size=4  value='60' value='' /></td>
+    	</tr>
+
+    	<tr>
+    		<td width="80">Mandatory</td><td><input type='checkbox'  class="i_mandatory" value='1'> </td>
+    	</tr>
+
+    	<tr>
+    		<td width="80">Multilanguage</td><td><input type='checkbox'  class="i_multilanguage" value='1'> </td>
+    	</tr>
+
+    	<tr>
+    		<td width="80">Disabled</td><td><input type='checkbox'  class="i_disabled" name='i_disabled' value='1' /></td>
+    	</tr>
+
+    	<tr>
+    		<td width="80">Readonly</td><td><input type='checkbox'  class="i_readonly" name='i_readonly' value='1' /></td>
+    	</tr>
+
+
+
+    </table>
+  </div>
+  
+  
+  
+   <div id='dialog-File' title='Nuevo campo archivo' style='display:none;font-size:11px;'>
+    <table class='file tform' cellpadding="2" cellspacing="5">
+    
+    	<tr>
+    		<td width="80">Name</td><td><input type='text'  class="i_name" value='' /></td>
+    	</tr>
+
+    	<tr>
+    		<td width="80">Class</td><td><input type='text'  class="i_class"  value='' /></td>
+    	</tr>
+
+    	<tr>
+    		<td width="80">Valid extensions</td><td><input type='text'  class="i_extensions"  value='pdf,doc' /></td>
+    	</tr>
+    	
+     	<tr>
+    		<td width="80">Size</td><td><input type='text'  class="i_size" size=4  value='60' value='' /></td>
+    	</tr>
+
+    	<tr>
+    		<td width="80">Mandatory</td><td><input type='checkbox'  class="i_mandatory" value='1'> </td>
+    	</tr>
+
+    	<tr>
+    		<td width="80">Multilanguage</td><td><input type='checkbox'  class="i_multilanguage" value='1'> </td>
+    	</tr>
+
+    	<tr>
+    		<td width="80">Disabled</td><td><input type='checkbox'  class="i_disabled" name='i_disabled' value='1' /></td>
+    	</tr>
+
+    	<tr>
+    		<td width="80">Readonly</td><td><input type='checkbox'  class="i_readonly" name='i_readonly' value='1' /></td>
+    	</tr>
+
+
+
+    </table>
+  </div>
+  
+  
 </div>
 
 
