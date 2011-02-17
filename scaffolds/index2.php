@@ -250,7 +250,7 @@
             tvalue   = $(this).find('.i_value').val();
             tmandatory   = ($(this).find('.i_mandatory:checked').val() == '1') ? '1' : '0';
             tmultilanguage   = ($(this).find('.i_multilanguage:checked').val() == '1') ? '1' : '0';
-            ttype   = $(this).find('.i_type').val();
+            ttype   = "text";
             tminlenght   = $(this).find('.i_minlenght').val();
             tmaxlenght   = $(this).find('.i_maxlenght').val();
             tsize   = $(this).find('.i_size').val();
@@ -270,7 +270,7 @@
             tmandatory   = ($(this).find('.i_mandatory:checked').val() == '1') ? '1' : '0';
             tmultilanguage   = ($(this).find('.i_multilanguage:checked').val() == '1') ? '1' : '0';
             tckeditor   = ($(this).find('.i_ckeditor:checked').val() == '1') ? '1' : '0';
-            ttype   = $(this).find('.i_type').val();
+            ttype   = "textarea";
             tminlenght   = $(this).find('.i_minlenght').val();
             tmaxlenght   = $(this).find('.i_maxlenght').val();
             tsize   = $(this).find('.i_size').val();
@@ -346,7 +346,23 @@
             ttabindex   = "0";
             
             var json = "\""+tname+"\":{\"class\":\""+tclass+"\", \"value\":\""+tvalue+"\", \"mandatory\":\""+tmandatory+"\",  \"checked\":\""+tchecked+"\", \"type\":\""+ttype+"\", \"minlength\":\""+tminlenght+"\", \"maxlength\":\""+tmaxlenght+"\", \"disabled\":\""+tdisabled+"\", \"readonly\":\""+treadonly+"\", \"tabindex\":\""+ttabindex+"\"},";
-                     
+
+           }else if ($(this).hasClass('numeric')){
+            
+            tname  = $(this).find('.i_name').val();
+            tclass   = $(this).find('.i_class').val();
+            tvalue   = $(this).find('.i_value').val();
+            tmandatory   = ($(this).find('.i_mandatory:checked').val() == '1') ? '1' : '0';
+            ttype   = "numeric";
+            tminlenght   = $(this).find('.i_minlenght').val();
+            tmaxlenght   = $(this).find('.i_maxlenght').val();
+            tsize   = $(this).find('.i_size').val();
+            tdisabled   = ($(this).find('.i_disabled:checked').val() == '1') ? '1' : '0';
+            treadonly   = ($(this).find('.i_readonly:checked').val() == '1') ? '1' : '0';
+            ttabindex   = $(this).find('.i_tabindex').val();
+            
+            var json = "\""+tname+"\":{\"class\":\""+tclass+"\", \"value\":\""+tvalue+"\", \"mandatory\":\""+tmandatory+"\", \"type\":\""+ttype+"\", \"minlength\":\""+tminlenght+"\", \"maxlength\":\""+tmaxlenght+"\", \"size\":\""+tsize+"\", \"disabled\":\""+tdisabled+"\", \"readonly\":\""+treadonly+"\", \"tabindex\":\""+ttabindex+"\"},";
+                          
                                                
           }else{
             
@@ -376,6 +392,7 @@
 	<div id='forms'>
 
 		<div id='text' class='forms_items'>Text</div>
+		<div id='numeric' class='forms_items'>Numeric</div>
 		<div id='textarea' class='forms_items'>Textarea</div>
 		<div id='checkbox' class='forms_items'>Checkbox</div>
 		<div id='image' class='forms_items'>Image</div>
@@ -461,10 +478,6 @@
     	<tr>
     		<td width="80">Value</td><td><input type='text'  class="i_value" value=''  /></td>
     	</tr>
-    	
-    	 <tr>
-    		<td width="80">Type</td><td><input type='text'  class="i_type" value='text' readonly value='' /></td>
-    	</tr>
 
     	<tr>
     		<td width="80">Minlenght</td><td><input type='text'  class="i_minlenght"  size=4  value='1' value='' /></td>
@@ -517,10 +530,6 @@
 
     	<tr>
     		<td width="80">Value</td><td><input type='text'  class="i_value"  value='' /></td>
-    	</tr>
-
-    	<tr>
-    		<td width="80">Type</td><td><input type='text'  class="i_type" value='textarea' readonly value='' /></td>
     	</tr>
     	
     	<tr>
@@ -711,11 +720,57 @@
     		<td width="80">Readonly</td><td><input type='checkbox'  class="i_readonly" name='i_readonly' value='1' /></td>
     	</tr>
 
-
-
     </table>
   </div>  
   
+  
+    <div id='dialog-Numeric' title='Nuevo campo numérico' style='display:none;font-size:11px;'>
+    <table class='numeric tform' cellpadding="2" cellspacing="5">
+    
+    	<tr>
+    		<td width="80">Name</td><td><input type='text'  class="i_name" value='' /></td>
+    	</tr>
+
+    	<tr>
+    		<td width="80">Class</td><td><input type='text'  class="i_class"  value='' /></td>
+    	</tr>
+
+    	<tr>
+    		<td width="80">Value</td><td><input type='text'  class="i_value" value=''  /></td>
+    	</tr>
+    	
+    	<tr>
+    		<td width="80">MinValue</td><td><input type='text'  class="i_minlenght"  size=4  value='0' value='' /></td>
+    	</tr>
+
+    	<tr>
+    		<td width="80">MaxValue</td><td><input type='text'  class="i_maxlenght" size=4 value='1000' value='' /></td>
+    	</tr>
+    	
+    	 <tr>
+    		<td width="80">TabIndex</td><td><input type='text'  class="i_tabindex"  size=4  value='0'  value=''/></td>
+    	</tr>
+    	
+     	<tr>
+    		<td width="80">Size</td><td><input type='text'  class="i_size" size=4  value='9' value='' /></td>
+    	</tr>
+
+    	<tr>
+    		<td width="80">Mandatory</td><td><input type='checkbox'  class="i_mandatory" value='1'> </td>
+    	</tr>
+
+    	<tr>
+    		<td width="80">Disabled</td><td><input type='checkbox'  class="i_disabled" name='i_disabled' value='1' /></td>
+    	</tr>
+
+    	<tr>
+    		<td width="80">Readonly</td><td><input type='checkbox'  class="i_readonly" name='i_readonly' value='1' /></td>
+    	</tr>
+
+
+
+    </table>
+  </div>
   
 </div>
 

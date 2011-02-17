@@ -33,7 +33,7 @@ class Cform_numeric extends Cform_text
 	
 	function display( $return = false )
 	{
-		$text = " type =\"".$this->m_type."\" max =\"".$this->m_maxlenght."\" size =\"".$this->m_size."\" value =\"".$this->m_value."\" tabindex =\"".$this->m_tabindex."\""; 
+		$text = " type =\"".$this->m_type."\" max =\"".$this->m_maxlenght."\" min =\"".$this->m_minlenght."\" size =\"".$this->m_size."\" value =\"".$this->m_value."\" tabindex =\"".$this->m_tabindex."\""; 
 		
 		if ( $this->m_disabled ){
 			$text = $text ." disabled =\"".$this->m_disabled."\"";
