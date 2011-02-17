@@ -314,7 +314,40 @@
             ttabindex   = "0";
             
             var json = "\""+tname+"\":{\"class\":\""+tclass+"\", \"value\":\""+tvalue+"\", \"mandatory\":\""+tmandatory+"\",  \"extensions\":\""+textensions+"\", \"multilanguage\":\""+tmultilanguage+"\", \"type\":\""+ttype+"\", \"minlength\":\""+tminlenght+"\", \"maxlength\":\""+tmaxlenght+"\", \"disabled\":\""+tdisabled+"\", \"readonly\":\""+treadonly+"\", \"tabindex\":\""+ttabindex+"\"},";
+
+          }else if ($(this).hasClass('datepicker')){
+            
+            tname  = $(this).find('.i_name').val();
+            tclass   = $(this).find('.i_class').val();
+            tvalue   = $(this).find('.i_value').val();
+            tmandatory   = ($(this).find('.i_mandatory:checked').val() == '1') ? '1' : '0';
+            ttype   = "datepicker";
+            tminlenght   = "0";
+            tmaxlenght   = "10";
+            tsize   = "10";
+            tdisabled   = ($(this).find('.i_disabled:checked').val() == '1') ? '1' : '0';
+            treadonly   = ($(this).find('.i_readonly:checked').val() == '1') ? '1' : '0';
+            ttabindex   = "0";
+            
+            var json = "\""+tname+"\":{\"class\":\""+tclass+"\", \"value\":\""+tvalue+"\", \"mandatory\":\""+tmandatory+"\",  \"type\":\""+ttype+"\", \"minlength\":\""+tminlenght+"\", \"maxlength\":\""+tmaxlenght+"\", \"disabled\":\""+tdisabled+"\", \"readonly\":\""+treadonly+"\", \"tabindex\":\""+ttabindex+"\"},";
                      
+           }else if ($(this).hasClass('checkbox')){
+            
+            tname  = $(this).find('.i_name').val();
+            tclass   = $(this).find('.i_class').val();
+            tvalue   = "1";
+            tmandatory   = ($(this).find('.i_mandatory:checked').val() == '1') ? '1' : '0';
+            tchecked   = ($(this).find('.i_checked:checked').val() == '1') ? '1' : '0';
+            ttype   = "checkbox";
+            tminlenght   = "0";
+            tmaxlenght   = "5";
+            tdisabled   = ($(this).find('.i_disabled:checked').val() == '1') ? '1' : '0';
+            treadonly   = ($(this).find('.i_readonly:checked').val() == '1') ? '1' : '0';
+            ttabindex   = "0";
+            
+            var json = "\""+tname+"\":{\"class\":\""+tclass+"\", \"value\":\""+tvalue+"\", \"mandatory\":\""+tmandatory+"\",  \"checked\":\""+tchecked+"\", \"type\":\""+ttype+"\", \"minlength\":\""+tminlenght+"\", \"maxlength\":\""+tmaxlenght+"\", \"disabled\":\""+tdisabled+"\", \"readonly\":\""+treadonly+"\", \"tabindex\":\""+ttabindex+"\"},";
+                     
+                                               
           }else{
             
             alert('es nada');
@@ -344,8 +377,10 @@
 
 		<div id='text' class='forms_items'>Text</div>
 		<div id='textarea' class='forms_items'>Textarea</div>
+		<div id='checkbox' class='forms_items'>Checkbox</div>
 		<div id='image' class='forms_items'>Image</div>
 		<div id='file' class='forms_items'>File</div>
+		<div id='datepicker' class='forms_items'>Datepicker</div>
 
 	</div>
 
@@ -606,10 +641,80 @@
     		<td width="80">Readonly</td><td><input type='checkbox'  class="i_readonly" name='i_readonly' value='1' /></td>
     	</tr>
 
+    </table>
+  </div>
+
+  
+  <div id='dialog-Datepicker' title='Nuevo campo datepicker' style='display:none;font-size:11px;'>
+    <table class='datepicker tform' cellpadding="2" cellspacing="5">
+    
+    	<tr>
+    		<td width="80">Name</td><td><input type='text'  class="i_name" value='' /></td>
+    	</tr>
+
+    	<tr>
+    		<td width="80">Class</td><td><input type='text'  class="i_class"  value='' /></td>
+    	</tr>
+
+    	<tr>
+    		<td width="80">Value</td><td><input type='text'  class="i_value" value=''  /></td>
+    	</tr>
+    	
+    	 <tr>
+    		<td width="80">TabIndex</td><td><input type='text'  class="i_tabindex"  size=4  value='0'  value=''/></td>
+    	</tr>
+
+    	<tr>
+    		<td width="80">Mandatory</td><td><input type='checkbox'  class="i_mandatory" value='1'> </td>
+    	</tr>
+
+    	<tr>
+    		<td width="80">Disabled</td><td><input type='checkbox'  class="i_disabled" name='i_disabled' value='1' /></td>
+    	</tr>
+
+    	<tr>
+    		<td width="80">Readonly</td><td><input type='checkbox'  class="i_readonly" name='i_readonly' value='1' /></td>
+    	</tr>
+
+    </table>
+  </div>  
+
+  
+  <div id='dialog-Checkbox' title='Nuevo campo checkbox' style='display:none;font-size:11px;'>
+    <table class='checkbox tform' cellpadding="2" cellspacing="5">
+    
+    	<tr>
+    		<td width="80">Name</td><td><input type='text'  class="i_name" value='' /></td>
+    	</tr>
+
+    	<tr>
+    		<td width="80">Class</td><td><input type='text'  class="i_class"  value='' /></td>
+    	</tr>
+
+    	 <tr>
+    		<td width="80">TabIndex</td><td><input type='text'  class="i_tabindex"  size=4  value='0'  value=''/></td>
+    	</tr>
+    	
+    	<tr>
+    		<td width="80">Mandatory</td><td><input type='checkbox'  class="i_mandatory" value='1'> </td>
+    	</tr>
+
+    	<tr>
+    		<td width="80">Checked</td><td><input type='checkbox'  class="i_checked" value='1'> </td>
+    	</tr>
+
+    	<tr>
+    		<td width="80">Disabled</td><td><input type='checkbox'  class="i_disabled" name='i_disabled' value='1' /></td>
+    	</tr>
+
+    	<tr>
+    		<td width="80">Readonly</td><td><input type='checkbox'  class="i_readonly" name='i_readonly' value='1' /></td>
+    	</tr>
+
 
 
     </table>
-  </div>
+  </div>  
   
   
 </div>
