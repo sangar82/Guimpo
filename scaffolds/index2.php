@@ -362,7 +362,19 @@
             ttabindex   = $(this).find('.i_tabindex').val();
             
             var json = "\""+tname+"\":{\"class\":\""+tclass+"\", \"value\":\""+tvalue+"\", \"mandatory\":\""+tmandatory+"\", \"type\":\""+ttype+"\", \"minlength\":\""+tminlenght+"\", \"maxlength\":\""+tmaxlenght+"\", \"size\":\""+tsize+"\", \"disabled\":\""+tdisabled+"\", \"readonly\":\""+treadonly+"\", \"tabindex\":\""+ttabindex+"\"},";
-                          
+
+            
+           }else if ($(this).hasClass('hidden')){
+            
+            tname  = $(this).find('.i_name').val();
+            tclass   = $(this).find('.i_class').val();
+            tvalue   = $(this).find('.i_value').val();
+            tmandatory   = ($(this).find('.i_mandatory:checked').val() == '1') ? '1' : '0';
+            ttype   = "hidden";
+            tmaxlenght   = $(this).find('.i_maxlenght').val();
+          
+            var json = "\""+tname+"\":{\"class\":\""+tclass+"\", \"value\":\""+tvalue+"\", \"mandatory\":\""+tmandatory+"\", \"type\":\""+ttype+"\", \"maxlength\":\""+tmaxlenght+"\"},";
+                                      
                                                
           }else{
             
@@ -398,6 +410,7 @@
 		<div id='image' class='forms_items'>Image</div>
 		<div id='file' class='forms_items'>File</div>
 		<div id='datepicker' class='forms_items'>Datepicker</div>
+		<div id='hidden' class='forms_items'>Hidden</div>
 
 	</div>
 
@@ -766,11 +779,38 @@
     	<tr>
     		<td width="80">Readonly</td><td><input type='checkbox'  class="i_readonly" name='i_readonly' value='1' /></td>
     	</tr>
+    	
+    </table>
+  </div>
+  
+  
+  
+  <div id='dialog-Hidden' title='Nuevo campo oculto' style='display:none; font-size:11px;''>
+    <table class='hidden tform' cellpadding="2" cellspacing="5">
+    
+    	<tr>
+    		<td width="80">Name</td><td><input type='text'  class="i_name"  value='' /></td>
+    	</tr>
 
+    	<tr>
+    		<td width="80">Class</td><td><input type='text'  class="i_class"  value='' /></td>
+    	</tr>
+
+    	<tr>
+    		<td width="80">Value</td><td><input type='text'  class="i_value"  value='' /></td>
+    	</tr>
+    	
+    	<tr>
+    		<td width="80">Maxlenght</td><td><input type='text'  class="i_maxlenght" size=4 value='100'  value='' /></td>
+    	</tr>
+    	
+    	<tr>
+    		<td width="80">Mandatory</td><td><input type='checkbox'  class="i_mandatory" value='1'> </td>
+    	</tr>
 
 
     </table>
-  </div>
+  </div>  
   
 </div>
 
