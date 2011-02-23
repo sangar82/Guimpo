@@ -1,13 +1,16 @@
-<!DOCTYPE html>
-<html lang="en">
+<?php require_once('../config.php'); ?>
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
 <head>
 	<meta charset="utf-8">
 	<title>jQuery UI Droppable - Shopping Cart Demo</title>
-	<link rel="stylesheet" href="http://www.guimpo.com/css/cupertino/jquery-ui-1.8.9.custom.css?1">
+	
 	<script src="http://www.guimpo.com/js/jquery.js?1"></script>
 	<script src="http://www.guimpo.com/js/jquery-ui-1.8.9.custom.min.js?1"></script>
 
 	<link rel="stylesheet" href="../demos.css">
+	<link rel="stylesheet" href="http://www.guimpo.com/css/cupertino/jquery-ui-1.8.9.custom.css?1">
 	<style>
 
 
@@ -186,6 +189,7 @@
       $(document).ready(function() {
    
          $('#enviar').click(function() {
+           
             
             var code = "";
             var mname = $("#name_rel").val();
@@ -194,6 +198,15 @@
             var campos = recupera_dades();
             
             if (mtype == "webform"){
+              
+              if ( $("#name_rel").val() == "" ){
+               
+                   alert("Debes poner un nombre para el modelo"); 
+                   $("#name_rel").focus();
+                   return false;
+              }
+              
+              
               code += "{ \"name\" : \""+mname+"\" , \"type\" : \""+mtype+"\",";
               
               if (mstripped != 0){
@@ -203,6 +216,15 @@
               code += campos;
 
             }else{
+              
+              
+                if ($( '#model option:selected' ).val() == null){
+                  
+                  alert('No puedes crear relaciones 1:n sin antes crear un modelo');
+                  
+                  return false;
+                  
+                }
               
             }
             
@@ -223,14 +245,30 @@
                 
               $("#rs").hide();
               $("#rm").hide();
+              
+              $(".nmodelo").show();
+              $(".n1n").hide();
+              
+              
+              
                 
             }else if ($("input[name='typerel']:checked").val() ==  'webform_relational'){
               
               $("#rs").show();
               $("#rm").show();
               
+              $(".nmodelo").hide();
+              $(".n1n").show();
+              
             }
 
+        });
+        
+        
+        $('.nouregistre').live('click', function() {
+            
+           $('.optionsc tr:last').after("<tr><td><input type='text' class='i_label' value='' size='5'></td><td><input type='text' class='i_value' size='5'></td><td><input type='text' class='i_class' size='5'></td><td><input type='checkbox'  class='i_checked' value='1'></td></tr>");
+            
         });
 
         
@@ -374,8 +412,29 @@
             tmaxlenght   = $(this).find('.i_maxlenght').val();
           
             var json = "\""+tname+"\":{\"class\":\""+tclass+"\", \"value\":\""+tvalue+"\", \"mandatory\":\""+tmandatory+"\", \"type\":\""+ttype+"\", \"maxlength\":\""+tmaxlenght+"\"},";
-                                      
-                                               
+
+            
+           }else if ($(this).hasClass('radiobuttons')){
+            
+             /*
+             rows  = $(this).find('.files');
+             
+             $(this).find("tr").children().children().each(function(index) {
+                alert(index);
+             });
+             
+             
+            tname  = $(this).find('.i_name').val();
+            tclass   = $(this).find('.i_class').val();
+            tvalue   = $(this).find('.i_value').val();
+            tmandatory   = ($(this).find('.i_mandatory:checked').val() == '1') ? '1' : '0';
+            ttype   = "hidden";
+            tmaxlenght   = $(this).find('.i_maxlenght').val();
+          
+            var json = "\""+tname+"\":{\"class\":\""+tclass+"\", \"value\":\""+tvalue+"\", \"mandatory\":\""+tmandatory+"\", \"type\":\""+ttype+"\", \"maxlength\":\""+tmaxlenght+"\"},";
+                                                      
+            */
+                                           
           }else{
             
             alert('es nada');
@@ -407,6 +466,7 @@
 		<div id='numeric' class='forms_items'>Numeric</div>
 		<div id='textarea' class='forms_items'>Textarea</div>
 		<div id='checkbox' class='forms_items'>Checkbox</div>
+		<!--<div id='radiobuttons' class='forms_items'>Radiobuttons</div>-->
 		<div id='image' class='forms_items'>Image</div>
 		<div id='file' class='forms_items'>File</div>
 		<div id='datepicker' class='forms_items'>Datepicker</div>
@@ -428,7 +488,35 @@
       
         <input type='radio' name='typerel'  id='rel_new' value='webform'  checked='checked' /> <label for='rel_new'>Nuevo modelo</label>  <input type='radio' name='typerel'  id='rel_1n' value='webform_relational' /> <label for='rel_1n'>Relación 1:n</label> <br/><br/>
       
-        Nombre del modelo/relación <input type='text' name='name_rel' id='name_rel'  /> <br/><br/>
+        <span class='nmodelo'>Nombre del modelo <input type='text' name='name_rel' id='name_rel'  /> <br/><br/></span>
+        
+        <span class='n1n dnone'>
+        
+        Nombre de la relación
+        <?php
+            echo "<select name='model'>";
+    
+              $imagenes =  glob(PATH_ROOT."/clases/{cform_construct_*.php}",GLOB_BRACE);
+          
+              foreach ($imagenes as $ima){
+                
+                $aux = explode("_", $ima);
+                
+                if ( count($aux) == 3){
+                  
+                  $aux2 = explode(".", $aux[count($aux) - 1]);
+                  
+                  if ($aux2[0] != "user"  and  $aux2[0] != "login") 
+                    echo "<option value='".$aux2[0]."'>".$aux2[0]."</option>";
+                }
+
+              }
+            
+            echo "</select>_<input type='text' name='name_rel' id='name_1n'  /><br /><br />";
+        
+        ?>
+            
+         </span>
         
         Stripped &nbsp;&nbsp;
         
@@ -436,9 +524,9 @@
           <option value='0'>Sin stripped</option>
         </select> <br /><br/>
                 
-        <div id='rs' class='dnone'>Relation stripped <input type='radio' name='rel_stripped'  id='rel_stripped_true' value='true'  /> <label for='rel_stripped_true'>True</label>  <input type='radio' name='rel_stripped'  id='rel_stripped_false' value='false' checked /> <label for='rel_stripped_false'>False</label> <br /><br /></div>        
+        <div id='rs' class='dnone'>Relation has stripped <input type='radio' name='rel_stripped'  id='rel_stripped_true' value='true'  /> <label for='rel_stripped_true'>True</label>  <input type='radio' name='rel_stripped'  id='rel_stripped_false' value='false' checked /> <label for='rel_stripped_false'>False</label> <br /><br /></div>        
         
-        <div id='rm' class='dnone'>Relation multilanguage <input type='radio' name='rel_multilanguage'  id='rel_multi_true' value='true'  /> <label for='rel_stripped_true'>True</label>  <input type='radio' name='rel_multilanguage'  id='rel_multi_false' value='false' checked /> <label for='rel_stripped_false'>False</label> <br /><br /></div>        
+        <div id='rm' class='dnone'>Stripped Relation is multilanguage <input type='radio' name='rel_multilanguage'  id='rel_multi_true' value='true'  /> <label for='rel_stripped_true'>True</label>  <input type='radio' name='rel_multilanguage'  id='rel_multi_false' value='false' checked /> <label for='rel_stripped_false'>False</label> <br /><br /></div>        
         
         <div id='generator' class='dnone'>
         
@@ -807,10 +895,49 @@
     	<tr>
     		<td width="80">Mandatory</td><td><input type='checkbox'  class="i_mandatory" value='1'> </td>
     	</tr>
-
-
+    	
     </table>
   </div>  
+  
+
+   <div id='dialog-Radiobuttons' title='Nuevo campo radiobuttons' style='display:none;font-size:11px;'>
+    <table class='radiobuttons tform' cellpadding="2" cellspacing="5">
+    
+    	<tr>
+    		<td width="80">Name</td><td><input type='text'  class="i_name" value='' /></td>
+    	</tr>
+
+    	<tr>
+    		<td width="80">Mandatory</td><td><input type='checkbox'  class="i_mandatory" value='1'> </td>
+    	</tr>
+    	
+    </table>
+    
+    <br><br>Añade radiobuttons<br>
+    
+    <table width="180px" class='optionsc'>
+		<thead>
+			<th colspan align='left'>Label</th>
+			<th colspan align='left'>Value</th>
+			<th colspan align='left'>Class</th>
+			<th colspan align='left'>Checked</th>
+		</thead>
+		<tbody class='files'>
+    			<tr>
+    				<td><input type='text' class="i_label" value='' size='5'></td>
+    				<td><input type='text' class='i_value' size='5'></td>
+    				<td><input type='text' class='i_class' size='5'></td>
+    				<td><input type='checkbox'  class="i_checked" value='1'></td>
+    			</tr>
+		</tbody>
+	</table>
+
+  <br>
+  <span class='nouregistre'>nou registre</span>
+  <div class='test'></div>
+  
+  </div>
+  
   
 </div>
 
@@ -818,8 +945,6 @@
 <div id='choosen'>
 
 </div>
-
-
 
 
 </body>
