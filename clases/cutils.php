@@ -185,7 +185,7 @@ HTML;
   							    accept: "doc|pdf"
   							  },
 HTML;
-  					}else if ($special_class == "repassword"){
+  					}else if ($special == "repassword"){
   						$heredoc .= <<< HTML
   							  password_again: {
   							    equalTo: "#password"

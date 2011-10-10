@@ -11,7 +11,7 @@ else
   echo "<h1>Editar usuario</h1>";
   
   
-echo "<table width='800'>";
+echo "<table class='formtable'>";
 
   echo "<tr>";
     echo "<td>Username</td>";
@@ -19,7 +19,7 @@ echo "<table width='800'>";
   echo "</tr>";
 
   echo "<tr>";
-    echo "<td>Password</td>";
+    echo "<td width='150'>Password</td>";
     echo "<td> ". $form->get_form_object('password')->display(true) ." </td>";
   echo "</tr>";
 
