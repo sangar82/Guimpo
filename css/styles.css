@@ -15,12 +15,15 @@ input:focus, textarea:focus, select:focus{
   border:1px solid black;
 }
 
-.formattable td, .formattable th {
-  padding:20px 20px 20px 0px;
+.formattable th {
+  padding:0px 20px 0px 0px;
   text-align:left;
 }
 
-
+.formattable td {
+  padding:20px 20px 0px 0px;
+  text-align:left;
+}
 
 .rfloat{
   float:right;
@@ -249,7 +252,7 @@ label.error, div.error{
 }
 
 #menutitle{
-    color: #DDDDDD;
+    color: #eee;
     font-size: 24px;
     left: 11px;
     position: relative;

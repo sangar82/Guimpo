@@ -5116,7 +5116,7 @@ if ($cambios){
       
       
       $file = file_get_contents(PATH_ROOT."/vistas/backend/top/vtop.php");
-      $new_file = str_replace('//#NO-BORRAR#//', $tab.$tab.$tab."\$class = (\$_SERVER['SCRIPT_NAME'] == '/admin/".$arrayjson['name']."_list.php'  OR \$_SERVER['SCRIPT_NAME'] == '/admin/".$arrayjson['name']."_create.php'  OR  \$_SERVER['SCRIPT_NAME'] == '/admin/".$arrayjson['name']."_edit.php'  OR \$_SERVER['SCRIPT_NAME'] == '/admin/".$arrayjson['name'].".php')  ? 		\"class='menuadminulactive'\" 		: 		\"\";  $sl $tab $tab $tab echo \"<li><a href='/admin/".$arrayjson['name']."/list/' \$class>".ucfirst($arrayjson['name'])."</a></li>\";\n//#NO-BORRAR#//", $file);
+      $new_file = str_replace('//#NO-BORRAR#//', "\$class = (\$_SERVER['SCRIPT_NAME'] == '/admin/".$arrayjson['name']."_list.php'  OR \$_SERVER['SCRIPT_NAME'] == '/admin/".$arrayjson['name']."_create.php'  OR  \$_SERVER['SCRIPT_NAME'] == '/admin/".$arrayjson['name']."_edit.php'  OR \$_SERVER['SCRIPT_NAME'] == '/admin/".$arrayjson['name'].".php')  ? 		\"class='menuadminulactive'\" 		: 		\"\"; $sl$tab$tab   echo \"<li><a href='/admin/".$arrayjson['name']."/list/' \$class>".ucfirst($arrayjson['name'])."</a></li>\";$sl $sl $tab $tab $tab //#NO-BORRAR#//", $file);
 
      $archivo=fopen(PATH_ROOT."/vistas/backend/top/vtop.php" , "w");
       if ($archivo) {
