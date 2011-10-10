@@ -5121,10 +5121,30 @@ if ($cambios){
   
 }
 
-
 //***********************************/
 //********fin Aviso cambios   *******/
 //***********************************/
+
+
+//***********************************/
+//******** Scaffold text   *******/
+//***********************************/
+
+      $archivo=fopen(PATH_ROOT."/bd/scaffolds/".$arrayjson['name'].".php" , "w");
+      
+      if ($archivo) {
+        $result = fputs ($archivo, $scaffold);
+      }
+      
+      fclose ($archivo);
+      
+//***********************************/
+//******** Fin Scaffold text   *******/
+//***********************************/
+
+
+
+
 
 echo "<br /><a href='/scaffolds/'>Volver</a>";
 
