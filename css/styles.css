@@ -50,7 +50,7 @@ label.error, div.error{
 }
 
 .info_ok{
-  width: 90%;
+  width: 98.35%;
   height:auto;
   background:green;
   color:white;
@@ -62,7 +62,7 @@ label.error, div.error{
 }
 
 .info_ko{
-  width: 90%;
+  width: 98.35%;
   height:auto;
   background:red;
   color:white;

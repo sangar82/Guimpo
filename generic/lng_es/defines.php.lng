@@ -89,3 +89,9 @@ max_js=Introduce un valor más pequeño o igual a {0}.
 min_js=Introduce un valor más grande o igual a {0}.
 combosearchmissed=Has olvidado campos por marcar!
 /*FI ERRORES VALIDACION FORMULARIOS JAVASCRIPT*/
+
+
+/*Mensajes admin*/
+admin_intro=Bienvenido al portal de administración
+admin_intro_1=Desde este portal podrá administrar los contenidos de su web.
+admin_intro_2=Elija una opción del menú superior.

@@ -84,6 +84,7 @@
   
   if ($restore){
     copy(PATH_ROOT . "/utils/temp/vtop.php", PATH_ROOT . "/vistas/frontend/top/vtop.php")  ;
+    copy(PATH_ROOT . "/utils/temp/vtop_admin.php", PATH_ROOT . "/vistas/backend/top/vtop.php")  ;
     copy(PATH_ROOT . "/utils/temp/vadmin_index.php", PATH_ROOT . "/vistas/backend/main/vadmin_index.php")  ;
     copy(PATH_ROOT . "/utils/temp/.htaccess", PATH_ROOT . "/.htaccess")  ;
     

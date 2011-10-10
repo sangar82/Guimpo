@@ -1,10 +1,16 @@
 <?php 
 
-echo "<h1>Zona privada</h1>";
+echo "<h1>";
+	echo $this->translate('admin_intro');
+echo "</h1>";
 
-echo "<ul id='privatezone'>";
-  echo "<li><a href='/admin/users/list/'>Gestión de usuarios</a></li>";
-	//#NO-BORRAR#//
-echo "</ul>";
+echo "<p>";
+	echo $this->translate('admin_intro_1');
+echo "</p>";
+
+echo "<p>";
+	echo $this->translate('admin_intro_2');
+echo "</p>";
+
 
 ?>

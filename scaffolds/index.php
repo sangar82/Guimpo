@@ -5099,6 +5099,9 @@ if ($cambios){
     
       //Añadimos una opcion al menu de admin
        
+      /*
+       vadmin version vieja
+       
       $file = file_get_contents(PATH_ROOT."/vistas/backend/main/vadmin_index.php");
       $new_file = str_replace('//#NO-BORRAR#//', "echo \"<li><a href='/admin/".$arrayjson['name']."/list/'>Gestión de ".$arrayjson['name']."</a></li>\";\n//#NO-BORRAR#//", $file);
       
@@ -5108,6 +5111,25 @@ if ($cambios){
         $result = fputs ($archivo, $new_file);
       }
       fclose ($archivo);
+      
+      */
+      
+      
+      $file = file_get_contents(PATH_ROOT."/vistas/backend/top/vtop.php");
+      $new_file = str_replace('//#NO-BORRAR#//', $tab.$tab.$tab."\$class = (\$_SERVER['SCRIPT_NAME'] == '/admin/".$arrayjson['name']."_list.php'  OR \$_SERVER['SCRIPT_NAME'] == '/admin/".$arrayjson['name']."_create.php'  OR  \$_SERVER['SCRIPT_NAME'] == '/admin/".$arrayjson['name']."_edit.php'  OR \$_SERVER['SCRIPT_NAME'] == '/admin/".$arrayjson['name'].".php')  ? 		\"class='menuadminulactive'\" 		: 		\"\";  $sl $tab $tab $tab echo \"<li><a href='/admin/".$arrayjson['name']."/list/' \$class>".ucfirst($arrayjson['name'])."</a></li>\";\n//#NO-BORRAR#//", $file);
+
+     $archivo=fopen(PATH_ROOT."/vistas/backend/top/vtop.php" , "w");
+      if ($archivo) {
+        $result = fputs ($archivo, $new_file);
+      }
+      fclose ($archivo);
+      
+      /*
+      $class = ($_SERVER['SCRIPT_NAME'] == '/admin/index.php')  ? 		"class='menuadminulactive'" 		: 		"";
+			echo "<li><a href='/admin/' $class>Inicio</a></li>";
+			*/
+			
+			
   
       if ($result){ 
         echo "<li>En <u>/backend/main/vadmin_index.php</u> a&ntilde;adido elemento en el menu</li>";
