@@ -1,10 +1,8 @@
 /*
-   Project:         framework
-   Section:         test
+   Project:         guimpo.com
+   Section:         languages
    Version:         1
-   Modication Date: 20-09-2010
-   
-   PENDING REVISION!
+   Modication Date: 17-10-2011
 */
 
 /*Menu*/
@@ -15,12 +13,12 @@ login=Login
 salir=Salir
 volver_atras=Volver atràs
 
-
 /*Menu*/
 
 
 
 /*Users*/
+
 identificate=Introduce tus datos de acceso
 users=usuarios
 user=usuario
@@ -30,10 +28,13 @@ name=Nombre
 lastname=Apellidos
 repite_password=Repite el password
 create_new_user=Crear un usuario nuevo
+
 /*Users*/
 
 
+
 /*formularios*/
+
 confirm_delete=¿Estás seguro de borrar este registro?
 wait=Espera un momento, por favor
 return_to_menu=Volver al inicio
@@ -57,16 +58,22 @@ created=Creado
 updated=Modificado
 image_actual=Imagén actual
 file_actual=Archivo actual
+
 /*formularios*/
 
 
+
 /*Mensajes modelo*/
+
 session_expirada=La sesión ha expirado. Vuelve a identificarte.
 session_incorrecta=Para ver este contenido debes identificarte.
+
 /*Mensajes modelo*/
+
 
 
 /*ERRORES VALIDACION PHP*/
+
 text_field_string_range_not_valid=Los datos introducidos no están en el rango permitido
 text_field_null=Es obligatorio introducir un valor
 text_field_numeric_not_numeric=Los datos introducidos no son un número válido
@@ -77,9 +84,13 @@ telefono_taken=El número de telefono está ocupado por otro usuario, elige otro
 must_checked=Debes marcar este campo
 must_select_a_value=Debes elegir un valor del desplegable
 not_file_extension_allowed=El archivo no tiene la extensión correcta
+
 /*FI ERRORES VALIDACION PHP*/
 
+
+
 /*ERRORES VALIDACION FORMULARIOS JAVASCRIPT*/
+
 required_js=Este campo es obligatorio.
 remote_js=Ya se está utilizando, escoge otro.
 email_js=Introduce un email válido.
@@ -100,10 +111,13 @@ range_js=Introduce un valor entre {0} y {1}.
 max_js=Introduce un valor más pequeño o igual a {0}.
 min_js=Introduce un valor más grande o igual a {0}.
 combosearchmissed=Has olvidado campos por marcar!
+
 /*FI ERRORES VALIDACION FORMULARIOS JAVASCRIPT*/
 
 
+
 /*Mensajes admin*/
+
 admin_intro=Bienvenido al portal de administración
 admin_intro_1=Desde este portal podrá administrar los contenidos de su web.
 admin_intro_2=Elija una opción del menú superior.
