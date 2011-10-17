@@ -43,12 +43,9 @@ if ($users){
   
   echo "<br /><br />";
 
-  echo "<a href='/admin/users/create/'>". $this->translate('new_item')."</a>";
+  echo "<a href='/admin/users/create/' class='create'>". $this->translate('create_new_user')."</a>";
 
 }else 
-  echo "". $this->translate('no_items')." <a href='/admin/users/create/'>". $this->translate('new_item')."</a>";
+  echo "". $this->translate('no_items')." <a href='/admin/users/create/' class='create'>". $this->translate('create_new_user')."</a>";
   
-  echo "<br><br><a href='/admin/'>". $this->translate('return_to_menu')."</a>";
-
-
 ?>

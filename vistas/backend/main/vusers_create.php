@@ -48,7 +48,7 @@ echo "<table class='formtable'>";
       }    
       echo  $form->get_form_object('submit')->display(true);
       
-      echo "&nbsp;&nbsp; <a href='/admin/users_list.php'>Volver atrás</a>";
+      echo "&nbsp;&nbsp; <a href='/admin/users_list.php' class='return'>". $this->translate("volver_atras") ."</a>";
     echo "</td>";
   echo "</tr>";
   

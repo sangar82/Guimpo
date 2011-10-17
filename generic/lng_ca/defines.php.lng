@@ -1,10 +1,121 @@
 /*
-   Project:         framework
-   Section:         test
+   Project:         guimpo.com
+   Section:         languages
    Version:         1
-   Modication Date: 20-09-2010
-   
-   PENDING REVISION!
+   Modication Date: 17-10-2011
 */
 
-test=Test en català
+
+/*Menu*/
+
+inicio=Inici
+usuarios=Usuaris
+login=Login
+salir=Sortir
+volver_atras=Tornar enrere
+
+/*Menu*/
+
+
+/*Users*/
+
+identificate=Introduex les teves dades d'accés.
+users=usuaris
+user=usuariu
+username=Nom d'usuari
+password=Contrasenya
+name=Nom
+lastname=Cognoms
+repite_password=Repeteix el password
+create_new_user=Crear un nou usuari
+
+
+/*Users*/
+
+
+/*formularios*/
+
+confirm_delete=Estàs segur d'esborrar aquest registre?
+wait=Espera un moment, si us plau
+return_to_menu=Tornar l'inici
+list_of=Llistat de %0%
+return_to=Tornar a %0%
+create_a=Crear %0%
+edit_a=Modificar %0%
+siguiente=Següent
+anterior=Anterior
+view=Veure
+modify=Modificar
+delete=Eliminar
+new_item=Crear una nou registre
+no_items=No hi ha registres creats.
+return=Tornar enrere
+options=Opcions
+view=Veure
+edit=Editar
+delete=Eliminar
+created=Creat
+updated=Modificat
+image_actual=Imatge actual
+file_actual=Arxiu actual
+
+/*formularios*/
+
+
+/*Mensajes modelo*/
+
+session_expirada=La sesió ha expirat. Torna a identificar-te.
+session_incorrecta=Per veure aquest contingut has d'estar autentificat.
+
+/*Mensajes modelo*/
+
+
+/*ERRORES VALIDACION PHP*/
+
+text_field_string_range_not_valid=Les dades introduïdes no estan en el rang permès
+text_field_null=Es obligatori introduir un valor
+text_field_numeric_not_numeric=Les dades introduïdes no son un número vàlid
+referencia_taken=Hi ha un altre element amb la mateixa referencia
+username_not_is_a_email=El nom d'usuari ha de ser un email vàlid
+username_taken=El nom d´usuari està ocupat, escull un altre
+telefono_taken=El número de telèfon està ocupat, escull un altre
+must_checked=Has de marcar aquest camp
+must_select_a_value=Has d'escollir un valor del desplegable
+not_file_extension_allowed=L'arxiu no té la extensió correcta
+
+/*FI ERRORES VALIDACION PHP*/
+
+
+/*ERRORES VALIDACION FORMULARIOS JAVASCRIPT*/
+
+required_js=Aquest camp es obligatori.
+remote_js=Ja s'està fent servir, escull un altre.
+email_js=Introdueix un email vàlid.
+url_js=Introdueix una url vàlida.
+date_js=Introdueix una data vàlida.
+dateiso_js=Introdueix una data amb format ISO.
+datede_js=
+number_js=Introdueix un número vàlid.
+numberde_js=
+digits_js=Introdueix nomès números.
+creditcard_js=Introdueix un número de targeta válid.
+equalto_js=Introdueix una altra vegada el mateix valor.
+accept_js=Introdueix un arxiu amb extensió vàlida.
+maxlength_js=Introdueix no mes de {0} caràcters.
+minlength_js=Introdueix almenys {0} caràcters.
+rangelength_js=Introdueix un valor entre {0} and {1} caràcters.
+range_js=Introdueix un valor entre {0} i {1}.
+max_js=Introdueix un valor mes petit o igual a {0}.
+min_js=Introdueix un valor mes gran o igual a {0}.
+combosearchmissed=Has oblidat camps per marcar!
+
+/*FI ERRORES VALIDACION FORMULARIOS JAVASCRIPT*/
+
+
+/*Mensajes admin*/
+
+admin_intro=Benvingut al portal d'administració
+admin_intro_1=Des d'aquest portal podrà administrar els continguts de la seva web.
+admin_intro_2=Esculli una opció del menú superior.
+
+/*Mensajes admin*/

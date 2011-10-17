@@ -7,6 +7,17 @@
    PENDING REVISION!
 */
 
+/*Menu*/
+
+inicio=Inicio
+usuarios=Usuarios
+login=Login
+salir=Salir
+volver_atras=Volver atràs
+
+
+/*Menu*/
+
 
 
 /*Users*/
@@ -18,6 +29,7 @@ password=Contraseña
 name=Nombre
 lastname=Apellidos
 repite_password=Repite el password
+create_new_user=Crear un usuario nuevo
 /*Users*/
 
 
@@ -80,7 +92,7 @@ numberde_js=
 digits_js=Introduce sólo dígitos
 creditcard_js=Introduce un número de targeta válido.
 equalto_js=Introduce otra vez el mismo valor.
-accept_js=Introduce un valor con extensión válida.
+accept_js=Introduce un archivo con extensión válida.
 maxlength_js=Introduce no más de {0} carácteres.
 minlength_js=Introduce por lo menos {0} carácteres.
 rangelength_js=Introduce un valor entre {0} and {1} carácteres.
