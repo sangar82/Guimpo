@@ -37,10 +37,14 @@ input:focus, textarea:focus, select:focus{
 
 .rfloat{
   float:right;
+  
+  text-align:right;
 }
 
 .lfloat{
   float:left;
+  
+  text-align:right;
 }
 
 /****fi init***/
@@ -240,6 +244,7 @@ label.error, div.error{
 	width:32px;
 	float:left;
 }
+
 .ajaxloader_text{
 	background: url(/img/ajax-loader.gif) no-repeat 6px;
 	height:132px;
@@ -253,70 +258,6 @@ label.error, div.error{
 	padding-left:48px;	
 }
 
-#menuadmin{
-	 width:100%;
-	 margin:0px auto;
-	 height:50px;
-	 background:#000;
-	 font-family:verdana;
-}
-
-#menutitle{
-    color: #eee;
-    font-size: 24px;
-    left: 11px;
-    position: relative;
-    top: 7px;
-    float:left;
-}
-
-#menuadminul{
-	margin:0px;
-	padding:0px;
-	position:relative;
-	top:15px;
-	left:80px;
-	float:left;
-}
-
-#menuadminul li{
-  margin:0px;
-  padding:0px;
-  list-style:none;
-  float:left;
-  margin-right:30px;
-}
-
-#menuadminul li a{
-	color:#fff;
-	text-decoration:none;
-	padding:5px 10px;
-	border:1px solid #000;
-}
-
-.menuadminulactive, #menuadminul li a:hover{
-	 padding:5px 10px;
-	 color:#000 !important;
-	 background:#fff;
-	 border:1px solid #000;
-   border-radius: 6px; 
-  -webkit-border-radius: 6px; 
-  -moz-border-radius: 6px; 
-}
-
-#adminlogout{
-  float:right;
-  position:relative;
-  top:16px;
-  right:15px;
-  font-size:12px;
-  color:#ddd;
-  font-size:11px;
-}
-
-#adminlogout a{
-	color:#ddd;
-}
 
 
 

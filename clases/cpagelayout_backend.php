@@ -31,6 +31,9 @@ class Cpagelayout_backend extends Cpagebase {
 		$this->m_main 		= $section_names['main'];
 		$this->m_footer 	= $section_names['footer'];
 		
+		//insertamos estilos por defecto
+		$this->add_styles(PATH_ROOT_CSS. 'styles.css');
+		
 		Cpagelayout_backend::Cpagebase();
 		
 		//Hacemos que el backend este protegido por sesión

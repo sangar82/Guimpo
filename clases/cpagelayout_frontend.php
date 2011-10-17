@@ -31,6 +31,9 @@ class Cpagelayout_frontend extends Cpagebase {
 		$this->m_main 		= $section_names['main'];
 		$this->m_footer 	= $section_names['footer'];
 		
+		//insertamos estilos por defecto
+		$this->add_styles(PATH_ROOT_CSS. 'fstyles.css');
+		
 		Cpagelayout_frontend::Cpagebase();
 		
 		

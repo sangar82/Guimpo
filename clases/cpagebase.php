@@ -72,12 +72,8 @@ class Cpagebase
 		
 		//idioma de la pagina
 		$this->add_metas("<meta http-equiv='content-language' content='".Cutils::get_actual_lng()."' />");
-			
-			
-		//insertamos estilos por defecto
-		$this->add_styles(PATH_ROOT_CSS. 'styles.css');
-			
-			
+						
+
 		//insertamos jquery por defecto
 		$this->add_js_scripts(PATH_ROOT_JS .'jquery.js');
 		
