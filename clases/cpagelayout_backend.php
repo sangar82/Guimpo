@@ -33,8 +33,14 @@ class Cpagelayout_backend extends Cpagebase {
 		
 		//insertamos estilos por defecto
 		$this->add_styles(PATH_ROOT_CSS. 'styles.css');
-		
+				
 		Cpagelayout_backend::Cpagebase();
+		
+		//Creamos el objeto de lenguage
+		$this->m_language = new Clanguage(ADMIN_LANGUAGE);
+	
+		//asignamos el valor del lenguaje actual
+		$this->m_actual_language = ADMIN_LANGUAGE; 		
 		
 		//Hacemos que el backend este protegido por sesión
 		$this->get_session()->check();

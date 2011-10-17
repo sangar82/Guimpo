@@ -37,13 +37,11 @@ input:focus, textarea:focus, select:focus{
 
 .rfloat{
   float:right;
-  
   text-align:right;
 }
 
 .lfloat{
   float:left;
-  
   text-align:right;
 }
 
@@ -98,7 +96,7 @@ label.error, div.error{
 #paginat{
   position:relative;
   margin-top:20px;
-  left:12px;
+  left:3px;
   font-size:11px;
 }
 
@@ -135,6 +133,7 @@ label.error, div.error{
 
 .paginat_seleccionable{
 	cursor:pointer;
+	text-decoration:none;
 }
 
 .paginat_seleccionable:hover{

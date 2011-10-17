@@ -20,7 +20,7 @@ class Cpagebase
 	
 	private $m_heredoc_scripts;
 	
-	private $m_language;
+	var $m_language;
 	var $m_default_language;
 	var $m_actual_language;
 	
@@ -59,7 +59,7 @@ class Cpagebase
 		
 		//Creamos el objeto de lenguage
 		$this->m_language = new Clanguage(Cutils::get_actual_lng());
-	
+
 		
 		//asignamos el valor del lenguaje actual
 		$this->m_actual_language = Cutils::get_actual_lng(); 

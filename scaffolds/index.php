@@ -4211,21 +4211,18 @@ $text .= $sl.$sl."if (\$items){";
   $text .= $sl.$sl.$tab."echo \"<br /><br /> \"; ";
 
   if ( $arrayjson['type'] == 'webform_relational')  {
-    $text .= $sl.$tab."echo \"<a href='/".$arrayjson['name']."/create/\$return/'>\".\$this->translate('new_item').\"</a>\"; ";
+    $text .= $sl.$tab."echo \"<a href='/".$arrayjson['name']."/create/\$return/' class='create'>\".\$this->translate('new_item').\"</a>\"; ";
   } else if ( $arrayjson['type'] == 'webform')  {
-    $text .= $sl.$tab."echo \"<a href='/".$arrayjson['name']."/create/'>\".\$this->translate('new_item').\"</a>\"; ";
+    $text .= $sl.$tab."echo \"<a href='/".$arrayjson['name']."/create/' class='create'>\".\$this->translate('new_item').\"</a>\"; ";
   }
   
 $text .= $sl.$sl."}else";
   
   if ( $arrayjson['type'] == 'webform_relational')  {
-    $text .= $sl.$tab."echo \"\".\$this->translate('no_items').\" <a href='/".$arrayjson['name']."/create/\$return/'>\".\$this->translate('new_item').\"</a>\"; ";
+    $text .= $sl.$tab."echo \"\".\$this->translate('no_items').\" <a href='/".$arrayjson['name']."/create/\$return/' class='create'>\".\$this->translate('new_item').\"</a>\"; ";
     $text .= $sl.$sl.$tab."echo \" <br><br><a href='/".$name_of_relation."/list/'>\".\$this->translate('return_to', array('".$name_of_relation."')).\" </a>\"; ";
   } else if ( $arrayjson['type'] == 'webform')  {
-    $text .= $sl.$tab."echo \"\".\$this->translate('no_items').\" <a href='/".$arrayjson['name']."/create/'>\".\$this->translate('new_item').\"</a>\"; ";
-    
-    $text .= $sl.$sl.$tab."echo \"<br/><br/><a href='/'>Volver al inicio</a>\"";
-    
+    $text .= $sl.$tab."echo \"\".\$this->translate('no_items').\" <a href='/".$arrayjson['name']."/create/' class='create'>\".\$this->translate('new_item').\"</a>\"; "; 
   }
 $text .= $sl."?>";
 
