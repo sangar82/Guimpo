@@ -3500,6 +3500,8 @@ $text .= $sl."\$metas = array('nocache'=>'' );";
 $text .=$sl.$sl."\$layout	= new Cpagelayout_frontend( \$names_section ); ";
 
   $text .=$sl.$tab."\$layout->set_page_metas(\$metas);";
+  $text .=$sl.$tab."\$layout->set_page_js_scripts(PATH_ROOT_JS . 'tableformat.js');";
+  
 
   if ( $arrayjson['type'] == 'webform_relational')  {
     

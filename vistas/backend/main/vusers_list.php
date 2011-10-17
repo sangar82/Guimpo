@@ -16,6 +16,7 @@ if ($users){
       echo "<th>". $this->translate('lastname')."</th>";
       echo "<th>". $this->translate('created')."</th>";
       echo "<th>". $this->translate('updated')."</th>";
+      echo "<th colspan='3'>". $this->translate('options')."</th>";
       
     echo "</thead>";
     echo "<tbody>";

@@ -14,6 +14,10 @@ input:focus, textarea:focus, select:focus{
   border:1px solid black;
 }
 
+.formattable{
+	font-size:13px;
+}
+
 .formattable th {
   padding:10px 20px 10px 20px;
   text-align:left;
@@ -27,8 +31,8 @@ input:focus, textarea:focus, select:focus{
   vertical-align: middle;
 }
 
-.hovertr{
-	background:#C6D5E1 !important;
+.formattable tr:hover td {
+  background: #C6D5E1;
 }
 
 .rfloat{
@@ -313,5 +317,7 @@ label.error, div.error{
 #adminlogout a{
 	color:#ddd;
 }
+
+
 
 
