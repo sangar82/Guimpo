@@ -201,6 +201,7 @@ class Cform_construct
 	
 	function fill_object_from_bd($resultat)
 	{
+		
 		// Por cada uno de los objetos del formulario miramos si hay un $_request con la misma key y si es asi le ponemos el valor al objecto
 		foreach ($this->m_form_object->get_objects() as $obj)
 		{
@@ -214,10 +215,11 @@ class Cform_construct
 				foreach( $resultat as $key => $value )
 				{
 					// Miramos que los objectos que recojemos pertenezcan al formulario
+					
 
-						if ($name_without_formname == $key)
+						if ($name_without_formname === $key)
 						{
-						  
+					
 						     switch($type_obj){
 						       
 						       case 'radio':
@@ -255,7 +257,10 @@ class Cform_construct
 						         $obj->set_value($value);
 						         break;
 						         
+						         
+						         
 						     }
+						     
 						     
 						      
 						  /*
@@ -320,7 +325,7 @@ class Cform_construct
 				{
 					// Miramos que los objectos que recojemos pertenezcan al formulario
 
-						if ($name_without_formname == $key)
+						if ($name_without_formname === $key)
 						{
 							// Si es un radio no hemos de asignar valor porque ya lo tiene, si no elegir el que toca
 							if ($type_obj == "radio")

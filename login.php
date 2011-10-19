@@ -10,7 +10,8 @@
   $names_section = array( 
     "top" 			=> 	"vtop_empty", 
     "menu" 			=> 	"vmenu", 
-    "main" 			=> 	"vlogin",
+   // "main" 			=> 	"vlogin",
+    "main" 			=> 	"vsignuplogin",
     "footer"		=>	"vfooter"
   );
 	
@@ -26,6 +27,7 @@
 	$metas = array('nocache'=>'');
 	
   $layout	= new Cpagelayout_frontend($names_section);
+  $layout->set_page_styles(PATH_ROOT_CSS . "styles.css");
   $layout->set_page_forms($array_forms); 
   $layout->set_page_heredoc($heredoc);
 	$layout->Display();

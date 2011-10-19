@@ -258,6 +258,103 @@ label.error, div.error{
 }
 
 
+/*login*/
+.login_box_container{
+  margin:0px auto;
+  width:940px;
+}
+
+.login_box_right{
+  margin-bottom:80px;
+  width:464px;
+  height:auto;
+  float:right;
+  margin-left:0px;
+}
+
+.login_box_left{
+  position:relative;
+  left:-10px;
+  width:464px;
+  height:auto;
+  margin-bottom:80px;
+  float:left;
+  margin-right:0px;
+}
+
+.login_box_top{
+  width:464px;
+  height:22px;
+  line-height:22px;
+  padding-left:10px;
+  background:#4E5E6F;
+  background-position: -4px -350px;
+  font-size:13px;
+  color:#fff;
+  font-weight:bold;
+}
+
+.login_box_cont{
+  position:relative;
+  width:442px;
+  height:auto;
+  background:#f7f7f7;
+  border:1px solid #bfbfbf;
+  padding:15px;
+  margin-bottom:10px;
+  border-bottom-right-radius:4px;
+  -moz-border-radius-bottomright:4px;
+  -webkit-border-bottom-right-radius::4px;
+  border-bottom-left-radius:4px;
+  -moz-border-radius-bottomleft:4px;
+  -webkit-border-bottom-left-radius::4px;
+  border-top:0px;
+  padding-bottom:20px;
+  font-size:12px;
+  height:150px;
+  text-align:justify;
+}
+
+.login_box_cont table,.login_box_cont input {
+	font-size:13px;
+}
+
+.login_box_cont  #submit {
+	position:relative;
+	top:28px;
+}
+
+.login_box_cont > a {
+  position:relative;
+  top:20px;
+}
+
+.login_box_cont input[type=text], .login_box_cont input[type=password] {
+	width:250px;
+}
+
+.captcha_info{
+  color:red;
+  display:inline-block;
+  margin-bottom:20px;
+  margin-top:20px;
+}
+
+#recaptcha_image{
+  margin-bottom:10px;
+}
+
+.helper{
+  color:#6F6F6F;
+  font-size:11px;
+  position:relative;
+  top:5px;
+}
+
+/*fi login*/
+
+
+
 
 
 

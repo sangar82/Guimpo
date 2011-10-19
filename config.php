@@ -35,7 +35,7 @@ define( "MAX_ITEMS", 12);
 define( "EXPIRE_COOKIES_MSG",  600000) ;
 
 define('LANGUAGES', 'es-ca-en');
-define('ADMIN_LANGUAGE', 'ca');
+define('ADMIN_LANGUAGE', 'es');
 
 define('DBDRIVER','mysql');
 define('HOST', 'localhost');

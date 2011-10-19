@@ -1,9 +1,9 @@
 <?php
 
-require_once( '../config.php' );
+require_once( 'config.php' );
 require_once( PATH_ROOT_CLASES. 'cusers.php');
 require_once( PATH_ROOT_CLASES. 'cutils.php');
-require_once( PATH_ROOT_CLASES . 'cpagelayout_backend.php');
+require_once( PATH_ROOT_CLASES . 'cpagelayout_frontend.php');
 require_once( PATH_ROOT_CLASES . 'cform_construct_user.php');
 
 
@@ -24,13 +24,13 @@ $metas = array(
 
 
 //incluimos el formulario de usuarios y lo añadimos al array de formularios
-$newuser = new Cform_construct_user('cformusers','es','new', '', 'backend');
+$newuser = new Cform_construct_user('cformusers','es','new', '',  'frontend');
 $array_forms['cformusers'] = $newuser; 	
 
 //incluimos la validacion por javascript
 $heredoc = Cutils::get_scripts_heredoc_form_validation($array_forms , 'repassword' );
 
-$layout	= new Cpagelayout_backend($names_section);
+$layout	= new Cpagelayout_frontend($names_section);
   $layout->set_page_forms($array_forms);
   $layout->set_page_heredoc($heredoc);
   $layout->set_var('form_type', 'new');

@@ -11,6 +11,7 @@ inicio=Inicio
 usuarios=Usuarios
 login=Login
 salir=Salir
+logout=Salir
 volver_atras=Volver atràs
 
 /*Menu*/
@@ -27,7 +28,17 @@ password=Contraseña
 name=Nombre
 lastname=Apellidos
 repite_password=Repite el password
+email=Email
+repite_email=Repite el email
 create_new_user=Crear un usuario nuevo
+forgotpassword=¿Has olvidado la contraseña?
+newuser=Nuevo usuario
+newusert=Al crear un nuevo usuario podrá realizar sus gestiones rápidamente en las próximas acciones, sin necesidad de facilitarnos todos sus datos otra vez.
+newuserl=Soy un nuevo usuario
+userreg=Ya soy usuario
+cuser=Nuevo Usuario
+uuser=Editar Usuario
+type=Tipo de usuario
 
 /*Users*/
 

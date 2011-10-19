@@ -35,11 +35,6 @@ echo "<table class='formtable'>";
     echo "<td> ". $this->translate('repite_email') ." </td>";
     echo "<td> ". $form->get_form_object('re_email')->display(true) ." </td>";
   echo "</tr>";
-  
-  echo "<tr>";
-    echo "<td> ". $this->translate('type') ." </td>";
-    echo "<td> ". $form->get_form_object('type')->display(true) ." </td>";
-  echo "</tr>";
 
   echo "<tr>";
     echo "<td> ". $this->translate('name') ." </td>";
@@ -59,13 +54,12 @@ echo "<table class='formtable'>";
         echo  $form->get_form_object('user_id')->display(true);
         
       }    
+      echo  $form->get_form_object('type')->display(true);
       echo  $form->get_form_object('submit')->display(true);
       
-      echo "&nbsp;&nbsp; <a href='/admin/users_list.php' class='return'>". $this->translate("volver_atras") ."</a>";
+      echo "&nbsp;&nbsp; <a href='/' class='return'>". $this->translate("volver_atras") ."</a>";
     echo "</td>";
   echo "</tr>";
-  
-  
   
 echo "</table>";
 

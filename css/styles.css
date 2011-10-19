@@ -337,6 +337,13 @@ label.error, div.error{
 	color:#ddd;
 }
 
+.helper{
+	color:#6F6F6F;
+	font-size:11px;
+	position:relative;
+	top:5px;
+}
+
 
 
 

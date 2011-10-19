@@ -190,6 +190,9 @@ HTML;
   							  password_again: {
   							    equalTo: "#password"
   							  },
+  							  email_again: {
+  							    equalTo: "#email"
+  							  },
 HTML;
    				
   					}

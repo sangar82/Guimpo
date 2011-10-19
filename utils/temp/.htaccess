@@ -18,6 +18,11 @@ RewriteRule ^logout$ /logout/ [R]
 RewriteRule ^logout/$ /logout.php [QSA,L]
 #Fi Reglas htaccess para login
 
+#Reglas htaccess para el registro de usuarios
+RewriteRule ^newuser$ /newuser/ [R] 
+RewriteRule ^newuser/$ /new_user.php [QSA,L]
+#Fi Reglas htaccess para el registro de usuarios
+
 
 #Reglas htaccess para usuarios
 RewriteRule ^admin/users/create$ /admin/users/create/ [R] 

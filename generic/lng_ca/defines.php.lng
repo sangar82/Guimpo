@@ -12,6 +12,7 @@ inicio=Inici
 usuarios=Usuaris
 login=Login
 salir=Sortir
+logout=Sortir
 volver_atras=Tornar enrere
 
 /*Menu*/
@@ -35,7 +36,7 @@ create_new_user=Crear un nou usuari
 
 /*formularios*/
 
-confirm_delete=Estàs segur d'esborrar aquest registre?
+confirm_delete=Estàs segur de borrar aquest registre?
 wait=Espera un moment, si us plau
 return_to_menu=Tornar l'inici
 list_of=Llistat de %0%

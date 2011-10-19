@@ -28,6 +28,7 @@ $metas = array(
 $layout	= new Cpagelayout_backend($names_section);
 
   $users = Cusers::item_list();
+  $layout->set_page_js_scripts(PATH_ROOT_JS. 'tableformat.js');
   $layout->set_var('users', $users);
   
 

@@ -10,34 +10,40 @@ class Cusers {
 	var $m_lastname;
 	var $m_username;
 	var $m_password;
+	var $m_type;
+	var $m_email;
 	var $m_created;
 	var $m_updated;
 	
 	
-  function Cusers($id = '', $username = '', $password = '', $name = '', $lastname = ''){ 
+  function Cusers($id = '', $username = '', $password = '', $name = '', $lastname = '', $email = '', $type = ''){ 
 		
     if ($id == ''){
       
-			$this->m_name 	  	   =  $name;
-			$this->m_lastname 	   =  $lastname;    
-			$this->m_username 	   =  $username;
-			$this->m_password 	   =  md5($password);
+			$this->m_name 	  	   		=  $name;
+			$this->m_lastname 	   	=  $lastname;    
+			$this->m_username 	   	=  $username;
+			$this->m_password 	   	=  md5($password);
+			$this->m_email						= 	$email;
+			$this->m_type							= 	$type;
 			
 		}else{
 		  
 		  $this->m_id			= $id;
 			
 			$con = new cdatabase(array('host'=>HOST, 'user'=>USER, 'dbname'=>DBNAME, 'password'=>PASSWORD), DBDRIVER );
-			$query = "SELECT name, lastname, username, password, created, updated FROM users WHERE id=$id ";
+			$query = "SELECT name, lastname, username, password, type, email, created, updated FROM users WHERE id=$id ";
 			$user = $con->fetch_one_result($query);
 
 			
-			$this->m_name 	  	= $user['name'];
-			$this->m_lastname 	= $user['lastname'];
+			$this->m_name 	  			= $user['name'];
+			$this->m_lastname 		= $user['lastname'];
 			$this->m_username  	= $user['username'];
 			$this->m_password  	= $user['password'];
-			$this->m_created  	= $user['created'];
-			$this->m_updated  	= $user['updated'];
+			$this->m_email  				= $user['email'];
+			$this->m_type	  				= $user['type'];
+			$this->m_created  			= $user['created'];
+			$this->m_updated  		= $user['updated'];
 			
 		}
 		
@@ -52,7 +58,7 @@ class Cusers {
     
     $con = new cdatabase(array('host'=>HOST, 'user'=>USER, 'dbname'=>DBNAME, 'password'=>PASSWORD), DBDRIVER );
     
-    $sql = "INSERT INTO users ( name, lastname, username, password) VALUES ('".$this->m_name."', '".$this->m_lastname."', '".$this->m_username."', '".$this->m_password."')";
+    $sql = "INSERT INTO users ( name, lastname, username, password, type, email) VALUES ('".$this->m_name."', '".$this->m_lastname."', '".$this->m_username."', '".$this->m_password."', '".$this->m_type."', '".$this->m_email."')";
     
     $result = $con->insert( $sql );
     
@@ -63,16 +69,18 @@ class Cusers {
   }
   
   
-  function edit($name = '' , $lastname = '', $username = '', $password = ''){
+  function edit($name = '' , $lastname = '', $username = '', $password = '', $email = '', $type = ''){
     
     $con = new cdatabase(array('host'=>HOST, 'user'=>USER, 'dbname'=>DBNAME, 'password'=>PASSWORD), DBDRIVER );
     
     $query = "UPDATE users SET ";
 		
-    $query.= ($name != '')		    ?	"name='$name', "			                  :		"";	
-		$query.= ($lastname != '')		?	"lastname='$lastname', " 			          :		"";
-		$query.= ($username != '')		?	"username='$username', "			          :		"";
-		$query.= ($password != '')		?	"password='".md5($password) ."', "			:		"";
+    $query.= ($name != '')		    	?		"name='$name', "			                  				:		"";	
+		$query.= ($lastname != '')		?		"lastname='$lastname', " 			         		 	:		"";
+		$query.= ($username != '')		?		"username='$username', "			          		:		"";
+		$query.= ($email != '')					?		"email='$email', "			          								:		"";
+		$query.= ($type != '')						?		"type='$type', "			          									:		"";
+		$query.= ($password != '')		?		"password='".md5($password) ."', "			:		"";
 		$query.= " updated=now()";
 			
 		$query.= " WHERE id=".$this->m_id.";";
@@ -91,7 +99,7 @@ class Cusers {
     
     $con = new cdatabase(array('host'=>HOST, 'user'=>USER, 'dbname'=>DBNAME, 'password'=>PASSWORD), DBDRIVER );
     
-    $sql = "SELECT id, name, lastname, username, password, created, updated FROM users ORDER BY id desc";
+    $sql = "SELECT id, name, lastname, username, password, type, email, created, updated FROM users ORDER BY id desc";
     
     $result = $con->fetch_array($sql);
     
@@ -123,7 +131,7 @@ class Cusers {
 	  
 	  $con = new cdatabase(array('host'=>HOST, 'user'=>USER, 'dbname'=>DBNAME, 'password'=>PASSWORD), DBDRIVER );
 	  
-	  $sql = "SELECT id, name, lastname, username, password, created, updated FROM users WHERE id=". $this->m_id;
+	  $sql = "SELECT id, name, lastname, username, password, type, email, created, updated FROM users WHERE id=". $this->m_id;
     
     $result = $con->fetch_one_result($sql);
     
@@ -139,7 +147,7 @@ class Cusers {
 	  
 	  $con = new cdatabase(array('host'=>HOST, 'user'=>USER, 'dbname'=>DBNAME, 'password'=>PASSWORD), DBDRIVER );
 	  
-	  $sql = "SELECT id, name, lastname, username, password, created, updated FROM users WHERE username='". $username ."' and password = '".md5($password)."';";
+	  $sql = "SELECT id, name, lastname, username, password, type, email, created, updated FROM users WHERE username='". $username ."' and password = '".md5($password)."';";
 	   
 	  $result = $con->fetch_one_result($sql);
     

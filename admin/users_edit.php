@@ -26,11 +26,19 @@ $metas = array(
 $id  = Cutils::get_filtered_params('id', 1, 0, 1, 0);
 
 //incluimos el formulario de usuarios y lo añadimos al array de formularios
-$newuser = new Cform_construct_user('cformusers','es','edit', $id);
+$newuser = new Cform_construct_user('cformusers','es','edit', $id, 'backend');
 $array_forms['cformusers'] = $newuser; 
 
 //incluimos la validacion por javascript
 $heredoc = Cutils::get_scripts_heredoc_form_validation($array_forms , 'repassword' );
+
+$heredoc .= <<< html
+<script>
+		$(document).ready(function(){
+	        $("#re_email").val($("#email").val()); 
+	 });
+</script>
+html;
 
 $layout	= new Cpagelayout_backend( $names_section );
   $layout->set_page_heredoc($heredoc);

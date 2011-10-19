@@ -16,6 +16,7 @@ CREATE TABLE users (
     username character varying(256) NOT NULL,
     password character varying(256) NOT NULL,
     type character varying(32) NOT NULL,
+    email character varying(256) NOT NULL,
     created timestamp without time zone DEFAULT now() NOT NULL,
     updated timestamp without time zone DEFAULT now() NOT NULL
 );
@@ -29,6 +30,7 @@ CREATE TABLE users (
    `username` varchar(256) NOT NULL,
    `password` varchar(256) NOT NULL,
    `type` varchar(256) NOT NULL,
+   `email` varchar(256) NOT NULL,
    `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE  
 CURRENT_TIMESTAMP,
    `updated` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
