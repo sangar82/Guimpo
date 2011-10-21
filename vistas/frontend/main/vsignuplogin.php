@@ -4,7 +4,9 @@ $form = $this->get_form_by_name('cformlogin');
 $form->open_form_display();
 
 //Web informacino
-echo $this->get_web_information('login');
+//echo $this->get_web_information('login');
+
+echo $this->get_web_information(); 
 
 
 echo "<div class='login_box_container'>"; 
@@ -22,7 +24,7 @@ echo "<div class='login_box_container'>";
 					echo "<h3>". $this->translate('newuserl') ."</h3>
 					<p> ". $this->translate('newusert') ."</p><br>";
 					
-					echo "<a href='/admin/users/create/' class='create rfloat'>". $this->translate('create_new_user')."</a>";
+					echo "<a href='/newuser/' class='create rfloat'>". $this->translate('create_new_user')."</a>";
 
 		echo "</div>";
 		
@@ -55,7 +57,7 @@ echo "<div class='login_box_container'>";
 					echo "</td>";
 					echo "<td>";
 						echo "<div>". $form->get_form_object('password')->display(true) ."</div>";
-						echo "<span class='helper'> <a href='/'>".$this->get_language()->get_element_generic('forgotpassword')."</a> </span>";
+						echo "<span class='helper'> <a href='/reminder_password/'>".$this->get_language()->get_element_generic('forgotpassword')."</a> </span>";
 					echo "</td>";
 				echo "</tr>";
 				

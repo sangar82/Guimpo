@@ -315,6 +315,24 @@ HTML;
   
     return $ret;
   }
+  
+  /**
+  * Función que crea un string aleatorio para confirmar un nuevo usuario
+  *
+  * @param int $length Número de dígitos a crear
+  * @return string
+  */		
+  static function randomkeys($length){
+    $key = "";
+    //$pattern = "1234567890abcdefghijklmnopqrstuvwxyz!@#%&/()=[]{}+-*_ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    $pattern = "1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    $length_pattern = strlen($pattern)-1;
+    
+    for($i=0;$i<$length;$i++){
+      $key .= $pattern{rand(0,$length_pattern)};
+    }
+    return $key;
+  }
 
 }//end cutils
 ?>

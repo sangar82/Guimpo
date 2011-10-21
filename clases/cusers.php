@@ -2,6 +2,7 @@
 
 require_once(PATH_ROOT_CLASES . 'cdatabase.php');
 require_once(PATH_ROOT_CLASES . 'cpaginado.php');
+require_once(PATH_ROOT_CLASES . 'cutils.php');
 
 class Cusers {
   
@@ -156,6 +157,82 @@ class Cusers {
     else 
       return $result['id'];
 	     
+	}
+	
+	static function exist_email($email){
+		
+		$con = new cdatabase(array('host'=>HOST, 'user'=>USER, 'dbname'=>DBNAME, 'password'=>PASSWORD), DBDRIVER );
+	  
+	  $sql = "SELECT id, email FROM users WHERE email='". $email ."';";
+	   
+	  $result = $con->fetch_one_result($sql);
+    
+    if($result == 0 || $result == -2)
+      return false;
+    else 
+      return $result;
+	}
+	
+	static function check_hash_change_email($hash){
+		
+		$con = new cdatabase(array('host'=>HOST, 'user'=>USER, 'dbname'=>DBNAME, 'password'=>PASSWORD), DBDRIVER );
+	  
+	  $sql = "SELECT id, hash FROM users WHERE hash='". $hash ."';";
+	   
+	  $result = $con->fetch_one_result($sql);
+    
+    if($result == 0 || $result == -2)
+      return false;
+    else 
+      return $result;
+		
+	}
+	
+	static function create_hash_change_email($id){
+		
+		$hash = Cutils::randomkeys('40');
+		
+		$con = new cdatabase(array('host'=>HOST, 'user'=>USER, 'dbname'=>DBNAME, 'password'=>PASSWORD), DBDRIVER );
+    
+    $query = "UPDATE users SET hash='$hash', updated=now() WHERE id = $id ";
+		
+		$result = $con->update($query);
+		
+    if ($result)
+      return $hash;
+    else 
+      return false;	
+		
+	}
+	
+	
+	static function change_password($hash, $newpassword){
+		
+				$con = new cdatabase(array('host'=>HOST, 'user'=>USER, 'dbname'=>DBNAME, 'password'=>PASSWORD), DBDRIVER );
+    
+		    $query = "UPDATE users SET password='".md5($newpassword)."', hash='',  updated=now() WHERE hash = '$hash' ";
+				
+				$result = $con->update($query);
+				
+		    if ($result)
+		      return true;
+		    else 
+		      return false;	
+	}
+	
+	static function get_email_from_hash($hash){
+		
+		$con = new cdatabase(array('host'=>HOST, 'user'=>USER, 'dbname'=>DBNAME, 'password'=>PASSWORD), DBDRIVER );
+	  
+	  $sql = "SELECT id, email FROM users WHERE hash='". $hash ."';";
+	   
+	  $result = $con->fetch_one_result($sql);
+    
+    if($result == 0 || $result == -2)
+      return false;
+    else 
+      return $result['email'];		
+		
 	}
 	
   

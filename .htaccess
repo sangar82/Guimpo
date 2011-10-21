@@ -12,17 +12,27 @@ RewriteRule ^login$ /login/ [R]
 RewriteRule ^login/$ /login.php [QSA,L]
 #Fi Reglas htaccess para login
 
-
 #Reglas htaccess para login
 RewriteRule ^logout$ /logout/ [R] 
 RewriteRule ^logout/$ /logout.php [QSA,L]
 #Fi Reglas htaccess para login
 
-
 #Reglas htaccess para el registro de usuarios
 RewriteRule ^newuser$ /newuser/ [R] 
 RewriteRule ^newuser/$ /new_user.php [QSA,L]
 #Fi Reglas htaccess para el registro de usuarios
+
+#Reglas htaccess para el recordar contraseña
+RewriteRule ^reminder_password$ /reminder_password/ [R] 
+RewriteRule ^reminder_password/$ /reminderpass_create.php [QSA,L]
+#Reglas htaccess para el recordar contraseña
+
+#Reglas htaccess para el cambio de password
+RewriteRule ^change_password$ /change_password/ [R] 
+RewriteRule ^change_password/$ /login/ [R]
+RewriteRule ^change_password/([a-zA-Z0-9-]+)$ /change_password/$1/ [R] 
+RewriteRule ^change_password/([a-zA-Z0-9-]+)/$ /changepass_create.php?hash=$1 [QSA,L] 
+#Reglas htaccess para el cambio de password
 
 
 #Reglas htaccess para usuarios
@@ -49,4 +59,3 @@ RewriteRule ^admin/users/delete/$ /admin/users/list/ [R]
 RewriteRule ^admin/users/delete/([0-9]+)$ /admin/users/delete/$1/ [R] 
 RewriteRule ^admin/users/delete/([0-9]+)/$ /admin/users_actions.php?id=$1&a=delete [QSA,L]
 #Fi Reglas htaccess para usuarios
-

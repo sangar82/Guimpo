@@ -2,7 +2,7 @@
    Project:         guimpo.com
    Section:         languages
    Version:         1
-   Modication Date: 17-10-2011
+   Modication Date: 19-10-2011
 */
 
 
@@ -17,6 +17,34 @@ volver_atras=Tornar enrere
 
 /*Menu*/
 
+/*Mailing*/
+
+info_reminder=Si ha oblidat la seva contrasenya pot sol.licitar-la via email. Si us plau, escrigui l'email amb el que es va donar d'alta i li enviarem al seu correu un enllaç per poder canviar-la.
+info_changing=Introdueixi la nova contrasenya per canviar-la
+intro_email=Introdueixi el seu email
+hola=Hola!
+intro_change_pass=Hem rebut la seva sol.licitud per canviar la contrasenya d'accés a la nostra pàgina.
+for_change_pass=Per canviar la contrasenya, %0%
+click_aqui=fagi click aquí
+mgracias=Moltes Gracies!
+grettings=L'equip de %0%
+no_reply=Si us plau, no respongui aquest missatge, ha estat enviat automàticament.
+subject_pet=Petició de canvi de contrasenya a %0%
+pet_email_send=Un email ha estat enviat al seu correu perque pugui canviar la contrasenya.
+pet_email_error=S'ha produit un error enviant l'email de canvi de contrasenya.
+not_email=L'email introduit no existeix.
+pass_changed=L'informem que la seva contrasenya ha estat canviada correctament.
+subject_chang=Contrasenya canviada per %0%
+pass_chang=Contrasenya canviada correctament
+error_chang=S'ha produit un error enviant l'email de confirmació de canvi de contrasenya
+error_chang_p=S'ha produit un error en el canvi de contrasenya
+pass_not_equal=Les contrasenyes no coincideixen
+cambia_contra=Canvi de contrasenya
+npassword=Nova contrasenya
+renpassword=Repeteix la nova contrasenya
+
+/*Mailing*/
+
 
 /*Users*/
 
@@ -28,8 +56,18 @@ password=Contrasenya
 name=Nom
 lastname=Cognoms
 repite_password=Repeteix el password
+email=Email
+repite_email=Repeteix l'email
 create_new_user=Crear un nou usuari
-
+forgotpassword=¿Has oblidat la contrasenya?
+newuser=Nou usuari
+newusert=Al crear un nou usuari, podrà realitzar les seves gestions ràpidament en les proximes accions, sense necessitat de facilitar-nos les seves dades una altra vegada.
+newuserl=Sóc un nou usuari
+userreg=Ja sóc usuari
+cuser=Nou Usuari
+uuser=Editar Usuari
+type=Tipus d'usuari
+reminderpass=Recordar contrasenya
 
 /*Users*/
 

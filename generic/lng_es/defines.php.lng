@@ -2,7 +2,7 @@
    Project:         guimpo.com
    Section:         languages
    Version:         1
-   Modication Date: 17-10-2011
+   Modication Date: 19-10-2011
 */
 
 /*Menu*/
@@ -16,6 +16,34 @@ volver_atras=Volver atràs
 
 /*Menu*/
 
+
+/*Mailing*/
+
+info_reminder=Si ha olvidado su contraseña puede solicitarla vía email. Por favor, escriba el e-mail con el que se registró en la página y le enviaremos a su correo un enlace para cambiarla.
+info_changing=Introduzca la nueva contraseña para cambiarla
+intro_email=Introduce tu email
+hola=Hola!
+intro_change_pass=Hemos recibido su solicitud para cambiar la contraseña de acceso a nuestra página.
+for_change_pass=Para cambiar la contraseña, %0%
+click_aqui=haga click aquí
+mgracias=Muchas Gracias!
+grettings=El equipo de %0%
+no_reply=Por favor, no responda este mensaje, ha sido enviado automáticamente.
+subject_pet=Petición de cambio de contraseña en %0%
+pet_email_send=Un email ha sido enviado a tu correo para que puedas cambiar la contraseña
+pet_email_error=Se produjo un error enviando el email de cambio de contraseña
+not_email=El email introducido no existe
+pass_changed=Le informamos que su contraseña ha sido cambiada correctamente
+subject_chang=Contraseña cambiada para %0%
+pass_chang=Contraseña cambiada correctamente
+error_chang=Se produjo un error enviando el email de confirmación de cambio de contraseña
+error_chang_p=Se produjo un error en el cambio de contraseña
+pass_not_equal=Las contraseñas no coinciden
+cambia_contra=Cambio de contraseña
+npassword=Nueva contraseña
+renpassword=Repite la nueva contraseña
+
+/*Mailing*/
 
 
 /*Users*/
@@ -39,6 +67,7 @@ userreg=Ya soy usuario
 cuser=Nuevo Usuario
 uuser=Editar Usuario
 type=Tipo de usuario
+reminderpass=Recordar contraseña
 
 /*Users*/
 
