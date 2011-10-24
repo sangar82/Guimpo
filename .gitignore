@@ -2,4 +2,4 @@
 .settings/org.eclipse.php.core.prefs
 .project
 .buildpath
-log/
+log/errors/
