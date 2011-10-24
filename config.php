@@ -45,6 +45,7 @@ define('PASSWORD','root');
 define('DBNAME','framework');
 
 //mailing
+define('EMAIL_COMPANY', "sangar1982@gmail.com");
 define('SERVER_MAIL'    , "");
 define('PORT_MAIL'      , 25);
 define('USER_MAIL'      , "");

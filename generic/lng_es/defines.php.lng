@@ -13,7 +13,8 @@ login=Login
 salir=Salir
 logout=Salir
 volver_atras=Volver atràs
-
+contacto=Contacto
+lcontacto=contacto
 /*Menu*/
 
 
@@ -42,6 +43,8 @@ pass_not_equal=Las contraseñas no coinciden
 cambia_contra=Cambio de contraseña
 npassword=Nueva contraseña
 renpassword=Repite la nueva contraseña
+email_contact_send_ok=Email de contacto enviado correctamente
+email_contact_send_ko=Error enviando email de contacto
 
 /*Mailing*/
 
@@ -57,6 +60,9 @@ name=Nombre
 lastname=Apellidos
 repite_password=Repite el password
 email=Email
+poblacion=Población
+telefono=Teléfono
+comentarios=Comentarios
 repite_email=Repite el email
 create_new_user=Crear un usuario nuevo
 forgotpassword=¿Has olvidado la contraseña?

@@ -8,6 +8,12 @@ body, table, input, radio, select, textarea {
 
 .formtable td { 
   height:50px;
+  vertical-align:top;
+}
+
+.formtable td textarea{
+	margin-bottom:10px;
+	width:400px;
 }
 
 input:focus, textarea:focus, select:focus{
@@ -62,6 +68,7 @@ input:focus, textarea:focus, select:focus{
 label.error, div.error{
 	font-weight:bold;
 	color:red;
+	font-size:13px;
 }
 
 .info_ok{

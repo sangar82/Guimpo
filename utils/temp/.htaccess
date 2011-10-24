@@ -33,6 +33,17 @@ RewriteRule ^change_password/([a-zA-Z0-9-]+)$ /change_password/$1/ [R]
 RewriteRule ^change_password/([a-zA-Z0-9-]+)/$ /changepass_create.php?hash=$1 [QSA,L] 
 #Reglas htaccess para el cambio de password
 
+#Reglas htaccess para el contacto
+RewriteRule ^contacto$ /contacto/ [R] 
+RewriteRule ^contacto/$ /contact_create.php [QSA,L]
+
+RewriteRule ^contacte$ /contacte/ [R] 
+RewriteRule ^contacte/$ /contact_create.php [QSA,L]
+
+RewriteRule ^contact$ /contact/ [R] 
+RewriteRule ^contact/$ /contact_create.php [QSA,L]
+#Reglas htaccess para el contacto
+
 #Reglas htaccess para usuarios
 RewriteRule ^admin/users/create$ /admin/users/create/ [R] 
 RewriteRule ^admin/users/create/$ /admin/users_create.php [QSA,L]

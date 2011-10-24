@@ -14,7 +14,8 @@ login=Login
 salir=Sortir
 logout=Sortir
 volver_atras=Tornar enrere
-
+contacto=Contacte
+lcontacto=contacte
 /*Menu*/
 
 /*Mailing*/
@@ -42,6 +43,8 @@ pass_not_equal=Les contrasenyes no coincideixen
 cambia_contra=Canvi de contrasenya
 npassword=Nova contrasenya
 renpassword=Repeteix la nova contrasenya
+email_contact_send_ok=Email de contacte enviat correctament
+email_contact_send_ko=Error enviant email de contacte
 
 /*Mailing*/
 
@@ -57,6 +60,9 @@ name=Nom
 lastname=Cognoms
 repite_password=Repeteix el password
 email=Email
+poblacion=Població
+telefono=Telèfon
+comentarios=Comentaris
 repite_email=Repeteix l'email
 create_new_user=Crear un nou usuari
 forgotpassword=¿Has oblidat la contrasenya?
