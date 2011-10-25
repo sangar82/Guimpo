@@ -11,13 +11,13 @@ body, table, input, radio, select, textarea {
   vertical-align:top;
 }
 
+.signtable td{
+  vertical-align:top;
+}
+
 .formtable td textarea{
   margin-bottom:10px;
   width:400px;
-}
-
-input:focus, textarea:focus, select:focus{
-  border:1px solid black;
 }
 
 .formattable{

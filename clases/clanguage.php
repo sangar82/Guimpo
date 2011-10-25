@@ -49,7 +49,7 @@ class Clanguage
 			{
 			  if (substr($row,0,1)!=";" && substr($row,0,2)!="<?" && substr($row,0,2)!="?>" && strpos($row,"=") !== FALSE )
 			  {
-			    list ($index, $value) = split("=",$row, 2);
+			    list ($index, $value) = explode("=",$row, 2);
 			    $this->m_generic_array[strtolower($index)] = chop($value);
 			  }
 			}

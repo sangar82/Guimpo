@@ -219,7 +219,7 @@ HTML;
 	*/	  
   static function get_web_languages(){
     
-    $array_languages = split('-', LANGUAGES);
+    $array_languages = explode('-', LANGUAGES);
     
     return $array_languages;
     

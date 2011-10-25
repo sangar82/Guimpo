@@ -534,7 +534,7 @@ class Cform_construct
 	
 	function get_name_obj_without_fornmame($name_obj){
 	  
-      $name_obj_mod = split("_", $name_obj);
+      $name_obj_mod = explode("_", $name_obj);
       
       if ($name_obj_mod[count($name_obj_mod) - 1] == 'ts'){
         return $name_obj_mod[count($name_obj_mod) - 1];
@@ -606,7 +606,7 @@ class Cform_construct
       	$php = ($url!='')?$url:htmlentities($_SERVER['PHP_SELF'],ENT_QUOTES);
       	if(strpos($php,'/')!==false) 
       	{
-      		$aux = split('/',$php);
+      		$aux = explode('/',$php);
       		$php = $aux[count($aux)-1];
       	}	
       	return $php;

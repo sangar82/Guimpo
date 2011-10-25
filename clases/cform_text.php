@@ -34,7 +34,7 @@ class Cform_text extends Cform_input
 	* @param string $title_error Enter the title for validation 
 	* @return void
 	*/
-	function Cform_text($id, $name, $class = '', $label = '', $value = '',  $mandatory = 0, $type="text", $minlenght= "", $maxlenght = 60, $size = 60, $disabled = false, $readonly = false, $tabindex = 0, $autocomplete='')
+	function Cform_text($id, $name, $class = '', $label = '', $value = '',  $mandatory = 0, $type="text", $minlenght= "", $maxlenght = 60, $size = 60, $disabled = false, $readonly = false, $tabindex = 0, $autocomplete='off')
 	{
 		$this->m_minlenght 		= $minlenght;
 		$this->m_maxlenght 		= $maxlenght;

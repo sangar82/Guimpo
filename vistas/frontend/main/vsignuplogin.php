@@ -40,7 +40,7 @@ echo "<div class='login_box_container'>";
 		echo "<div class='login_box_cont'>";
 	
 			
-			echo "<table cellspaccing='5' cellpadding='5'>";
+			echo "<table cellspaccing='5' cellpadding='5' class='signtable'>";
 			
 				echo "<tr>";
 					echo "<td width='160px'>";

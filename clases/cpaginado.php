@@ -207,7 +207,7 @@ class Cpaginado
 				$result .= $this->Anterior();
 				for($i=1;$i<=$ultimaPag;$i++)
 				{
-					$result .= $this->GoTo($i);
+					$result .= $this->gotoloc($i);
 				}
 				$result .= $this->Seguent();
 			}
@@ -218,7 +218,7 @@ class Cpaginado
 					$result .= $this->Anterior();
 					for($i=1;($i<=4 && $i<=$ultimaPag);$i++)
 					{
-						$result .= $this->GoTo($i);
+						$result .= $this->gotoloc($i);
 					}
 					if($ultimaPag>5) $result .= "<span class='paginat_no_seleccionable_button'>...</span>".$this->GoTo($ultimaPag);
 					$result .= $this->Seguent();
@@ -228,11 +228,11 @@ class Cpaginado
 				{//si esta seleccionada una de les 4 ultimes pagines..
 					
 					$result .= $this->Anterior();
-					$result .= $this->GoTo(1)."<span class='paginat_no_seleccionable_button'>...</span>";
+					$result .= $this->gotoloc(1)."<span class='paginat_no_seleccionable_button'>...</span>";
 					
 					for ($i=($ultimaPag-3);$i<=$ultimaPag;$i++)
 					{
-						$result .= $this->GoTo($i);
+						$result .= $this->gotoloc($i);
 					}
 					$result .= $this->Seguent();
 					
@@ -244,14 +244,14 @@ class Cpaginado
 					//seleccionada pagina >= 4
 					
 					$result .= $this->Anterior();
-					$result.=$this->GoTo(1)."<span class='paginat_no_seleccionable_button'>...</span>";
+					$result.=$this->gotoloc(1)."<span class='paginat_no_seleccionable_button'>...</span>";
 					$primerNum = ($this->m_pag==$ultimaPag) ? ($this->m_pag-2) : ($this->m_pag-1);
 					
 					for ($i=$primerNum;$i<$primerNum+3;$i++)
 					{
-						$result .= $this->GoTo($i);
+						$result .= $this->gotoloc($i);
 					}
-					$result .= "<span class='paginat_no_seleccionable_button'>...</span>".$this->GoTo($ultimaPag);
+					$result .= "<span class='paginat_no_seleccionable_button'>...</span>".$this->gotoloc($ultimaPag);
 					$result .= $this->Seguent();
 					
 				}
@@ -279,7 +279,7 @@ class Cpaginado
 	{
 		return ($this->m_pag<$this->m_ultimaPag) ? "<span class='paginat_seleccionable_button paginat_seleccionable' onClick=\"location.href='".$this->CreaURL($this->m_pag+1)."'\"> <img src='".PATH_ADMIN_IMG."generic/icon_next.jpg' border='0'>  </span>" : "<span class='paginat_no_seleccionable_button'> <img src='".PATH_ADMIN_IMG."generic/icon_next.jpg' border='0'> </span>";
 	}
-	private function GoTo($num_pag)
+	private function gotoloc($num_pag)
 	{
 		return ($this->m_pag==$num_pag) ? "<span class='paginat_item paginat_actual'>$num_pag</span>" : "<span class='paginat_item paginat_seleccionable' onClick=\"location.href='".$this->CreaURL($num_pag)."'\">$num_pag</span>";
 	}

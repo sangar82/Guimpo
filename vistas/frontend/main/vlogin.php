@@ -10,7 +10,7 @@ echo "<div id='loginbox'>";
 echo $this->get_web_information(); 
   echo "<h1>".$this->translate('identificate')."</h1><br/>" ;
 
-  echo "<table>";
+  echo "<table class=''signtable>";
   
   	echo "<tr>";
   		echo "<td width='160'>".$this->translate('username')."</td>"; 

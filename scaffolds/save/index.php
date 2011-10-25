@@ -1731,7 +1731,7 @@ $text .=  "class C".$arrayjson['name']." { ".$sl;
       
       if ( $arrayjson['type'] == 'webform_relational')  {
         //recogemos el nombre del item al que hace referencia la galeria para recoger los parametros ke envia
-        $relation = split("_",$arrayjson['name']);
+        $relation = explode("_",$arrayjson['name']);
         $name_of_relation = $relation[0];  
         $name_of_this = $relation[1];  
       
