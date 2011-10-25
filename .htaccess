@@ -2,6 +2,8 @@ RewriteEngine On
 
 AddDefaultCharset UTF-8
 
+Options +Indexes +FollowSymlinks -MultiViews 
+
 #Redirigir a www.framework.com si ve de framework.com
 RewriteCond %{HTTP_HOST} ^guimpo.com$
 RewriteRule ^(.*)$ http://www.guimpo.com/$1 [R=301,L]
