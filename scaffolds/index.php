@@ -17,11 +17,11 @@ $sql_table  =  '';
 $webform_relational = '
 
 {
-                "name"                  : "categoria_gallery",
-                "type"                  : "webform_relational",
-                "stripped"              : "name",
-                "relation_stripped"     : true,
-                "relation_multilang"    : false, 
+                "name"                  		:	  "categoria_gallery",
+                "type"                       :		"webform_relational",
+                "stripped"              		: 	"name",
+                "relation_stripped"     	: 	 true,
+                "relation_multilang"    : 		 false, 
                 "campos"                : {
             
                             "name" : {                                        
@@ -42,6 +42,7 @@ $webform_relational = '
                                         "class"      : "",
                                         "value"      : "",
                                         "mandatory"  : "1",
+                                        "multilanguage" : false,
                                         "type"       : "image",
                                         "minlength"  : "0",
                                         "maxlength"  : "200",
@@ -106,9 +107,9 @@ $webform = '{
 
 /*
 $webform = '{
-                "name"        : "categoria",
-                "type"        : "webform",
-                "stripped"    : "name",
+                "name"					: "categoria",
+                "type"						: "webform",
+                "stripped"    	: "name",
                 "campos"      : {
             
                             "name" : {                                        
@@ -298,6 +299,13 @@ echo "<div  id='cont'>";
   
   echo "<h3>MVCgenerator</h3>";
   
+  if ( ! isset($_REQUEST['t']) )
+  	echo "<a href='/scaffolds/?t=1'>Ir a  webform_relational</a>";
+  else
+  	echo "<a href='/scaffolds/'>Ir a webform</a>";
+  
+  echo "<br><br>";	
+  	
   echo "<form method='POST'>";
   
     echo "<div style='width:1300px;height:auto;'>";

@@ -74,6 +74,9 @@ cuser=Nou Usuari
 uuser=Editar Usuari
 type=Tipus d'usuari
 reminderpass=Recordar contrasenya
+password_info=Deixi en blanc la contrasenya si no vol canviar-la.
+repassword_info=Torni a escriure de nou la contrasenya anterior.
+reemail_info=Torni a escriure el email anterior.
 
 /*Users*/
 

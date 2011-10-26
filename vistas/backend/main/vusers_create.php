@@ -16,14 +16,31 @@ echo "<table class='formtable'>";
     echo "<td> ". $form->get_form_object('username')->display(true) ." </td>";
   echo "</tr>";
 
-  echo "<tr>";
-    echo "<td width='150'> ". $this->translate('password') ." </td>";
-    echo "<td> ". $form->get_form_object('password')->display(true) ." </td>";
-  echo "</tr>";
+  if ($this->get_var('form_type') == 'new'){
+
+		  echo "<tr>";
+		    echo "<td width='150'> ". $this->translate('password') ." </td>";
+		    echo "<td> ". $form->get_form_object('password')->display(true) ." </td>";
+		  echo "</tr>";
+  
+  } else {
+  	
+  		echo "<tr>";
+		    echo "<td width='150'> ". $this->translate('password') ." </td>";
+		    echo "<td>";
+		    	echo " <div>". $form->get_form_object('password')->display(true) ." </div>";
+		    	echo "<span class='helper'> ".$this->get_language()->get_element_generic('password_info')." </span>";
+		    echo "</td>";
+		  echo "</tr>";
+  	
+  }
 
   echo "<tr>";
     echo "<td> ". $this->translate('repite_password') ." </td>";
-    echo "<td> ". $form->get_form_object('re_password')->display(true) ." </td>";
+    echo "<td> ";
+    	echo "<div> ". $form->get_form_object('re_password')->display(true) ."</div>";
+    	echo "<span class='helper'> ".$this->get_language()->get_element_generic('repassword_info')." </span>";
+    echo " </td>";
   echo "</tr>";
   
   echo "<tr>";
@@ -33,7 +50,10 @@ echo "<table class='formtable'>";
   
   echo "<tr>";
     echo "<td> ". $this->translate('repite_email') ." </td>";
-    echo "<td> ". $form->get_form_object('re_email')->display(true) ." </td>";
+    echo "<td>";
+    	echo  "<div>". $form->get_form_object('re_email')->display(true) . "</div>";
+    	echo "<span class='helper'> ".$this->get_language()->get_element_generic('reemail_info')." </span>";
+    	echo " </td>";
   echo "</tr>";
   
   echo "<tr>";

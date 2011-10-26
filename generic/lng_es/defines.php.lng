@@ -74,6 +74,9 @@ cuser=Nuevo Usuario
 uuser=Editar Usuario
 type=Tipo de usuario
 reminderpass=Recordar contraseña
+password_info=Deje en blanco la contraseña si no quiere cambiarla.
+repassword_info=Vuelva a escribir de nuevo la contraseña anterior.
+reemail_info=Vuelva a escribir el email anterior.
 
 /*Users*/
 
