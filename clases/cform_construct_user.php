@@ -3,7 +3,7 @@
 include_once("cform_construct.php");
 include_once("cusers.php");
 include_once("cimagen.php");
-include_once("cmail.php");
+include_once("cmailing.php");
 
 
 class Cform_construct_user extends  Cform_construct {

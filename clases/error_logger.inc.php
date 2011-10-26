@@ -1,4 +1,7 @@
 <?php
+
+
+require_once(PATH_ROOT_CLASES . 'cmailing.php');
  
 
 function error_logger( $error = 'Undefined error', $error_level = 'ERROR', $error_type = 'ERRORS' )
@@ -95,14 +98,12 @@ function error_logger( $error = 'Undefined error', $error_level = 'ERROR', $erro
 			}
 			else 
 			{
-				// Sends an E-Mail
-				$mail_server = $inifile['mail']['Server'];
-				$mail_port = $inifile['mail']['Port'];
-				$mail_usr = $inifile['mail']['Usr'];
-				$mail_pwd = $inifile['mail']['Pwd'];
-				$mail_from = $inifile['mail']['From'];
-				$mail_to = $inifile['mail']['To'];
-				send_error_mail( $mail_server, $mail_port, $mail_from, $mail_to, 'Error Logger', "Unnable to write the message [$error_message] to the log file [$log_file]", '', $mail_usr, $mail_pwd );
+				$mail_from = "error_logger@".DOMAIN;
+				$mail_to = EMAIL_DEVELOPER;
+				
+				$mail = new Cmailing($mail_from, $mail_to, 'Error Logger', "Unnable to write the message [$error_message] to the log file [$log_file]");
+				$x = $mail->send();
+				
 			}
 		}
 	}

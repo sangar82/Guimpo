@@ -15,14 +15,5 @@ FileNameHack=log/hack/hack_%y%m%d.log
 ;Date format for the Date Stamp in the log, in the PHP format.
 ;example d/m/Y H:i:s
 DateFormat=d/m/Y H:i:s
-
-[mail]
-Server=mail.sinermedia.com
-Port=25
-Usr=isanchez@sinermedia.com
-Pwd=isanchez
-From=info@framework.com
-To=isanchez@sinermedia.com
-
 */
 ?>

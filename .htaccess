@@ -8,7 +8,6 @@ Options +Indexes +FollowSymlinks -MultiViews
 RewriteCond %{HTTP_HOST} ^guimpo.com$
 RewriteRule ^(.*)$ http://www.guimpo.com/$1 [R=301,L]
 
-
 #Reglas htaccess para login
 RewriteRule ^login$ /login/ [R] 
 RewriteRule ^login/$ /login.php [QSA,L]
@@ -24,14 +23,14 @@ RewriteRule ^newuser$ /newuser/ [R]
 RewriteRule ^newuser/$ /new_user.php [QSA,L]
 #Fi Reglas htaccess para el registro de usuarios
 
-#Reglas htaccess para el recordar contraseña
+#Reglas htaccess para el registro de usuarios
 RewriteRule ^reminder_password$ /reminder_password/ [R] 
 RewriteRule ^reminder_password/$ /reminderpass_create.php [QSA,L]
-#Reglas htaccess para el recordar contraseña
+#Fi Reglas htaccess para el registro de usuarios
 
 #Reglas htaccess para el cambio de password
 RewriteRule ^change_password$ /change_password/ [R] 
-RewriteRule ^change_password/$ /login/ [R]
+RewriteRule ^change_password/$ /changepass_create.php [QSA,L]
 RewriteRule ^change_password/([a-zA-Z0-9-]+)$ /change_password/$1/ [R] 
 RewriteRule ^change_password/([a-zA-Z0-9-]+)/$ /changepass_create.php?hash=$1 [QSA,L] 
 #Reglas htaccess para el cambio de password
@@ -46,7 +45,6 @@ RewriteRule ^contacte/$ /contact_create.php [QSA,L]
 RewriteRule ^contact$ /contact/ [R] 
 RewriteRule ^contact/$ /contact_create.php [QSA,L]
 #Reglas htaccess para el contacto
-
 
 #Reglas htaccess para usuarios
 RewriteRule ^admin/users/create$ /admin/users/create/ [R] 
@@ -72,3 +70,4 @@ RewriteRule ^admin/users/delete/$ /admin/users/list/ [R]
 RewriteRule ^admin/users/delete/([0-9]+)$ /admin/users/delete/$1/ [R] 
 RewriteRule ^admin/users/delete/([0-9]+)/$ /admin/users_actions.php?id=$1&a=delete [QSA,L]
 #Fi Reglas htaccess para usuarios
+
