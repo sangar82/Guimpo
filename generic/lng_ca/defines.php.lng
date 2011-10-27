@@ -81,6 +81,16 @@ password_info=Deixi en blanc la contrasenya si no vol canviar-la.
 repassword_info=Torni a escriure de nou la contrasenya anterior.
 reemail_info=Torni a escriure l'email anterior.
 username_info=L'email que introdueixi será el seu nom d'usuari.
+login_incorrect=El nom d'usuari o la contrasenya introduïdes no son correctes.
+user_ok=Usuari guardat correctament
+user_ko=Error creant l'usuari. Torni a provar-ho, si us plau.
+user_edit_ok=Usuari edit correctament
+user_edit_ko=Error editant l'usuario
+passw_email_not_equal=La contrasenya i l'email no coincideixen
+passw_not_equal=Les contrasenyes no coincideix
+email_not_equal=L'email no coincideix
+user_del_ok=Usuari eliminat correctament
+user_del_ko=Error eliminant usuari
 
 /*Users*/
 
@@ -110,6 +120,8 @@ created=Creat
 updated=Modificat
 image_actual=Imatge actual
 file_actual=Arxiu actual
+del_ok=Eliminado correctamente
+del_ko=Error eliminando
 
 /*formularios*/
 

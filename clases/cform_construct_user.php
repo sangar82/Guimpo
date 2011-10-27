@@ -171,7 +171,7 @@ class Cform_construct_user extends  Cform_construct {
 							}
 							
 
-							$this->set_info_action_form_failed('El nombre de usuario ya está siendo utilizado. Escoge otro', 0);
+							$this->set_info_action_form_failed('username_taken', 1);
 						 	Clocation::header_location($path_red);
   				    exit(); 
 					} else {
@@ -218,13 +218,13 @@ class Cform_construct_user extends  Cform_construct {
 							$mailing = new Cmailing('new_user@'.DOMAIN, $user['email'], $this->m_language->translate('subject_new_user', array(DOMAIN) ), $text);
 							$email_sended = $mailing->send();    					 
       				
-      			   $this->set_info_action_form_success('Usuario guardado correctamente', 0);
+      			   $this->set_info_action_form_success('user_ok', 1);
       			   Clocation::header_location($path_redirection);
   				     exit();
     					
     				}else {
     					
-    				  $this->set_info_action_form_failed('Error creando al usuario', 0);
+    				  $this->set_info_action_form_failed('user_ko', 1);
   				    Clocation::header_location($path_redirection);
   				    exit(); 
   				  }
@@ -232,11 +232,11 @@ class Cform_construct_user extends  Cform_construct {
 				  }else{
 				  		
 				  	if($user['password'] != $user['re_password'] and $user['email'] != $user['re_email'])
-				      	$this->set_info_action_form_failed('El password y el email no coinciden', 0);
+				      	$this->set_info_action_form_failed('passw_email_not_equal', 1);
 				    else  if($user['password'] != $user['re_password'] )
-				    		$this->set_info_action_form_failed('El password no coincide', 0);
+				    		$this->set_info_action_form_failed('passw_not_equal', 1);
 				    else  if( $user['email'] != $user['re_email'] )
-				    		$this->set_info_action_form_failed('El email no coincide', 0);
+				    		$this->set_info_action_form_failed('email_not_equal', 1);
 				    		    
   				    Clocation::header_location($path_redirection);
   				    exit(); 
@@ -254,7 +254,7 @@ class Cform_construct_user extends  Cform_construct {
               $edituser->edit($user['name'] , $user['lastname'], $user['email'], $user['password'], $user['email'], $user['type']);
               
 						}else{
-				      $this->set_info_action_form_failed('El password no coincide', 0);
+				      $this->set_info_action_form_failed('passw_not_equal', 1);
   				    Clocation::header_location($path_redirection);
   				    exit(); 						  
 						}
@@ -265,13 +265,13 @@ class Cform_construct_user extends  Cform_construct {
 				  
 				  if ($edituser){
 				    
-				    $this->set_info_action_form_success('Usuario editado correctamente', 0);
+				    $this->set_info_action_form_success('user_edit_ok', 1);
 				    Clocation::header_location($path_redirection);
 				    exit();
 				    
 				  }else{
 				    
-				    $this->set_info_action_form_failed('Error editando al usuario', 0);
+				    $this->set_info_action_form_failed('user_edit_ko', 1);
 				    Clocation::header_location($path_redirection);
 				    exit();
 				    
@@ -282,27 +282,27 @@ class Cform_construct_user extends  Cform_construct {
 	}
 	
 	
-	function search_and_fill_object_from_bd()
-	{
+	function search_and_fill_object_from_bd(){
+		
 		// Buscamos en la base de datos los usuarios
 		$usuari = new Cusers($this->get_user_id());
 		$resultat = $usuari->load_user_to_array();
-	
 		
 		// Llenamos el objeto formulario con los valores de la bd
 		$this->fill_object_from_bd($resultat);
 	}
+	
 	
 	function exist_sesion_vars_for_this_form()
 	{
 		$resultat = false;
 		$sesion = new Csesion();
 		
-		if ($sesion->exists($this->get_sesion_name()))
-		{
-			$sesion_array = $sesion->get_var_session($this->get_sesion_name());
+		if ($sesion->exists($this->get_sesion_name())){
 			
+			$sesion_array = $sesion->get_var_session($this->get_sesion_name());
 			$resultat = isset($sesion_array[$this->get_form_name()]);
+			
 		}
 		
 		return $resultat;

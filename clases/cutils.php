@@ -119,11 +119,19 @@ class Cutils{
 	* @param string $info_msg Mensaje a mostrar
 	* @return void
 	*/	
-	static function set_web_information($info_action, $info_msg)
+	static function set_web_information($info_action, $info_msg, $with_language = 0)
 	{		
+		//Creamos el objeto de lenguage
+		$lng = new Clanguage(Cutils::get_actual_lng());
+		
 		//Creamos una cookie con el mensaje a mostrar
 		$cookie = new Ccookie('infos', EXPIRE_COOKIES_MSG, true);
-		$msg_array = array('info_action' => $info_action, 'info_msg' => $info_msg );
+		
+		if ($with_language)
+			$msg_array = array('info_action' => $info_action, 'info_msg' => $lng->get_element_generic($info_msg) );
+		else
+			$msg_array = array('info_action' => $info_action, 'info_msg' => $info_msg );
+			
 	  $cookie->WriteCookie($msg_array);
 	}
 

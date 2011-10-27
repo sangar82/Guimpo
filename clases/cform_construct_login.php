@@ -22,12 +22,12 @@ class Cform_construct_login extends  Cform_construct
 		
 		
 		//Nombre de usuario
-		$username = new Cform_text('username',$this->get_form_name().'_username','', '', '', 1, 'text', 3, 60, 25);
+		$username = new Cform_text('username',$this->get_form_name().'_username','', '', '', 1, 'text', 3, 60, 25, '', '', '', 'on');
 		$this->m_form_object->add_inputs($username, $username->get_id());
 		
 		
 		// Password
-		$password = new Cform_text('password',$this->get_form_name().'_password', '', '', '', 1, 'password', 6, 60, 25);
+		$password = new Cform_text('password',$this->get_form_name().'_password', '', '', '', 1, 'password', 6, 60, 25, '', '', '', 'on');
 		$this->m_form_object->add_inputs($password, $password->get_id());
 		
 
@@ -69,7 +69,7 @@ class Cform_construct_login extends  Cform_construct
 				  
 				}else{
 				  
-				  	$this->set_info_action_form_failed('Login incorrecto. Vuelve a identificarte', 0);
+				  	$this->set_info_action_form_failed('login_incorrect', 1);
 				    Clocation::header_location('/login/');
 				    exit();
 				}

@@ -2594,7 +2594,7 @@ $text .= "class Cform_construct_".$arrayjson['name']." extends  Cform_construct 
               
             }
             
-            $text .= $sl.$sl.$tab.$tab.$tab.$tab.$tab.$tab ."\$this->set_info_action_form_failed('Ya hay un item creado con estos datos', 0); ";
+            $text .= $sl.$sl.$tab.$tab.$tab.$tab.$tab.$tab ."\$this->set_info_action_form_failed('item_yet_created', 1); ";
             if ( $arrayjson['type'] == 'webform_relational')  {
     				  $text .= $sl.$sl.$tab.$tab.$tab.$tab.$tab.$tab ."Clocation::header_location('/admin/".$arrayjson['name']."/list/'.\$item['return'].'/');";
     				}else if ( $arrayjson['type'] == 'webform')  {
@@ -2665,9 +2665,9 @@ $text .= "class Cform_construct_".$arrayjson['name']." extends  Cform_construct 
   	       }
   				}
   				
-  			   $text .= $sl.$sl.$tab.$tab.$tab.$tab.$tab.$tab ."\$this->set_info_action_form_success('Item guardado correctamente', 0); ".$sl;
+  			   $text .= $sl.$sl.$tab.$tab.$tab.$tab.$tab.$tab ."\$this->set_info_action_form_success('save_ok', 1); ".$sl;
   				$text .= $sl.$tab.$tab.$tab.$tab.$tab ."}else {";
-  				  $text .= $sl.$tab.$tab.$tab.$tab.$tab.$tab ."\$this->set_info_action_form_failed('Error creando el item', 0); ";
+  				  $text .= $sl.$tab.$tab.$tab.$tab.$tab.$tab ."\$this->set_info_action_form_failed('save_ko', 1); ";
   				$text .= $sl.$tab.$tab.$tab.$tab.$tab ."}";
   				
   				if ( $arrayjson['type'] == 'webform_relational')  {
@@ -2868,9 +2868,9 @@ $text .= "class Cform_construct_".$arrayjson['name']." extends  Cform_construct 
 				    
   				}
   			
-  			   $text .= $sl.$sl.$tab.$tab.$tab.$tab.$tab.$tab ."\$this->set_info_action_form_success('Item editado correctamente', 0); ";
+  			   $text .= $sl.$sl.$tab.$tab.$tab.$tab.$tab.$tab ."\$this->set_info_action_form_success('edti_ok', 1); ";
   				$text .= $sl.$sl.$tab.$tab.$tab.$tab.$tab ."}else {";
-  				  $text .= $sl.$tab.$tab.$tab.$tab.$tab.$tab ."\$this->set_info_action_form_failed('Error editando el item', 0); ";
+  				  $text .= $sl.$tab.$tab.$tab.$tab.$tab.$tab ."\$this->set_info_action_form_failed('edit_ko, 1); ";
   				$text .= $sl.$tab.$tab.$tab.$tab.$tab ."}";
   				
   				if ( $arrayjson['type'] == 'webform_relational')  {
@@ -3219,7 +3219,7 @@ if ( isset( $arrayjson['stripped'] ) ) {
 $text .=$sl.$sl."//Miramos si existe. Si no existe enviamos a list";
 $text .=$sl."\$".$arrayjson['name']." = new C".$arrayjson['name']."(\$id);";
 $text .=$sl."if (!\$".$arrayjson['name']."->exists() and !isset(\$_REQUEST['cform".$arrayjson['name']."_item_id'])){";
-$text .=$sl.$tab."Cutils::set_web_information(0, 'El item no existe o ha sido eliminado de la base de datos');";
+$text .=$sl.$tab."Cutils::set_web_information(0, 'item_no_exist', 1);";
 $text .=$sl.$tab."Clocation::header_location('/".$arrayjson['name']."/list/');";
 $text .=$sl."}";
 
@@ -3654,7 +3654,7 @@ if ( $arrayjson['type'] == 'webform_relational')  {
 $text .=$sl.$sl."//Miramos si existe. Si no existe enviamos a list";
 $text .=$sl."\$".$arrayjson['name']." = new C".$arrayjson['name']."(\$id);";
 $text .=$sl."if (!\$".$arrayjson['name']."->exists()){";
-$text .=$sl.$tab."Cutils::set_web_information(0, 'El item no existe o ha sido eliminado de la base de datos');";
+$text .=$sl.$tab."Cutils::set_web_information(0, 'item_no_exist',1);";
 $text .=$sl.$tab."Clocation::header_location('/".$arrayjson['name']."/list/');";
 $text .=$sl."}";
 
@@ -3745,7 +3745,7 @@ if ( isset( $arrayjson['stripped'] ) ) {
 $text .=$sl.$sl."//Miramos si existe. Si no existe enviamos a list";
 $text .=$sl."\$".$arrayjson['name']." = new C".$arrayjson['name']."(\$id);";
 $text .=$sl."if (!\$".$arrayjson['name']."->exists()){";
-$text .=$sl.$tab."Cutils::set_web_information(0, 'El item no existe o ha sido eliminado de la base de datos');";
+$text .=$sl.$tab."Cutils::set_web_information(0, 'item_no_exist',1);";
 $text .=$sl.$tab."Clocation::header_location('/admin/".$arrayjson['name']."/list/');";
 $text .=$sl."}";
 
@@ -3771,8 +3771,8 @@ $text .= $sl.$sl."if (\$action == 'delete'){";
   $text .= $sl.$sl.$tab.$tab."if (\$result){";
   
     $text .= $sl.$sl.$tab.$tab.$tab."\$info_ok = 1; ";
-		$text .= $sl.$sl.$tab.$tab.$tab."\$info_msg = 'Eliminado correctamente'; ";
-		$text .= $sl.$sl.$tab.$tab.$tab."Cutils::set_web_information(\$info_ok, \$info_msg); ";
+		$text .= $sl.$sl.$tab.$tab.$tab."\$info_msg = 'del_ok'; ";
+		$text .= $sl.$sl.$tab.$tab.$tab."Cutils::set_web_information(\$info_ok, \$info_msg, 1); ";
 		 if ( $arrayjson['type'] == 'webform_relational')  {
             $text .= $sl.$sl.$tab.$tab.$tab."Clocation::header_location('/admin/".$arrayjson['name']."/list/'.\$return.'/'); ";
            }else{
@@ -3782,8 +3782,8 @@ $text .= $sl.$sl."if (\$action == 'delete'){";
   $text .= $sl.$sl.$tab.$tab."}else{";
   
     $text .= $sl.$sl.$tab.$tab.$tab."\$info_ok = 0; ";
-		$text .= $sl.$sl.$tab.$tab.$tab."\$info_msg = 'Error eliminando'; ";
-		$text .= $sl.$sl.$tab.$tab.$tab."Cutils::set_web_information(\$info_ok, \$info_msg); ";
+		$text .= $sl.$sl.$tab.$tab.$tab."\$info_msg = 'del_ko'; ";
+		$text .= $sl.$sl.$tab.$tab.$tab."Cutils::set_web_information(\$info_ok, \$info_msg,1); ";
 		 if ( $arrayjson['type'] == 'webform_relational')  {
             $text .= $sl.$sl.$tab.$tab.$tab."Clocation::header_location('/admin/".$arrayjson['name']."/list/'.\$return.'/'); ";
            }else{

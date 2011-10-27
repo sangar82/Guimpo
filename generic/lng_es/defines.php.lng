@@ -81,6 +81,16 @@ password_info=Deje en blanco la contraseña si no quiere cambiarla.
 repassword_info=Vuelva a escribir de nuevo la contraseña anterior.
 reemail_info=Vuelva a escribir de nuevo el email anterior.
 username_info=El email que introduzca será su nombre de usuario.
+login_incorrect=El nombre de usuario o la contraseña introducidos no son correctos.
+user_ok=Usuario guardado correctamente
+user_ko=Error creando al usuario. Vuelva a intentarlo, por favor.
+user_edit_ok=Usuario editado correctamente
+user_edit_ko=Error editando al usuario
+passw_email_not_equal=La contraseña y el email no coinciden
+passw_not_equal=Las contraseñas no coinciden
+email_not_equal=El email no coincide
+user_del_ok=Usuario eliminado correctamente
+user_del_ko=Error eliminando usuario
 
 /*Users*/
 
@@ -111,6 +121,14 @@ created=Creado
 updated=Modificado
 image_actual=Imagén actual
 file_actual=Archivo actual
+item_no_exist=El item no existe o ha sido eliminado de la base de datos
+del_ok=Eliminado correctamente
+del_ko=Error eliminando el objeto
+edit_ok=Editado correctamente
+edit_ko=Error editando el objeto
+save_ok=Guardado correctamente
+save_ko=Error guardando el objeto
+
 
 /*formularios*/
 
