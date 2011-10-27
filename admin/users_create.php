@@ -1,11 +1,11 @@
 <?php
 
+
 require_once( '../config.php' );
 require_once( PATH_ROOT_CLASES. 'cusers.php');
 require_once( PATH_ROOT_CLASES. 'cutils.php');
 require_once( PATH_ROOT_CLASES . 'cpagelayout_backend.php');
 require_once( PATH_ROOT_CLASES . 'cform_construct_user.php');
-
 
 
 // Definimos las seccins del layout

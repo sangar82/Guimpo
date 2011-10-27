@@ -319,7 +319,7 @@ class Cform_construct
 			{
 				//Creamos el objeto de sesion
 				$sesion = new Csesion();
-				$array_sesion = $sesion->getSesio($this->get_sesion_name());
+				$array_sesion = $sesion->get_var_session($this->get_sesion_name());
 				
 				foreach( $array_sesion[$this->get_form_name()] as $key => $value )
 				{
@@ -368,17 +368,17 @@ class Cform_construct
 			$sesion = new Csesion();
 			
 			// Comprobamos si existe la sesion 
-			if ($sesion->ExisteixValorSesio($this->get_sesion_name()))
+			if ($sesion->exists($this->get_sesion_name()))
 			{
 				//Recojemos en un array toda la varaible de sesion para modificarla
-				$sesion_actual = $sesion->getSesio($this->get_sesion_name());
+				$sesion_actual = $sesion->get_var_session($this->get_sesion_name());
 				
 				//Modificamos el array con los nuevos datos
 				$sesion_actual[$this->get_form_name()] = $array_values;
 				
 				$name = $this->get_sesion_name();
 				// Guardamos el array en la variable de sesion
-				$sesion->setSesio($name, $sesion_actual);
+				$sesion->set_var_session($name, $sesion_actual);
 			}
 			else
 			{
@@ -391,7 +391,7 @@ class Cform_construct
 				
 				$name = $this->get_sesion_name();
 				//guardamos el array en la variable de sesion
-				$sesion->setSesio($name, $array_session);
+				$sesion->set_var_session($name, $array_session);
 			}
 	}
 	

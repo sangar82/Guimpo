@@ -31,6 +31,8 @@ mgracias=Moltes Gracies!
 grettings=L'equip de %0%
 no_reply=Si us plau, no respongui aquest missatge, ha estat enviat automàticament.
 subject_pet=Petició de canvi de contrasenya a %0%
+subject_new_user=Nou usuari creat correctament a %0%
+intro_new_user=El seu nou usuari ha estat creat correctament.<br><br>Les seves dades d'accès al portal son les següents:
 pet_email_send=Un email ha estat enviat al seu correu perque pugui canviar la contrasenya.
 pet_email_error=S'ha produit un error enviant l'email de canvi de contrasenya.
 not_email=L'email introduit no existeix.
@@ -58,14 +60,14 @@ username=Nom d'usuari
 password=Contrasenya
 name=Nom
 lastname=Cognoms
-repite_password=Repeteix el password
+repite_password=Repeteixi el password
 email=Email
 poblacion=Població
 telefono=Telèfon
 comentarios=Comentaris
-repite_email=Repeteix l'email
+repite_email=Repeteixi l'email
 create_new_user=Crear un nou usuari
-forgotpassword=¿Has oblidat la contrasenya?
+forgotpassword=¿Ha oblidat la contrasenya?
 newuser=Nou usuari
 newusert=Al crear un nou usuari, podrà realitzar les seves gestions ràpidament en les proximes accions, sense necessitat de facilitar-nos les seves dades una altra vegada.
 newuserl=Sóc un nou usuari
@@ -76,7 +78,8 @@ type=Tipus d'usuari
 reminderpass=Recordar contrasenya
 password_info=Deixi en blanc la contrasenya si no vol canviar-la.
 repassword_info=Torni a escriure de nou la contrasenya anterior.
-reemail_info=Torni a escriure el email anterior.
+reemail_info=Torni a escriure l'email anterior.
+username_info=L'email que introdueixi será el seu nom d'usuari.
 
 /*Users*/
 

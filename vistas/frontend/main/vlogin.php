@@ -1,10 +1,7 @@
 <?php 
 
-
-
 $form = $this->get_form_by_name('cformlogin'); 
 $form->open_form_display();
-
 
 echo "<div id='loginbox'>";
 echo $this->get_web_information(); 

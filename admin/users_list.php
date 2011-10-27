@@ -24,16 +24,15 @@ $metas = array(
 	"nocache"       =>  "" 
 );
 
+//Borramos si existe la variable de sesion de usuarios por si ponen un mail ya creado
+$sesion = new Csesion();
+$sesion->delete_var_session('user');
+
 
 $layout	= new Cpagelayout_backend($names_section);
-
   $users = Cusers::item_list();
   $layout->set_page_js_scripts(PATH_ROOT_JS. 'tableformat.js');
   $layout->set_var('users', $users);
-  
-
 $layout->Display();
-
-
 
 ?>

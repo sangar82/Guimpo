@@ -26,6 +26,10 @@
 	//meta para no cargar en cache
 	$metas = array('nocache'=>'');
 	
+	//Borramos si existe la variable de sesion de usuarios por si ponen un mail ya creado
+	$sesion = new Csesion();
+	$sesion->delete_var_session('user');
+	
   $layout	= new Cpagelayout_frontend($names_section);
   $layout->set_page_styles(PATH_ROOT_CSS . "styles.css");
   $layout->set_page_forms($array_forms); 

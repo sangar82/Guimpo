@@ -329,15 +329,12 @@ label.error, div.error{
 	font-size:13px;
 }
 
-.login_box_cont  #submit {
-	position:relative;
-	top:28px;
+.login_box_cont  #submit , .login_box_cont > a{
+    position: absolute;
+    right: 20px;
+    top: 136px;
 }
 
-.login_box_cont > a {
-  position:relative;
-  top:20px;
-}
 
 .login_box_cont input[type=text], .login_box_cont input[type=password] {
 	width:250px;
@@ -359,7 +356,11 @@ label.error, div.error{
   font-size:11px;
   position:relative;
   top:5px;
+  margin-bottom: 30px;
+  display:block;
 }
+
+
 
 /*fi login*/
 

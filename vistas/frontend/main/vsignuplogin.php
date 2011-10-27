@@ -24,7 +24,7 @@ echo "<div class='login_box_container'>";
 					echo "<h3>". $this->translate('newuserl') ."</h3>
 					<p> ". $this->translate('newusert') ."</p><br>";
 					
-					echo "<a href='/newuser/' class='create rfloat'>". $this->translate('create_new_user')."</a>";
+					echo "<a href='/newuser/' class='create rfloat botonslogin'>". $this->translate('create_new_user')."</a>";
 
 		echo "</div>";
 		

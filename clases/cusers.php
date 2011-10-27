@@ -159,6 +159,45 @@ class Cusers {
 	     
 	}
 	
+	
+	static function is_unique($username, $user_id = ''){
+		
+		$con = new cdatabase(array('host'=>HOST, 'user'=>USER, 'dbname'=>DBNAME, 'password'=>PASSWORD), DBDRIVER );
+		
+		if ($user_id){
+			
+			//Miramos si el usuario actual no ha cambiado sus datos de acceso 
+	  	$sql = "SELECT id, username FROM users WHERE username='". $username ."' and id = $user_id;";
+	  	$result = $con->fetch_one_result($sql);
+	  	
+	  	if ($result['id'])
+	  		return true;
+	  	else {
+	  		//Miramos si estamos cogiendo el nombre de usuario de otro
+	  		$sql = "SELECT id, username FROM users WHERE username='". $username ."'";
+	  		$result = $con->fetch_one_result($sql);
+	  		
+	  		if( $result == 0 )
+		      return true;
+		    else 
+		      return false;
+	  	}
+	  	
+		} else {
+		//Como es un new solo debemos mirar si el usuario existe en la BBDD
+	  $sql = "SELECT id, username FROM users WHERE username='". $username ."';";
+		}
+		 
+	  $result = $con->fetch_one_result($sql);
+    
+    if( $result == 0 )
+      return true;
+    else 
+      return false;
+      
+	}
+	
+	
 	static function exist_email($email){
 		
 		$con = new cdatabase(array('host'=>HOST, 'user'=>USER, 'dbname'=>DBNAME, 'password'=>PASSWORD), DBDRIVER );

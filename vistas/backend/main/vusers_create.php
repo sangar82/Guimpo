@@ -1,5 +1,7 @@
 <?php 
 
+echo $this->get_web_information(); 
+
 $form = $this->get_form_by_name('cformusers');
 $form->open_form_display();
 
@@ -11,10 +13,28 @@ else
   
 echo "<table class='formtable'>";
 
+/*
   echo "<tr>";
     echo "<td> ". $this->translate('username') ." </td>";
     echo "<td> ". $form->get_form_object('username')->display(true) ." </td>";
   echo "</tr>";
+*/  
+  echo "<tr>";
+    echo "<td> ". $this->translate('email') ." </td>";
+    echo "<td>";
+    	echo  $form->get_form_object('email')->display(true);
+    	echo "<span class='helper'> ".$this->get_language()->get_element_generic('username_info')." </span>";
+    echo "</td>";
+  echo "</tr>";
+  
+  echo "<tr>";
+    echo "<td> ". $this->translate('repite_email') ." </td>";
+    echo "<td>";
+    	echo  "<div>". $form->get_form_object('re_email')->display(true) . "</div>";
+    	echo "<span class='helper'> ".$this->get_language()->get_element_generic('reemail_info')." </span>";
+    	echo " </td>";
+  echo "</tr>";
+
 
   if ($this->get_var('form_type') == 'new'){
 
@@ -43,18 +63,6 @@ echo "<table class='formtable'>";
     echo " </td>";
   echo "</tr>";
   
-  echo "<tr>";
-    echo "<td> ". $this->translate('email') ." </td>";
-    echo "<td> ". $form->get_form_object('email')->display(true) ." </td>";
-  echo "</tr>";
-  
-  echo "<tr>";
-    echo "<td> ". $this->translate('repite_email') ." </td>";
-    echo "<td>";
-    	echo  "<div>". $form->get_form_object('re_email')->display(true) . "</div>";
-    	echo "<span class='helper'> ".$this->get_language()->get_element_generic('reemail_info')." </span>";
-    	echo " </td>";
-  echo "</tr>";
   
   echo "<tr>";
     echo "<td> ". $this->translate('type') ." </td>";
@@ -81,7 +89,7 @@ echo "<table class='formtable'>";
       }    
       echo  $form->get_form_object('submit')->display(true);
       
-      echo "&nbsp;&nbsp; <a href='/admin/users_list.php' class='return'>". $this->translate("volver_atras") ."</a>";
+      echo "&nbsp;&nbsp; <a href='/admin/users/list/' class='return'>". $this->translate("volver_atras") ."</a>";
     echo "</td>";
   echo "</tr>";
   

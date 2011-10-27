@@ -32,7 +32,7 @@ class Cform_construct_login extends  Cform_construct
 		
 
 		// Boton de envio
-		$submit_button = new Cform_button_submit('submit',$this->get_form_name().'_submit', 'Entrar', '');
+		$submit_button = new Cform_button_submit('submit',$this->get_form_name().'_submit', 'Entrar', 'botonslogin');
 		$this->m_form_object->add_inputs($submit_button, $submit_button->get_id());
 		
 		$this->m_form_object->close_form();

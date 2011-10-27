@@ -11,12 +11,12 @@ define('LANGUAGES'							, 'es-ca-en');
 define('ADMIN_LANGUAGE'		, 'es');
 
 //Database
-define('DBDRIVER'				,'mysql');  //mysql - postgres
+define('DBDRIVER'				,	'mysql');  //mysql - postgres
 define('HOST'								, 'localhost');
-define('PORT'								, '3306');
-define('USER'								,'root');
-define('PASSWORD'			,'root');
-define('DBNAME'					,'framework');
+define('PORT'								,	'3306');
+define('USER'								,	'root');
+define('PASSWORD'			,	'root');
+define('DBNAME'					,	'framework');
 
 //Mailing
 define('EMAIL_COMPANY'				, "sangar1982@gmail.com");
