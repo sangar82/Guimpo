@@ -241,13 +241,25 @@ HTML;
 	*/		
 	static function get_actual_lng()
 	{
+		$uri = $_SERVER['REQUEST_URI'];
+		$pos = strpos($uri, "/admin/");
+		
+		if ($pos !== false){
+			
+			$value = ADMIN_LANGUAGE;
+			
+		} else {
+		
+				if ( strtolower($_SERVER['SERVER_NAME']) == 'en.'.DOMAIN )
+					$value = 'en';
+				else if ( strtolower($_SERVER['SERVER_NAME']) == 'ca.'.DOMAIN )
+					$value = 'ca';
+				else
+					$value = 'es';
+			
+		}
+		
 
-		if ( strtolower($_SERVER['SERVER_NAME']) == 'en.'.DOMAIN )
-			$value = 'en';
-		else if ( strtolower($_SERVER['SERVER_NAME']) == 'ca.'.DOMAIN )
-			$value = 'ca';
-		else
-			$value = 'es';
 			
 		
 		return $value;

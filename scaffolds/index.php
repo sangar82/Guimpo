@@ -2868,9 +2868,9 @@ $text .= "class Cform_construct_".$arrayjson['name']." extends  Cform_construct 
 				    
   				}
   			
-  			   $text .= $sl.$sl.$tab.$tab.$tab.$tab.$tab.$tab ."\$this->set_info_action_form_success('edti_ok', 1); ";
+  			   $text .= $sl.$sl.$tab.$tab.$tab.$tab.$tab.$tab ."\$this->set_info_action_form_success('edit_ok', 1); ";
   				$text .= $sl.$sl.$tab.$tab.$tab.$tab.$tab ."}else {";
-  				  $text .= $sl.$tab.$tab.$tab.$tab.$tab.$tab ."\$this->set_info_action_form_failed('edit_ko, 1); ";
+  				  $text .= $sl.$tab.$tab.$tab.$tab.$tab.$tab ."\$this->set_info_action_form_failed('edit_ko', 1); ";
   				$text .= $sl.$tab.$tab.$tab.$tab.$tab ."}";
   				
   				if ( $arrayjson['type'] == 'webform_relational')  {

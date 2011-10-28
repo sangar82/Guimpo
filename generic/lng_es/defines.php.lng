@@ -128,6 +128,7 @@ edit_ok=Editado correctamente
 edit_ko=Error editando el objeto
 save_ok=Guardado correctamente
 save_ko=Error guardando el objeto
+item_yet_created=Ya hay un item creado con estos datos
 
 
 /*formularios*/

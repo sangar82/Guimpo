@@ -120,8 +120,13 @@ created=Creat
 updated=Modificat
 image_actual=Imatge actual
 file_actual=Arxiu actual
-del_ok=Eliminado correctamente
-del_ko=Error eliminando
+del_ok=Eliminat correctament
+del_ko=Error eliminant
+edit_ok=Editat correctament
+edit_ko=Error editant l'objecte
+save_ok=Guardat correctament
+save_ko=Error guardant l'objecte
+item_yet_created=Ja hi ha un item creat amb aquestes dades
 
 /*formularios*/
 
