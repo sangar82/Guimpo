@@ -25,7 +25,6 @@ define('EMAIL_DEVELOPER'		, "sangar1982@gmail.com");
 //Expires Cookie time
 define( "EXPIRE_COOKIES_MSG",  600000) ;
 
-
 //PATHS - Don´t change this
 define( "PATH_ROOT"															, 	$_SERVER['DOCUMENT_ROOT'] . "/");
 define( "PATH_ROOT_CLASES"								, 	PATH_ROOT ."/clases/");
@@ -37,7 +36,6 @@ define( "PATH_ROOT_MULTIMEDIA"				, 	"http://www.".DOMAIN."/multimedia/" );
 define( "PATH_ROOT_UPLOADS"						, 	"http://www.".DOMAIN."/img/uploads/" );
 define( "PATH_ROOT_INCLUDES"						, 	"http://www.".DOMAIN."/includes/" );
 define( "PATH_ROOT_JS"												, 	"http://www.".DOMAIN."/js/");
-
 
 //Others define not used yet
 define( "ENVIRONMENT"						,  'local') ;
