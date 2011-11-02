@@ -353,6 +353,29 @@ HTML;
     }
     return $key;
   }
+  
+  
+  static function redirect_url_for_tablesorter($pag){
+  	
+		if ($pag == 1){
+			
+			$redirect_url = $_SERVER['REDIRECT_URL'];
+				
+		} else {
+			
+			$aux_url = explode('/',  $_SERVER['REDIRECT_URL']);
+			$count = count($aux_url);
+			
+			$redirect_url = "";
+			for ($i = 0; $i < $count - 2; $i++){
+				$redirect_url .=$aux_url[$i]."/";
+			}
+			
+			return $redirect_url;
+	
+} 	
+  	
+  }
 
 }//end cutils
 ?>

@@ -1727,9 +1727,9 @@ $text .=  "class C".$arrayjson['name']." { ".$sl;
     
     // ITEM LIST
     if ( $arrayjson['type'] == 'webform_relational')  {
-      $text .= $sl.$tab."static function item_list(\$id = '' , \$max = '', \$pag = 1){".$sl;
+      $text .= $sl.$tab."static function item_list(\$id = '' , \$max = '', \$pag = 1, \$sort_by = 'id', \$sort_dir='desc'){".$sl;
     } else if ( $arrayjson['type'] == 'webform'){
-      $text .= $sl.$tab."static function item_list(\$max = '', \$pag = 1){".$sl;
+      $text .= $sl.$tab."static function item_list(\$max = '', \$pag = 1, \$sort_by = 'id', \$sort_dir='desc'){".$sl;
     }
     
       $text .= $tab.$tab."\$con = new cdatabase(array('host'=>HOST, 'user'=>USER, 'dbname'=>DBNAME, 'password'=>PASSWORD), DBDRIVER );".$sl;
@@ -1804,7 +1804,7 @@ $text .=  "class C".$arrayjson['name']." { ".$sl;
         $text .= "WHERE ".$name_of_relation."_id = \$id ";
       }
       
-      $text .= "ORDER BY id desc \";";
+      $text .= "ORDER BY \$sort_by \$sort_dir \";";
        
       $text .= $sl.$tab.$tab."if (\$max!='' && \$max>0){";
       
@@ -3473,6 +3473,14 @@ $text .= $sl."//Recojemos la pagina actual";
 $text .= $sl."\$pag  = Cutils::get_filtered_params('pag', 0, 0, 1, 0); ";
 $text .= $sl."if (\$pag == 0) \$pag = 1;";
 
+$text .= $sl.$sl."//Creamos un array con los parametros que se enviaran a traves del paginado";
+$text .= $sl."\$sort_dir  				= 		isset( \$_REQUEST['sort_dir'])				? Cutils::get_filtered_params('sort_dir', 1, 0, 1, 0)	:   'desc';";
+$text .= $sl."\$sort_by	  			= 		isset( \$_REQUEST['sort_by'])				? Cutils::get_filtered_params('sort_by', 1, 0, 1, 0)	:   'id';";
+$text .= $sl."\$newsort_dir 		= 		(\$sort_dir == 'desc') 											? 'asc' 																															:		'desc';";
+ 
+$text .= $sl."\$params_get 		= ( isset( \$_REQUEST['sort_by'] ) ) 		? array('sort_by'=>\$sort_by, 'sort_dir'=>\$sort_dir) 	: array();";
+$text .= $sl."\$redirect_url			= Cutils::redirect_url_for_tablesorter(\$pag);";
+
 
 if ( $arrayjson['type'] == 'webform_relational')  {
   
@@ -3513,7 +3521,7 @@ $text .=$sl.$sl."\$layout	= new Cpagelayout_frontend( \$names_section ); ";
 
   if ( $arrayjson['type'] == 'webform_relational')  {
     
-    $text .=$sl.$sl.$tab."\$item_array = C".$arrayjson['name']."::item_list(\$".$name_of_relation."_id, MAX_ITEMS, \$pag);";
+    $text .=$sl.$sl.$tab."\$item_array = C".$arrayjson['name']."::item_list(\$".$name_of_relation."_id, MAX_ITEMS, \$pag, \$sort_by, \$sort_dir);";
     
     if ( isset( $arrayjson['relation_stripped'] ) )
       $text .=$sl.$tab."\$paginate = new Cpaginado(MAX_ITEMS,\$pag,\$item_array['total'],\$params_get, 'frontend'); ";
@@ -3522,7 +3530,7 @@ $text .=$sl.$sl."\$layout	= new Cpagelayout_frontend( \$names_section ); ";
     
   }else  if ( $arrayjson['type'] == 'webform'){
     
-    $text .=$sl.$sl.$tab."\$item_array = C".$arrayjson['name']."::item_list(MAX_ITEMS, \$pag);";
+    $text .=$sl.$sl.$tab."\$item_array = C".$arrayjson['name']."::item_list(MAX_ITEMS, \$pag, \$sort_by, \$sort_dir);";
     $text .=$sl.$tab."\$paginate = new Cpaginado(MAX_ITEMS,\$pag,\$item_array['total'],\$params_get); ";
     
   }
@@ -3537,6 +3545,10 @@ $text .=$sl.$sl."\$layout	= new Cpagelayout_frontend( \$names_section ); ";
   }
   
   $text .=$sl.$tab."\$layout->set_var('paginate', \$paginat_box);";
+  $text .=$sl.$tab."\$layout->set_var('sort_dir', \$sort_dir);";
+	$text .=$sl.$tab."\$layout->set_var('newsort_dir', \$newsort_dir);";
+	$text .=$sl.$tab."\$layout->set_var('sort_by', \$sort_by);";
+	$text .=$sl.$tab."\$layout->set_var('redirect_url', \$redirect_url);";
 
 $text .=$sl.$sl."\$layout->Display();";
 
@@ -4041,6 +4053,10 @@ $text .= $sl."\$paginate = \$this->get_var('paginate'); ";
 if ( $arrayjson['type'] == 'webform_relational')  {
   $text .= $sl."\$return = \$this->get_var('return'); ";
 }
+$text .= $sl."\$sort_dir 					= 	\$this->get_var('sort_dir');"; 
+$text .= $sl."\$newsort_dir 		= 	\$this->get_var('newsort_dir');"; 
+$text .= $sl."\$sort_by 					= 	\$this->get_var('sort_by');"; 
+$text .= $sl."\$redirect_url			= 	\$this->get_var('redirect_url');"; 
 
 $text .= $sl.$sl."echo \$this->get_web_information(); ";
 
@@ -4061,17 +4077,24 @@ $text .= $sl.$sl."if (\$items){";
         
         case 'text':
         case 'textarea':
+        case 'radio':
+        case 'numeric':
+        case 'datepicker':
+        case 'select':
+        case 'selectbd':
+        case 'checkbox':
             
-          /*    
+          
           if ( $value['multilanguage']){
-                
-            foreach ($array_languages as $item ) {
-              $aux_text .= $sl.$tab.$tab.$tab."echo \"<th>".ucfirst($index."_".$item)."</th> \"; "; 
-            }
+               
+         		//$aux_text .= $sl.$tab.$tab.$tab."echo \"<th>".ucfirst($index."_".$item)."</th> \"; ";
+         		$aux_text .= $sl.$tab.$tab.$tab."echo \"<th>\".( (\$sort_by == '".$index."_\".Cutils::get_actual_lng().\"' ) ? ((\$sort_by == '".$index."_\".Cutils::get_actual_lng().\"' and \$sort_dir == 'asc') ? '↓ '  : '↑ ') : '' ) .\"<a href='\$redirect_url?sort_by=".$index."_\".Cutils::get_actual_lng().\"&sort_dir=\$newsort_dir'>".ucfirst($index)."</a></th> \"; "; 
             
-          } else {*/
-            $aux_text .= $sl.$tab.$tab.$tab."echo \"<th>".ucfirst($index)."</th> \"; "; 
-          //}
+          } else {
+            //$aux_text .= $sl.$tab.$tab.$tab."echo \"<th>".ucfirst($index)."</th> \"; "; 
+            $aux_text .= $sl.$tab.$tab.$tab."echo \"<th>\".( (\$sort_by == '".$index."' ) ? ((\$sort_by == '".$index."' and \$sort_dir == 'asc') ? '↓ '  : '↑ ') : '' ) .\"<a href='\$redirect_url?sort_by=".$index."&sort_dir=\$newsort_dir'>".ucfirst($index)."</a></th> \"; ";  
+ 
+          }
           
           break;
           

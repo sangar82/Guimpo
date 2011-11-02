@@ -31,6 +31,10 @@ body, table, input, radio, select, textarea {
   color:#fff;
 }
 
+.formattable th a{
+	color:#fff;
+}
+
 .formattable td {
   padding:10px 20px 10px 20px;
   text-align:left;
