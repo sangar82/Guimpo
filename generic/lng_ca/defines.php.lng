@@ -111,6 +111,7 @@ modify=Modificar
 delete=Eliminar
 new_item=Crear una nou registre
 no_items=No hi ha registres creats.
+no_items_search=No s'ha trobat registres amb aquestes dades.
 return=Tornar enrere
 options=Opcions
 view=Veure
@@ -127,6 +128,7 @@ edit_ko=Error editant l'objecte
 save_ok=Guardat correctament
 save_ko=Error guardant l'objecte
 item_yet_created=Ja hi ha un item creat amb aquestes dades
+search=Cercar
 
 /*formularios*/
 

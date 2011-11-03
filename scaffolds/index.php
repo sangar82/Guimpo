@@ -1727,14 +1727,30 @@ $text .=  "class C".$arrayjson['name']." { ".$sl;
     
     // ITEM LIST
     if ( $arrayjson['type'] == 'webform_relational')  {
-      $text .= $sl.$tab."static function item_list(\$id = '' , \$max = '', \$pag = 1, \$sort_by = 'id', \$sort_dir='desc'){".$sl;
+      $text .= $sl.$tab."static function item_list(\$id = '' , \$max = '', \$pag = 1, \$sort_by = 'id', \$sort_dir='desc', \$search_text ='', \$search_field =''){".$sl;
     } else if ( $arrayjson['type'] == 'webform'){
-      $text .= $sl.$tab."static function item_list(\$max = '', \$pag = 1, \$sort_by = 'id', \$sort_dir='desc'){".$sl;
+      $text .= $sl.$tab."static function item_list(\$max = '', \$pag = 1, \$sort_by = 'id', \$sort_dir='desc', \$search_text ='', \$search_field =''){".$sl;
     }
     
       $text .= $tab.$tab."\$con = new cdatabase(array('host'=>HOST, 'user'=>USER, 'dbname'=>DBNAME, 'password'=>PASSWORD), DBDRIVER );".$sl;
 
       $text .= $sl.$tab.$tab."\$max_rows = '';".$sl;
+      
+     	 $text .= $sl.$sl.$tab.$tab."//Si es una busqueda creamos el where";
+			 $text .= $sl.$tab.$tab."if (\$search_text !='' and \$search_field !=''){";
+			 
+			 if ( $arrayjson['type'] == 'webform_relational')  {
+			 		$text .= $sl.$tab.$tab.$tab."\$where = \" and lower(\$search_field) like lower('%\$search_text%') \";";
+			 } else {
+			 		$text .= $sl.$tab.$tab.$tab."\$where = \" WHERE lower(\$search_field) like lower('%\$search_text%') \";";
+			 }
+			 		
+			 $text .= $sl.$tab.$tab."} else {";
+			 		$text .= $sl.$tab.$tab.$tab."\$where = '';";
+			 
+			 
+			 $text .= $sl.$tab.$tab."}";  
+      
       
       //Creamos la query para obtener el item
       $text .=  $sl.$tab.$tab."\$query = \"SELECT id, ";
@@ -1801,7 +1817,9 @@ $text .=  "class C".$arrayjson['name']." { ".$sl;
         $name_of_relation = $relation[0];  
         $name_of_this = $relation[1];  
       
-        $text .= "WHERE ".$name_of_relation."_id = \$id ";
+        $text .= "WHERE ".$name_of_relation."_id = \$id  \$where ";
+      } else {
+      	$text .= " \$where ";
       }
       
       $text .= "ORDER BY \$sort_by \$sort_dir \";";
@@ -1811,9 +1829,9 @@ $text .=  "class C".$arrayjson['name']." { ".$sl;
         $text .= $sl.$sl.$tab.$tab.$tab."\$offset = (\$pag - 1) * \$max;";
         
         if ( $arrayjson['type'] == 'webform_relational')  {
-          $text .= $sl.$sl.$tab.$tab.$tab."\$query_max = \"SELECT count(id) as max FROM ".$arrayjson['name']." WHERE ".$name_of_relation."_id =\$id \"; ";
+          $text .= $sl.$sl.$tab.$tab.$tab."\$query_max = \"SELECT count(id) as max FROM ".$arrayjson['name']." WHERE ".$name_of_relation."_id =\$id  \$where \"; ";
         }else{
-          $text .= $sl.$sl.$tab.$tab.$tab."\$query_max = \"SELECT count(id) as max FROM ".$arrayjson['name']."\"; ";
+          $text .= $sl.$sl.$tab.$tab.$tab."\$query_max = \"SELECT count(id) as max FROM ".$arrayjson['name']."  \$where \"; ";
         }
         
         $text .= $sl.$tab.$tab.$tab."\$result_max = \$con->fetch_one_result(\$query_max);";
@@ -3477,9 +3495,13 @@ $text .= $sl.$sl."//Creamos un array con los parametros que se enviaran a traves
 $text .= $sl."\$sort_dir  				= 		isset( \$_REQUEST['sort_dir'])				? Cutils::get_filtered_params('sort_dir', 1, 0, 1, 0)	:   'desc';";
 $text .= $sl."\$sort_by	  			= 		isset( \$_REQUEST['sort_by'])				? Cutils::get_filtered_params('sort_by', 1, 0, 1, 0)	:   'id';";
 $text .= $sl."\$newsort_dir 		= 		(\$sort_dir == 'desc') 											? 'asc' 																															:		'desc';";
- 
-$text .= $sl."\$params_get 		= ( isset( \$_REQUEST['sort_by'] ) ) 		? array('sort_by'=>\$sort_by, 'sort_dir'=>\$sort_dir) 	: array();";
+$text .= $sl."\$search_text		=		isset( \$_REQUEST['search_text'] )		?			htmlentities(\$_REQUEST['search_text']	)						: 	'';";	
+$text .= $sl."\$search_field		=		isset( \$_REQUEST['search_field'] )		?			\$_REQUEST['search_field']																: 	'';";	
 $text .= $sl."\$redirect_url			= Cutils::redirect_url_for_tablesorter(\$pag);";
+
+$text .= $sl.$sl."// Recogemos los parametros enviados para la ordenación y la busqueda para crear los numeros de página";
+$text .= $sl."\$params_get		= Cutils::create_params_array_for_search_and_tablesorter(\$sort_by, \$sort_dir, \$search_text, \$search_field );";
+
 
 
 if ( $arrayjson['type'] == 'webform_relational')  {
@@ -3496,9 +3518,19 @@ if ( $arrayjson['type'] == 'webform_relational')  {
   
 }
 
-
-$text .= $sl.$sl."//Creamos un array con los parametros que se enviaran a traves del paginado ";
-$text .= $sl."\$params_get = array();";
+$text .=$sl.$sl."// Construimos la url para la busqueda de campos";
+$text .=$sl."\$heredoc = <<< html";
+	$text .=$sl.$tab."<script>";
+			$text .=$sl.$tab.$tab."$(document).ready(function(){";
+					$text .=$sl.$sl.$tab.$tab.$tab."$('.search').click(function() {";
+					  $text .=$sl.$tab.$tab.$tab.$tab."var search_text  = escape( $('#search_text').val() );";
+					  $text .=$sl.$tab.$tab.$tab.$tab."var search_field = $('#search_field').val();";		  
+					  $text .=$sl.$tab.$tab.$tab.$tab."document.location = \"\$redirect_url?search_text=\"+search_text+\"&search_field=\"+search_field;";
+					 	$text .=$sl.$tab.$tab.$tab.$tab."return false;";
+					$text .=$sl.$tab.$tab.$tab."});";	
+			 $text .=$sl.$tab.$tab."});";
+	$text .=$sl.$tab."</script>";
+$text .=$sl."html;";
 
 
 $text .=$sl.$sl."// Definimos las seccins del layout $sl";
@@ -3516,12 +3548,13 @@ $text .= $sl."\$metas = array('nocache'=>'' );";
 $text .=$sl.$sl."\$layout	= new Cpagelayout_frontend( \$names_section ); ";
 
   $text .=$sl.$tab."\$layout->set_page_metas(\$metas);";
+  $text .=$sl.$tab."\$layout->set_page_heredoc(\$heredoc);";
   $text .=$sl.$tab."\$layout->set_page_js_scripts(PATH_ROOT_JS . 'tableformat.js');";
   
 
   if ( $arrayjson['type'] == 'webform_relational')  {
     
-    $text .=$sl.$sl.$tab."\$item_array = C".$arrayjson['name']."::item_list(\$".$name_of_relation."_id, MAX_ITEMS, \$pag, \$sort_by, \$sort_dir);";
+    $text .=$sl.$sl.$tab."\$item_array = C".$arrayjson['name']."::item_list(\$".$name_of_relation."_id, MAX_ITEMS, \$pag, \$sort_by, \$sort_dir, \$search_text, \$search_field);";
     
     if ( isset( $arrayjson['relation_stripped'] ) )
       $text .=$sl.$tab."\$paginate = new Cpaginado(MAX_ITEMS,\$pag,\$item_array['total'],\$params_get, 'frontend'); ";
@@ -3530,7 +3563,7 @@ $text .=$sl.$sl."\$layout	= new Cpagelayout_frontend( \$names_section ); ";
     
   }else  if ( $arrayjson['type'] == 'webform'){
     
-    $text .=$sl.$sl.$tab."\$item_array = C".$arrayjson['name']."::item_list(MAX_ITEMS, \$pag, \$sort_by, \$sort_dir);";
+    $text .=$sl.$sl.$tab."\$item_array = C".$arrayjson['name']."::item_list(MAX_ITEMS, \$pag, \$sort_by, \$sort_dir, \$search_text, \$search_field);";
     $text .=$sl.$tab."\$paginate = new Cpaginado(MAX_ITEMS,\$pag,\$item_array['total'],\$params_get); ";
     
   }
@@ -3538,6 +3571,7 @@ $text .=$sl.$sl."\$layout	= new Cpagelayout_frontend( \$names_section ); ";
 	$text .=$sl.$tab."\$paginat_box = \$paginate->RetornaPaginatLlistat('',false); ";
 	
   $text .=$sl.$sl.$tab."\$layout->set_var('item', \$item_array['item']);";
+  $text .=$sl.$sl.$tab."\$layout->set_var('items_total', \$item_array['total']);";
   
   if ( $arrayjson['type'] == 'webform_relational')  {
      $text .=$sl.$tab."\$layout->set_var('return', \$return);";
@@ -3549,6 +3583,8 @@ $text .=$sl.$sl."\$layout	= new Cpagelayout_frontend( \$names_section ); ";
 	$text .=$sl.$tab."\$layout->set_var('newsort_dir', \$newsort_dir);";
 	$text .=$sl.$tab."\$layout->set_var('sort_by', \$sort_by);";
 	$text .=$sl.$tab."\$layout->set_var('redirect_url', \$redirect_url);";
+	$text .=$sl.$tab."\$layout->set_var('search_text', \$search_text);";
+	$text .=$sl.$tab."\$layout->set_var('search_field', \$search_field);";
 
 $text .=$sl.$sl."\$layout->Display();";
 
@@ -4053,14 +4089,70 @@ $text .= $sl."\$paginate = \$this->get_var('paginate'); ";
 if ( $arrayjson['type'] == 'webform_relational')  {
   $text .= $sl."\$return = \$this->get_var('return'); ";
 }
+$text .= $sl."\$items_total 			= 	\$this->get_var('items_total');"; 
 $text .= $sl."\$sort_dir 					= 	\$this->get_var('sort_dir');"; 
 $text .= $sl."\$newsort_dir 		= 	\$this->get_var('newsort_dir');"; 
 $text .= $sl."\$sort_by 					= 	\$this->get_var('sort_by');"; 
 $text .= $sl."\$redirect_url			= 	\$this->get_var('redirect_url');"; 
+$text .= $sl."\$search_text			= 	\$this->get_var('search_text');";
+$text .= $sl."\$search_field			= 	\$this->get_var('search_field');";
+$text .= $sl."\$url_search 				= (\$search_text)  ?  \"&search_text=\$search_text&search_field=\$search_field\" : \"\";";
 
 $text .= $sl.$sl."echo \$this->get_web_information(); ";
 
 $text .= $sl.$sl."echo \"<h1>\".\$this->translate('list_of', array('".$arrayjson['name']."')).\"</h1>\"; ";
+
+$text .= $sl.$sl."if ( (\$items_total == 0 and \$search_text != '') or ( \$items_total ) ){";
+		
+		$text .= $sl.$sl.$tab."echo \"<div class='searchtable'>\";";
+			$text .= $sl.$tab.$tab."echo \"<input type='text' value='\$search_text' id='search_text' size='60'>&nbsp;&nbsp;\";";
+			$text .= $sl.$tab.$tab."echo \"<select id='search_field' class='paddingselect'>\";";
+			
+			foreach ($arrayjson['campos'] as $index => $value ){
+		      
+		      switch ($value['type']){
+		        
+		        case 'text':
+		        case 'textarea':
+		        case 'radio':
+		        case 'numeric':
+		        case 'datepicker':
+		        case 'select':
+		        case 'selectbd':
+		        case 'checkbox':
+		        	
+		        	if ( isset ($value['multilanguage'] ) ){
+		               
+		          	if ( $value['multilanguage']  ){
+		          		$text .= $sl.$tab.$tab.$tab."\$selected = ('".$index."_'.Cutils::get_actual_lng()  == \$search_field)  ?   'selected' : ''; ";
+		          		$text .= $sl.$tab.$tab.$tab."echo \"<option value='".$index."_\".Cutils::get_actual_lng().\"' \$selected>".ucfirst($index)."</option>\";";
+		          	} else {
+		          		$text .= $sl.$tab.$tab.$tab."\$selected = ('".$index."' == \$search_field)  ?   'selected' : ''; ";
+		          		$text .= $sl.$tab.$tab.$tab."echo \"<option value='$index' \$selected>".ucfirst($index)."</option>\";";
+		          	}
+		        	
+		        	} else {
+		        		$text .= $sl.$tab.$tab.$tab."\$selected = ('".$index."' == \$search_field)  ?   'selected' : ''; ";
+		        		$text .= $sl.$tab.$tab.$tab."echo \"<option value='$index' \$selected>".ucfirst($index)."</option>\";";
+		        	}
+		        	
+		        	break;
+		      }
+		      
+			}  
+		
+			$text .= $sl.$tab.$tab."echo \"</select>\";";
+			$text .= $sl.$tab.$tab."echo \"<a href='/admin/categoria/create/' class='search' id='search'>\".\$this->translate('search').\"</a>\";";
+		$text .= $sl.$tab."echo \"</div>\";";
+		
+		$text .= $sl.$sl.$tab."if (\$search_text){";
+			$text .= $sl.$tab.$tab."echo \"<a href='\".\$_SERVER['REDIRECT_URL'].\"' class='searchbacklink'>← Volver al listado</a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\";";
+			$text .= $sl.$tab.$tab."\$items_total = (\$items_total)			?    \$items_total			:		'0';";
+			$text .= $sl.$tab.$tab."echo \"<span class='searchbacklink'>\$items_total elementos encontrados.</span>\";";
+			$text .= $sl.$tab.$tab."echo \"<br/><br/>\";";
+		$text .= $sl.$tab."}";
+
+$text .= $sl.$sl."}";		
 
 $text .= $sl.$sl."if (\$items){";
 
@@ -4085,14 +4177,17 @@ $text .= $sl.$sl."if (\$items){";
         case 'checkbox':
             
           
-          if ( $value['multilanguage']){
+          if ( isset ($value['multilanguage'] ) ){
                
-         		//$aux_text .= $sl.$tab.$tab.$tab."echo \"<th>".ucfirst($index."_".$item)."</th> \"; ";
-         		$aux_text .= $sl.$tab.$tab.$tab."echo \"<th>\".( (\$sort_by == '".$index."_\".Cutils::get_actual_lng().\"' ) ? ((\$sort_by == '".$index."_\".Cutils::get_actual_lng().\"' and \$sort_dir == 'asc') ? '↓ '  : '↑ ') : '' ) .\"<a href='\$redirect_url?sort_by=".$index."_\".Cutils::get_actual_lng().\"&sort_dir=\$newsort_dir'>".ucfirst($index)."</a></th> \"; "; 
-            
+          	if ( $value['multilanguage']  ){
+         			$aux_text .= $sl.$tab.$tab.$tab."echo \"<th>\".( (\$sort_by == '".$index."_'.Cutils::get_actual_lng() ) ? ((\$sort_by == '".$index."_'.Cutils::get_actual_lng().'' and \$sort_dir == 'asc') ? '↓ '  : '↑ ') : '' ) .\"<a href='\$redirect_url?sort_by=".$index."_\".Cutils::get_actual_lng().\"&sort_dir=\$newsort_dir\$url_search'>".ucfirst($index)."</a></th> \"; "; 
+          	} else {
+          		 $aux_text .= $sl.$tab.$tab.$tab."echo \"<th>\".( (\$sort_by == '".$index."' ) ? ((\$sort_by == '".$index."' and \$sort_dir == 'asc') ? '↓ '  : '↑ ') : '' ) .\"<a href='\$redirect_url?sort_by=".$index."&sort_dir=\$newsort_dir\$url_search'>".ucfirst($index)."</a></th> \"; ";
+          	}
+          	
           } else {
             //$aux_text .= $sl.$tab.$tab.$tab."echo \"<th>".ucfirst($index)."</th> \"; "; 
-            $aux_text .= $sl.$tab.$tab.$tab."echo \"<th>\".( (\$sort_by == '".$index."' ) ? ((\$sort_by == '".$index."' and \$sort_dir == 'asc') ? '↓ '  : '↑ ') : '' ) .\"<a href='\$redirect_url?sort_by=".$index."&sort_dir=\$newsort_dir'>".ucfirst($index)."</a></th> \"; ";  
+            $aux_text .= $sl.$tab.$tab.$tab."echo \"<th>\".( (\$sort_by == '".$index."' ) ? ((\$sort_by == '".$index."' and \$sort_dir == 'asc') ? '↓ '  : '↑ ') : '' ) .\"<a href='\$redirect_url?sort_by=".$index."&sort_dir=\$newsort_dir\$url_search'>".ucfirst($index)."</a></th> \"; ";  
  
           }
           
@@ -4250,10 +4345,16 @@ $text .= $sl.$sl."if (\$items){";
 $text .= $sl.$sl."}else";
   
   if ( $arrayjson['type'] == 'webform_relational')  {
-    $text .= $sl.$tab."echo \"\".\$this->translate('no_items').\" <a href='/".$arrayjson['name']."/create/\$return/' class='create'>\".\$this->translate('new_item').\"</a>\"; ";
-    $text .= $sl.$sl.$tab."echo \" <br><br><a href='/".$name_of_relation."/list/'>\".\$this->translate('return_to', array('".$name_of_relation."')).\" </a>\"; ";
+  	$text .= $sl.$tab."if (\$search_text == '')";
+    	$text .= $sl.$tab."echo \"<br /><br />\".\$this->translate('no_items').\" <a href='/".$arrayjson['name']."/create/\$return/' class='create'>\".\$this->translate('new_item').\"</a>\"; ";
+    $text .= $sl.$tab."else"; 
+    	$text .= $sl.$tab."echo \"<br /><br />\".\$this->translate('no_items_search').\" <a href='/".$arrayjson['name']."/create/\$return/' class='create'>\".\$this->translate('new_item').\"</a>\"; ";
+    $text .= $sl.$sl.$tab."echo \"&nbsp;&nbsp;&nbsp;<a class='return' href='/".$name_of_relation."/list/'>\".\$this->translate('return_to', array('".$name_of_relation."')).\" </a>\"; ";
   } else if ( $arrayjson['type'] == 'webform')  {
-    $text .= $sl.$tab."echo \"\".\$this->translate('no_items').\" <a href='/".$arrayjson['name']."/create/' class='create'>\".\$this->translate('new_item').\"</a>\"; "; 
+  	$text .= $sl.$tab."if (\$search_text == '')";
+    	$text .= $sl.$tab.$tab."echo \"<br /><br />\".\$this->translate('no_items').\" <a href='/".$arrayjson['name']."/create/' class='create'>\".\$this->translate('new_item').\"</a>\"; ";
+    $text .= $sl.$tab."else"; 
+     	$text .= $sl.$tab.$tab."echo \"<br /><br />\".\$this->translate('no_items_search').\" <a href='/".$arrayjson['name']."/create/' class='create'>\".\$this->translate('new_item').\"</a>\"; ";
   }
 $text .= $sl."?>";
 

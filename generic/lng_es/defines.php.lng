@@ -112,6 +112,7 @@ modify=Modificar
 delete=Eliminar
 new_item=Crear una nuevo registro
 no_items=No existen registros creados.
+no_items_search=No se encontraron registros con estos datos.
 return=Volver atrás
 options=Opciones
 view=Ver
@@ -129,6 +130,7 @@ edit_ko=Error editando el objeto
 save_ok=Guardado correctamente
 save_ko=Error guardando el objeto
 item_yet_created=Ya hay un item creado con estos datos
+search=Buscar
 
 
 /*formularios*/

@@ -373,7 +373,32 @@ HTML;
 			
 			return $redirect_url;
 	
-} 	
+		} 	
+  	
+  }
+  
+  
+  static function create_params_array_for_search_and_tablesorter($sort_by, $sort_dir, $search_text, $search_field ){
+  	
+  if ($search_text != ''){ 
+	
+			if ( isset( $_REQUEST['sort_by'] ) ){
+				$params_get 		= 	array('sort_by'=>$sort_by, 'sort_dir'=>$sort_dir, 'search_text'=>$search_text, 'search_field'=>$search_field) ;
+			} else {
+				$params_get 		= 	array( 'search_text'=>$search_text, 'search_field'=>$search_field );
+			}
+		
+		} else {
+		
+			if ( isset( $_REQUEST['sort_by'] ) ){
+				$params_get 		= 	array('sort_by'=>$sort_by, 'sort_dir'=>$sort_dir);
+			} else {
+				$params_get 		= 	array();
+			}
+			
+		}	
+		
+		return $params_get;
   	
   }
 
