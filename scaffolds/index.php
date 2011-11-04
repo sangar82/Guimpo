@@ -386,6 +386,7 @@ echo "<div  id='cont'>";
   "size"       : "60", 
   "disabled"   : "false", 
   "readonly"   : "false",
+  "multilanguage"   : false,
   "tabindex"   : "0" }
 </pre>
 </div>	
@@ -751,9 +752,9 @@ foreach ($arrayjson['campos'] as $index => $value ){
     case 'numeric':
         
         if (DBDRIVER == "postgresql"){  
-         $sql_table .= $index." integer ";
+         $sql_table .= $index." float ";
         }else if (DBDRIVER == "mysql"){
-          $sql_table .= $index." INT(9) ";
+          $sql_table .= $index." FLOAT ";
         }
         
         if ($value['mandatory'])
