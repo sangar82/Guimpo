@@ -147,7 +147,7 @@ require_once('cusers.php');
 			 session_start();
 			 
 			//obtenemos el idioma actual
-			$actual_language = Cutils::get_filtered_lng();
+			$actual_language = Cutils::get_actual_lng();
 
 			//Creamos un objeto lenguaje para traducciones
 			$language = new Clanguage($actual_language);

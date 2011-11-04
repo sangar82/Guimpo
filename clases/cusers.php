@@ -96,19 +96,47 @@ class Cusers {
   }
   
   
-  static function item_list(){
-    
-    $con = new cdatabase(array('host'=>HOST, 'user'=>USER, 'dbname'=>DBNAME, 'password'=>PASSWORD), DBDRIVER );
-    
-    $sql = "SELECT id, name, lastname, username, password, type, email, created, updated FROM users ORDER BY id desc";
-    
-    $result = $con->fetch_array($sql);
-    
-    if ($result)
-      return $result;
-    else 
-      return false;
-  }
+	static function item_list($max = '', $pag = 1, $sort_by = 'id', $sort_dir='desc', $search_text ='', $search_field =''){
+		
+		$con = new cdatabase(array('host'=>HOST, 'user'=>USER, 'dbname'=>DBNAME, 'password'=>PASSWORD), DBDRIVER );
+
+		$max_rows = '';
+
+		//Si es una busqueda creamos el where
+		if ($search_text !='' and $search_field !=''){
+			$where = " WHERE lower($search_field) like lower('%$search_text%') ";
+		} else {
+			$where = '';
+		}
+		
+		$query = "SELECT id, name, lastname, username, password, type, email, created, updated FROM users  $where ORDER BY $sort_by $sort_dir ";
+		
+		if ($max!='' && $max>0){
+
+			$offset = ($pag - 1) * $max;
+
+			$query_max = "SELECT count(id) as max FROM users  $where "; 
+			$result_max = $con->fetch_one_result($query_max);
+
+			$max_rows = ($result_max) ? $result_max['max'] : '';
+
+			if ($offset > $max_rows) $offset = 0;
+
+			$query .= " LIMIT $max OFFSET $offset "; 
+
+		}
+
+		$item = $con->fetch_array($query);
+
+		if ($max_rows == ''){ 
+			$max_rows = count($item);
+		}
+
+		if ($item)
+			return array('item' => $item, 'total' => $max_rows);
+		else 
+			return false;
+	}
   
   
   function delete(){

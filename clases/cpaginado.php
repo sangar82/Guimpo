@@ -33,7 +33,7 @@ class Cpaginado
 		$this->m_url=$url;
 		$result = "";
 		
-		$lng = Cutils::get_filtered_lng();
+		$lng = Cutils::get_actual_lng();
 		$lang = new Clanguage($lng);
 		
 		$num_pags = $this->m_ultimaPag;

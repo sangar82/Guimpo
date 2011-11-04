@@ -5,23 +5,7 @@ require_once(PATH_ROOT_CLASES . 'ccookie.php');
 
 class Cutils{
   
-	/**
-	* Return the actual language
-	*
-	* @return string $value Return the actual language in ISO format
-	*/	
-	static function get_filtered_lng(){
-	  
-		if ( strtolower($_SERVER['SERVER_NAME']) == 'en.framework.com' )
-			$value = 'en';
-		else if ( strtolower($_SERVER['SERVER_NAME']) == 'ca.framework.com' )
-			$value = 'ca';
-		else
-			$value = 'es';
-		
-		return $value;
-		
-	}
+
 	
 	
 	/**
@@ -401,6 +385,30 @@ HTML;
 		return $params_get;
   	
   }
+  
+
+  static function convert_timestamp_to_spanish_date($timestamp, $without_time = false){
+    
+    $date_format = date("d-m-Y", strtotime($timestamp));
+    $time_format = date("H:i:s", strtotime($timestamp));
+
+    if ($without_time)
+    	return $date_format ;
+   	else
+   		return $time_format."&nbsp;&nbsp;".$date_format ;
+    
+  }
+  
+    static function convert_timestamp_to_string($timestamp){
+    
+    $date_format = date("d-m-Y", strtotime($timestamp));
+    $time_format = date("H:i:s", strtotime($timestamp));
+    
+    return $date_format." a las ".$time_format ;
+    
+  }
+  
+  
 
 }//end cutils
 ?>

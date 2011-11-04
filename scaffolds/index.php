@@ -1732,11 +1732,11 @@ $text .=  "class C".$arrayjson['name']." { ".$sl;
       $text .= $sl.$tab."static function item_list(\$max = '', \$pag = 1, \$sort_by = 'id', \$sort_dir='desc', \$search_text ='', \$search_field =''){".$sl;
     }
     
-      $text .= $tab.$tab."\$con = new cdatabase(array('host'=>HOST, 'user'=>USER, 'dbname'=>DBNAME, 'password'=>PASSWORD), DBDRIVER );".$sl;
+      $text .= $sl.$tab.$tab."\$con = new cdatabase(array('host'=>HOST, 'user'=>USER, 'dbname'=>DBNAME, 'password'=>PASSWORD), DBDRIVER );".$sl;
 
       $text .= $sl.$tab.$tab."\$max_rows = '';".$sl;
       
-     	 $text .= $sl.$sl.$tab.$tab."//Si es una busqueda creamos el where";
+     	 $text .= $sl.$tab.$tab."//Si es una busqueda creamos el where";
 			 $text .= $sl.$tab.$tab."if (\$search_text !='' and \$search_field !=''){";
 			 
 			 if ( $arrayjson['type'] == 'webform_relational')  {
@@ -1753,7 +1753,7 @@ $text .=  "class C".$arrayjson['name']." { ".$sl;
       
       
       //Creamos la query para obtener el item
-      $text .=  $sl.$tab.$tab."\$query = \"SELECT id, ";
+      $text .=  $sl.$sl.$tab.$tab."\$query = \"SELECT id, ";
       
       foreach ($arrayjson['campos'] as $index => $value ){
         
@@ -1824,7 +1824,7 @@ $text .=  "class C".$arrayjson['name']." { ".$sl;
       
       $text .= "ORDER BY \$sort_by \$sort_dir \";";
        
-      $text .= $sl.$tab.$tab."if (\$max!='' && \$max>0){";
+      $text .= $sl.$sl.$tab.$tab."if (\$max!='' && \$max>0){";
       
         $text .= $sl.$sl.$tab.$tab.$tab."\$offset = (\$pag - 1) * \$max;";
         
@@ -4142,7 +4142,7 @@ $text .= $sl.$sl."if ( (\$items_total == 0 and \$search_text != '') or ( \$items
 			}  
 		
 			$text .= $sl.$tab.$tab."echo \"</select>\";";
-			$text .= $sl.$tab.$tab."echo \"<a href='/admin/categoria/create/' class='search' id='search'>\".\$this->translate('search').\"</a>\";";
+			$text .= $sl.$tab.$tab."echo \"<a href='\".\$_SERVER['REDIRECT_URL'].\"' class='search' id='search'>\".\$this->translate('search').\"</a>\";";
 		$text .= $sl.$tab."echo \"</div>\";";
 		
 		$text .= $sl.$sl.$tab."if (\$search_text){";

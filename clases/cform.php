@@ -165,7 +165,7 @@ class Cform
 	{
 		$string_errors = "";
 		
-		$lng = Cutils::get_filtered_lng();
+		$lng = Cutils::get_actual_lng();
 		
 		$language = new Clanguage($lng);
 		
