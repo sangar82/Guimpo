@@ -125,10 +125,12 @@ class Cutils{
   {
   		$path_js = PATH_ROOT_JS;
   		$path_include = PATH_ROOT_INCLUDES;
+  		$lng = self::get_actual_lng();
+  		
   		
   		
   		$heredoc = <<< HTML
-  		<script src='{$path_include}jquery.validate.php?lng=es' type='text/javascript'></script>
+  		<script src='{$path_include}jquery.validate.php?lng=$lng' type='text/javascript'></script>
   		<script>	
     			$(document).ready(function(){
 HTML;
