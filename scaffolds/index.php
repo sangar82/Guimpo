@@ -1931,6 +1931,7 @@ $text .=  "class C".$arrayjson['name']." { ".$sl;
     }
     
     //htmlentities(stripslashes($_REQUEST[$name_obj]),ENT_QUOTES, 'UTF-8')
+    
     //Creamos un metodo dependiendo del tipo y segun los casos de striped y lenguajes
     if ( isset($arrayjson['stripped'] ) ) {
       
@@ -1953,13 +1954,14 @@ $text .=  "class C".$arrayjson['name']." { ".$sl;
            $text .= $sl.$sl.$tab.$tab."\$lng = Cutils::get_actual_lng();";
            
            $text .= $sl.$tab.$tab."\$query = \"SELECT  * FROM ".$arrayjson['name']." WHERE ";
-           
+
+           $text .="( ";
            foreach ($array_languages as $item ) {
             $text .= "stripped_".$item." = '\".Cutils::to_stripped(\$stripped_".$item.").\"' or ";
            }
            
            $text = substr( $text, 0, -4 ); 
-           $text.="\";";      
+           $text.=") \";";      
 
           
         } else if ( $arrayjson['type'] == 'webform_relational')  {
@@ -1979,11 +1981,13 @@ $text .=  "class C".$arrayjson['name']." { ".$sl;
            
            $text .= $sl.$tab.$tab."\$query = \"SELECT  * FROM ".$arrayjson['name']." WHERE ";
            
+           $text .="( ";
+           
            foreach ($array_languages as $item ) {
             $text .= "stripped_".$item." = '\".Cutils::to_stripped(\$stripped_".$item.").\"' or ";
            }
-           
-           $text = substr( $text, 0, -4 ) ." and ".$name_of_relation."_id=\$relation_id;"; 
+          
+           $text = substr( $text, 0, -4 ) ." ) and ".$name_of_relation."_id=\$relation_id;"; 
            $text.="\";";      
            
               
@@ -2023,6 +2027,112 @@ $text .=  "class C".$arrayjson['name']." { ".$sl;
       $text .= $sl.$sl.$sl.$tab."}";
           
     }
+    
+    
+    
+    
+    
+        //Creamos un metodo dependiendo del tipo y segun los casos de striped y lenguajes
+    if ( isset($arrayjson['stripped'] ) ) {
+      
+      if ($is_multilanguage ) {
+        
+        if ( $arrayjson['type'] == 'webform')  {
+          
+          $text .= $sl.$sl.$sl.$tab."function is_unique_edit(";
+          
+          foreach ($array_languages as $item ) {
+            $text .= "\$stripped_".$item.", ";
+          }
+          
+          $text = substr( $text, 0, -2 );  
+              
+           $text .= ", \$id){";
+          
+           $text .= $sl.$sl.$tab.$tab."\$con = new cdatabase(array('host'=>HOST, 'user'=>USER, 'dbname'=>DBNAME, 'password'=>PASSWORD), DBDRIVER ); ";
+           
+           $text .= $sl.$sl.$tab.$tab."\$lng = Cutils::get_actual_lng();";
+           
+           $text .= $sl.$tab.$tab."\$query = \"SELECT  * FROM ".$arrayjson['name']." WHERE ";
+
+           $text .="( ";
+           foreach ($array_languages as $item ) {
+            $text .= "stripped_".$item." = '\".Cutils::to_stripped(\$stripped_".$item.").\"' or ";
+           }
+           
+           $text = substr( $text, 0, -4 ); 
+           $text.=")  and id <> \$id \";";      
+
+          
+        } else if ( $arrayjson['type'] == 'webform_relational')  {
+         
+            $text .= $sl.$sl.$sl.$tab."function is_unique_edit(";
+            
+            foreach ($array_languages as $item ) {
+              $text .= "\$stripped_".$item.", ";
+            }
+            
+              
+           $text .= "\$relation_id, \$id){";
+          
+           $text .= $sl.$sl.$tab.$tab."\$con = new cdatabase(array('host'=>HOST, 'user'=>USER, 'dbname'=>DBNAME, 'password'=>PASSWORD), DBDRIVER ); ";
+           
+           $text .= $sl.$sl.$tab.$tab."\$lng = Cutils::get_actual_lng();";
+           
+           $text .= $sl.$tab.$tab."\$query = \"SELECT  * FROM ".$arrayjson['name']." WHERE ";
+           
+           $text .="( ";
+           
+           foreach ($array_languages as $item ) {
+            $text .= "stripped_".$item." = '\".Cutils::to_stripped(\$stripped_".$item.").\"' or ";
+           }
+          
+           $text = substr( $text, 0, -4 ) ." ) and ".$name_of_relation."_id=\$relation_id and id <> \$id;"; 
+           $text.="\";";      
+           
+              
+        }
+
+        
+      }else{
+        
+        if ( $arrayjson['type'] == 'webform')  {
+          
+          $text .= $sl.$sl.$sl.$tab."function is_unique_edit(\$stripped, \$id){";
+          
+           $text .= $sl.$sl.$tab."\$con = new cdatabase(array('host'=>HOST, 'user'=>USER, 'dbname'=>DBNAME, 'password'=>PASSWORD), DBDRIVER ); ";
+           
+           $text .= $sl.$tab.$tab."\$query = \"SELECT * FROM ".$arrayjson['name']." WHERE stripped = '\".Cutils::to_stripped(\$stripped).\"' and id <> \$id;\"; ";
+          
+          
+        } else if ( $arrayjson['type'] == 'webform_relational')  {
+          
+           $text .= $sl.$sl.$sl.$tab."function is_unique_edit(\$stripped, \$relation_id, \$id){";
+          
+            $text .= $sl.$sl.$tab."\$con = new cdatabase(array('host'=>HOST, 'user'=>USER, 'dbname'=>DBNAME, 'password'=>PASSWORD), DBDRIVER ); ";
+           
+            $text .= $sl.$tab.$tab."\$query = \"SELECT * FROM ".$arrayjson['name']." WHERE stripped = '\".Cutils::to_stripped(\$stripped).\"' and ".$name_of_relation."_id = \$relation_id  and id <> \$id ;\"; ";
+        }
+        
+      }
+      
+      
+      $text .= $sl.$sl.$tab.$tab."\$item = \$con->fetch_one_result(\$query);";
+      
+      $text .= $sl.$sl.$tab.$tab."if (\$item)";
+      $text .= $sl.$tab.$tab.$tab."return false; ";
+      $text .= $sl.$tab.$tab."else";
+      $text .= $sl.$tab.$tab.$tab."return true; ";
+      
+      $text .= $sl.$sl.$sl.$tab."}";
+          
+    }
+    
+    
+    
+    
+    
+    
     
     //Get strippeds para cambios de idiomas
     $text .= $sl.$sl.$sl.$tab."static function get_strippeds (\$stripped, \$relation_id = ''){".$sl;
@@ -2758,7 +2868,71 @@ $text .= "class Cform_construct_".$arrayjson['name']." extends  Cform_construct 
 				
 				  $text .= $sl.$sl.$tab.$tab.$tab.$tab.$tab ."//Obtenemos el objeto";
 				  $text .= $sl.$tab.$tab.$tab.$tab.$tab ."\$edititem = new C".$arrayjson['name']."(\$item['item_id']);";
-				  $text .= $sl.$tab.$tab.$tab.$tab.$tab ."\$edititem->edit( ";
+				  
+				  
+
+				          
+          //Edit  Si es un stripped hemos de mirar ke no ete creado ya en la BD
+          if ( isset($arrayjson['stripped'] ) ) {
+  
+            $text .= $sl.$sl.$tab.$tab.$tab.$tab.$tab ."//Si es un stripped hemos de mirar ke no ete creado ya en la BD";
+            
+            if ($is_multilanguage ) {
+              
+              if ( $arrayjson['type'] == 'webform')  {
+                
+                $text .= $sl.$tab.$tab.$tab.$tab.$tab ."if (! \$edititem->is_unique_edit(";
+                
+                foreach ($array_languages as $item ) {
+                  $text .= "\$item['".$arrayjson['stripped']."_".$item."'], ";
+                }
+          
+                $text = substr( $text, 0, -2 ) ;  
+                $text .=", \$item['item_id']) ){";
+                
+              } else if ( $arrayjson['type'] == 'webform_relational')  {
+               
+                  $text .= $sl.$tab.$tab.$tab.$tab.$tab ."if (! \$edititem->is_unique_edit(";
+                
+                foreach ($array_languages as $item ) {
+                  $text .= "\$item['".$arrayjson['stripped']."_".$item."'], ";
+                }
+          
+                $text .="\$item['".$name_of_relation."_id'], \$item['item_id']) ){";  
+                
+              }
+              
+            }else{
+              
+              if ( $arrayjson['type'] == 'webform')  {
+                
+                $text .= $sl.$tab.$tab.$tab.$tab.$tab ."if (! \$edititem->is_unique_edit(\$item['".$arrayjson['stripped']."'], \$item['item_id'])){";
+                
+              } else if ( $arrayjson['type'] == 'webform_relational')  {
+                
+                $text .= $sl.$tab.$tab.$tab.$tab.$tab ."if (! \$edititem->is_unique_edit(\$item['".$arrayjson['stripped']."'], \$item['".$name_of_relation."_id'], \$item['item_id'] )){";
+                
+              }
+              
+            }
+            
+            $text .= $sl.$sl.$tab.$tab.$tab.$tab.$tab.$tab ."\$this->set_info_action_form_failed('item_yet_created', 1); ";
+            if ( $arrayjson['type'] == 'webform_relational')  {
+    				  $text .= $sl.$sl.$tab.$tab.$tab.$tab.$tab.$tab ."Clocation::header_location('/admin/".$arrayjson['name']."/list/'.\$item['return'].'/');";
+    				}else if ( $arrayjson['type'] == 'webform')  {
+    				  $text .= $sl.$sl.$tab.$tab.$tab.$tab.$tab.$tab ."Clocation::header_location('/admin/".$arrayjson['name']."/list/');";
+    				}  
+  				  $text .= $sl.$tab.$tab.$tab.$tab.$tab.$tab ."exit(); ";
+  				  $text .= $sl.$sl.$tab.$tab.$tab.$tab.$tab ."}";
+                
+          }				  
+				  
+				  
+				  
+				  
+				  
+				  
+				  $text .= $sl.$sl.$tab.$tab.$tab.$tab.$tab ."\$edititem->edit( ";
 				  
 				  foreach ($arrayjson['campos'] as $index => $value ){
   				  
