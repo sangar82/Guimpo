@@ -620,6 +620,10 @@ if (!$arrayjson)
 
 echo "<h3>MVCgenerator</h3>";
 
+if ( $arrayjson['type'] == 'webform')  {
+	echo "<a href='/".$arrayjson['name']."/list/'>Ir a ".$arrayjson['name']." en zona pública</a>   ||   <a href='/admin/".$arrayjson['name']."/list/'>Ir a ".$arrayjson['name']." en zona privada</a> <br><br>";
+}
+
 if ($secuencia or $tabla)
   echo "<b>Base de datos</b><br/>";
 
@@ -841,9 +845,9 @@ if ( isset($arrayjson['stripped']) ) {
     foreach ($array_languages as $item ) {
     	
       if (DBDRIVER == "postgresql"){  
-        $sql_table_aux .=  "stripped_".$item ." character varying(".$value['maxlength'].") DEFAULT ''::character varying ";
+        $sql_table_aux .=  "stripped_".$item ." character varying(".$arrayjson['campos'][$arrayjson['stripped']]['maxlength'].") DEFAULT ''::character varying ";
       }else if (DBDRIVER == "mysql"){
-        $sql_table_aux .=   "stripped_".$item ." varchar(".$value['maxlength'].")  DEFAULT '' ";
+        $sql_table_aux .=   "stripped_".$item ." varchar(".$arrayjson['campos'][$arrayjson['stripped']]['maxlength'].")  DEFAULT '' ";
       }
       
       if ($value['mandatory'])
@@ -859,9 +863,9 @@ if ( isset($arrayjson['stripped']) ) {
     
 
     if (DBDRIVER == "postgresql"){  
-      $sql_table .=  "stripped  character varying(".$value['maxlength'].") DEFAULT ''::character varying ";
+      $sql_table .=  "stripped  character varying(".$arrayjson['campos'][$arrayjson['stripped']]['maxlength'].") DEFAULT ''::character varying ";
     }else if (DBDRIVER == "mysql"){
-      $sql_table .=   "stripped varchar(".$value['maxlength'].")  DEFAULT '' ";
+      $sql_table .=   "stripped varchar(".$arrayjson['campos'][$arrayjson['stripped']]['maxlength'].")  DEFAULT '' ";
     }    
     
     
@@ -3256,10 +3260,27 @@ foreach ($arrayjson['campos'] as $index => $value ){
           $ckeditor = $sl.$sl."\$path = PATH_ROOT_INCLUDES;";
           $ckeditor .= $sl."\$heredoc .=<<< html";
               $ckeditor .= $sl.$sl.$tab."<script type=\"text/javascript\">";
+             
+                 	$ckeditor .= $sl.$sl.$tab.$tab."$(document).ready(function(){";
+		
+											$ckeditor .= $sl.$tab.$tab.$tab."$('#submit').click(function() {";
+
+											
+													foreach ($array_languages as $item ) {
+                  
+                    				$ckeditor .= $sl.$tab.$tab.$tab.$tab."CKEDITOR.instances.".$index."_".$item.".updateElement();";
+                    
+                  				}    
+				
+												$ckeditor .= $sl.$tab.$tab.$tab.$tab."return true;";
+												
+											$ckeditor .= $sl.$tab.$tab.$tab."});";
+			
+									$ckeditor .= $sl.$tab.$tab."});";
               
                 $ckeditor .= $sl.$sl.$tab.$tab."//<![CDATA[";
                 $ckeditor .= $sl.$tab.$tab."window.onload = function(){";
-          
+                
                   foreach ($array_languages as $item ) {
                   
                     $ckeditor .= $sl.$tab.$tab.$tab."CKEDITOR.replace( '".$index."_".$item."', {filebrowserUploadUrl : \"{\$path}ckupload.php\"});";
@@ -3278,6 +3299,19 @@ foreach ($arrayjson['campos'] as $index => $value ){
           $ckeditor = $sl.$sl."\$path = PATH_ROOT_INCLUDES;";
           $ckeditor .= $sl.$sl."\$heredoc .=<<< html";
               $ckeditor .= $sl.$sl.$tab."<script type=\"text/javascript\">";
+              
+              		$ckeditor .= $sl.$sl.$tab.$tab."$(document).ready(function(){";
+		
+											$ckeditor .= $sl.$tab.$tab.$tab."$('#submit').click(function() {";
+			
+												$ckeditor .= $sl.$tab.$tab.$tab.$tab."CKEDITOR.instances.$index.updateElement();";
+				
+												$ckeditor .= $sl.$tab.$tab.$tab.$tab."return true;";
+												
+											$ckeditor .= $sl.$tab.$tab.$tab."});";
+			
+									$ckeditor .= $sl.$tab.$tab."});";
+								
               
                 $ckeditor .= $sl.$sl.$tab.$tab."//<![CDATA[";
                 $ckeditor .= $sl.$tab.$tab."window.onload = function(){";
@@ -3529,6 +3563,23 @@ foreach ($arrayjson['campos'] as $index => $value ){
           $ckeditor .= $sl."\$heredoc .=<<< html";
               $ckeditor .= $sl.$sl.$tab."<script type=\"text/javascript\">";
               
+               		$ckeditor .= $sl.$sl.$tab.$tab."$(document).ready(function(){";
+		
+											$ckeditor .= $sl.$tab.$tab.$tab."$('#submit').click(function() {";
+
+											
+													foreach ($array_languages as $item ) {
+                  
+                    				$ckeditor .= $sl.$tab.$tab.$tab.$tab."CKEDITOR.instances.".$index."_".$item.".updateElement();";
+                    
+                  				}    
+				
+												$ckeditor .= $sl.$tab.$tab.$tab.$tab."return true;";
+												
+											$ckeditor .= $sl.$tab.$tab.$tab."});";
+			
+									$ckeditor .= $sl.$tab.$tab."});";
+              
                 $ckeditor .= $sl.$sl.$tab.$tab."//<![CDATA[";
                 $ckeditor .= $sl.$tab.$tab."window.onload = function(){";
           
@@ -3550,6 +3601,18 @@ foreach ($arrayjson['campos'] as $index => $value ){
           $ckeditor = $sl.$sl."\$path = PATH_ROOT_INCLUDES;";
           $ckeditor .= $sl.$sl."\$heredoc .=<<< html";
               $ckeditor .= $sl.$sl.$tab."<script type=\"text/javascript\">";
+             
+                   $ckeditor .= $sl.$sl.$tab.$tab."$(document).ready(function(){";
+		
+											$ckeditor .= $sl.$tab.$tab.$tab."$('#submit').click(function() {";
+			
+												$ckeditor .= $sl.$tab.$tab.$tab.$tab."CKEDITOR.instances.$index.updateElement();";
+				
+												$ckeditor .= $sl.$tab.$tab.$tab.$tab."return true;";
+												
+											$ckeditor .= $sl.$tab.$tab.$tab."});";
+			
+									$ckeditor .= $sl.$tab.$tab."});";
               
                 $ckeditor .= $sl.$sl.$tab.$tab."//<![CDATA[";
                 $ckeditor .= $sl.$tab.$tab."window.onload = function(){";
