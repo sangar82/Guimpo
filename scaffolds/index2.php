@@ -6,11 +6,11 @@
 	<meta charset="utf-8">
 	<title>jQuery UI Droppable - Shopping Cart Demo</title>
 	
-	<script src="http://www.guimpo.com/js/jquery.js?1"></script>
-	<script src="http://www.guimpo.com/js/jquery-ui-1.8.9.custom.min.js?1"></script>
+	<script src="http://www.<?php echo DOMAIN; ?>/js/jquery.js?1"></script>
+	<script src="http://www.<?php echo DOMAIN; ?>/js/jquery-ui-1.8.9.custom.min.js?1"></script>
 
 	<link rel="stylesheet" href="../demos.css">
-	<link rel="stylesheet" href="http://www.guimpo.com/css/cupertino/jquery-ui-1.8.9.custom.css?1">
+	<link rel="stylesheet" href="http://www.<?php echo DOMAIN; ?>/css/cupertino/jquery-ui-1.8.9.custom.css?1">
 	<style>
 
 

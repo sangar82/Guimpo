@@ -284,10 +284,10 @@ echo "<head>";
   echo "<meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />";
   echo "<meta http-equiv='expires' content='1200' />";
   echo "<meta http-equiv='content-language' content='es' />";
-  echo "<link href='http://www.guimpo.com/css/styles.css?1' rel='stylesheet' type='text/css' />";
-  echo "<link rel='stylesheet' href='http://www.guimpo.com/css/cupertino/jquery-ui-1.8.9.custom.css?1'>";
-  echo "<script language='JavaScript' charset='UTF-8' src='http://www.guimpo.com/js/jquery.js?1'></script>";
-  echo "<script src='http://www.guimpo.com/js/jquery-ui-1.8.9.custom.min.js?1'></script>";
+  echo "<link href='http://www.".DOMAIN."/css/styles.css?1' rel='stylesheet' type='text/css' />";
+  echo "<link rel='stylesheet' href='http://www.".DOMAIN."/css/cupertino/jquery-ui-1.8.9.custom.css?1'>";
+  echo "<script language='JavaScript' charset='UTF-8' src='http://www.".DOMAIN."/js/jquery.js?1'></script>";
+  echo "<script src='http://www.".DOMAIN."/js/jquery-ui-1.8.9.custom.min.js?1'></script>";
   echo "<script>$(function() {\$('#examples').accordion({autoHeight: false,navigation: true, collapsible:true, active:false});});</script>";
   echo "<style>.ui-widget-content{font-size:12px;}</style>";
   
@@ -300,9 +300,9 @@ echo "<div  id='cont'>";
   echo "<h3>MVCgenerator</h3>";
   
   if ( ! isset($_REQUEST['t']) )
-  	echo "<a href='/scaffolds/?t=1'>Ir a  webform_relational</a>";
+  	echo "<a href='/scaffolds/?t=1'>Ir a  webform_relational</a> &nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp; <a href='/utils/delete_models.php'>Borrar MVC´s</a>";
   else
-  	echo "<a href='/scaffolds/'>Ir a webform</a>";
+  	echo "<a href='/scaffolds/'>Ir a webform</a> | &nbsp;&nbsp;&nbsp; <a href='/utils/delete_models.php'>Borrar MVC´s</a>";
   
   echo "<br><br>";	
   	
@@ -337,18 +337,20 @@ echo "<div  id='cont'>";
 <div>
 <pre>
 "descripcion" : {
-  "class"      : "",
-  "value"      : "",
-  "mandatory"  : "0",
+  "class"         : "",
+  "value"         : "",
+  "mandatory"     : "0",
   "multilanguage" : false,
-  "type"       : "textarea",
-  "cols"       : "57",
-  "rows"       : "8",
-  "minlength"  : "0",
-  "maxlength"  : "500",
-  "disabled"   : "false", 
-  "readonly"   : "false",
-  "tabindex"   : "0" }
+  "type"          : "textarea",
+  "cols"          : "57",
+  "rows"          : "8",
+  "minlength"     : "0",
+  "maxlength"     : "500",
+  "disabled"      : "false", 
+  "readonly"      : "false",
+  "tabindex"      : "0",
+  "multilanguage" : true,
+  "ckeditor"      : false}
 </pre>
 </div>
 
