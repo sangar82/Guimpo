@@ -4131,7 +4131,6 @@ $text .= $sl.$sl."echo \"<table class='formtable'>\";";
   switch ($value['type']){
     
     case 'text':
-    case 'textarea':
     case 'image':
     case 'file':
       
@@ -4157,6 +4156,37 @@ $text .= $sl.$sl."echo \"<table class='formtable'>\";";
       }
       
       break;
+      
+    case 'textarea':  
+    	
+    		if ($value['ckeditor']){
+    			$separator = "<br /><br /><br />";
+    		} else {
+    			$separator = "";
+    		}
+    	
+   	 if ( $value['multilanguage']){
+          	  
+        foreach ($array_languages as $item ) {
+          
+          $text .= $sl.$sl.$tab."echo \"<tr>\";";
+            $text .= $sl.$tab.$tab."echo \"<td width='130px'>".ucfirst($index)." ($item)</td>\"; ";
+            $text .= $sl.$tab.$tab."echo \"<td> \". \$form->get_form_object('".$index."_".$item."')->display(true) .\" $separator</td>\"; ";;
+          $text .= $sl.$tab."echo \"</tr>\"; ";
+          
+        }
+
+      
+      } else {
+        
+        $text .= $sl.$sl.$tab."echo \"<tr>\";";
+          $text .= $sl.$tab.$tab."echo \"<td width='130px'>".ucfirst($index)."</td>\"; ";
+          $text .= $sl.$tab.$tab."echo \"<td> \". \$form->get_form_object('$index')->display(true) .\" $separator</td>\"; ";;
+        $text .= $sl.$tab."echo \"</tr>\"; ";
+        
+      }
+      
+      break;  
     
     case 'radio':
       
