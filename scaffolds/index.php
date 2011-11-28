@@ -361,7 +361,6 @@ echo "<div  id='cont'>";
   "class"         : "",
   "value"         : "",
   "mandatory"     : "0",
-  "multilanguage" : false,
   "type"          : "textarea",
   "cols"          : "57",
   "rows"          : "8",
