@@ -4,7 +4,8 @@ require_once('../config.php');
 require_once(PATH_ROOT_CLASES . 'cdatabase.php'); 
 require_once(PATH_ROOT_CLASES . 'cutils.php'); 
 
-$con = Conecta();
+//$con = Conecta();
+$con = new cdatabase(array('host'=>HOST, 'user'=>USER, 'dbname'=>DBNAME, 'password'=>PASSWORD), DBDRIVER );
 
 $tab = chr(9);
 $sl  = chr(13);
@@ -632,7 +633,7 @@ if (DBDRIVER == "postgresql"){
 		
 		$sql_seq = "CREATE SEQUENCE ".$arrayjson['name']."_seq;";
 		
-		$result = @pg_query($con, $sql_seq);
+		$result = $con->create( $sql_seq ); 
 		
 		if ($result){
 		  echo "<font color='green'> &rArr; </font> Secuencia creada con &eacute;xito <br />";
@@ -891,9 +892,9 @@ $sql_table .= ");";
 if ( $tabla ){
   
   if (DBDRIVER == "postgresql"){
-    $result = pg_query($con, $sql_table);
+    $result = $con->create( $sql_table );
   }else if (DBDRIVER == "mysql"){
-    $result = mysql_query($sql_table);
+    $result = $con->create( $sql_table );
   }
   
   if ($result){
@@ -5570,28 +5571,5 @@ if ($cambios){
 
 echo "<br /><a href='/scaffolds/'>Volver</a>";
 
-
-  function Conecta() {
-    
-    if (DBDRIVER == "postgresql"){
-    
-      $connect_string = "host='".HOST."' user='".USER."' password='".PASSWORD."' dbname='".DBNAME."'";
-      $con = @pg_connect($connect_string);
-  
-      return $con;
-    
-    }else if (DBDRIVER == "mysql"){
-      
-      $link = mysql_connect('localhost', 'root', 'root');
-      mysql_select_db(DBNAME);
-      
-      
-      if (!$link){
-        die("No s'ha pogut connectar al servidor MySQL.");
-      }
-     
-      return $link;
-    }
-  }
 
 ?> 
