@@ -12,6 +12,9 @@ $url_search 				= 			($search_text)  ?  "&search_text=$search_text&search_field=
 
 echo $this->get_web_information(); 
 
+
+
+
 echo "<h1>". $this->translate('list_of', array($this->translate('users')))."</h1>";
 
 if ( ($items_total == 0 and $search_text != '') or ( $items_total ) ){

@@ -9,6 +9,7 @@ require_once( PATH_ROOT_CLASES . 'cform_construct_user.php');
 require_once( PATH_ROOT_CLASES . 'csesion.php');
 
 
+
 //Recojemos la pagina actual
 $pag  = Cutils::get_filtered_params('pag', 0, 0, 1, 0); 
 if ($pag == 0) $pag = 1;

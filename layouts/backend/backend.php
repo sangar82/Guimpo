@@ -18,3 +18,9 @@
 	
 </div><!-- end fcontainer -->
 
+<?php 
+	if ( DEVELOPER_CONSOLE ) {
+		Cdeveloper_console::show_developer_console();
+	}
+?>
+

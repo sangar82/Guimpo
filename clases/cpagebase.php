@@ -77,6 +77,11 @@ class Cpagebase
 		//insertamos jquery por defecto
 		$this->add_js_scripts(PATH_ROOT_JS .'jquery.js');
 		
+		//insertamos development.js si esta definido
+		if ( DEVELOPER_CONSOLE ){
+			$this->add_js_scripts(PATH_ROOT_JS .'development.js');
+		}
+		
 		
 		//Creamos el objeto session si la pagina lo permite
 		$this->m_sesion = new Csesion();

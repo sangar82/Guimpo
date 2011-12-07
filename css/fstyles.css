@@ -417,6 +417,37 @@ label.error, div.error{
 
 
 
+#developer_console{
+  position:relative;
+  top:50px;
+  width:97%;
+  background: #ddd;
+  padding:20px;
+  margin-bottom:20px;
+  height:auto;
+}
+
+.dev_link_close{
+  display:none;
+}
+
+.dev_green{
+  color: green;
+  font-weight: bold;
+}
+
+.dev_red{
+  color: red;
+  font-weight: bold;
+}
+
+.dev_pre{
+  display:none;
+}
+
+
+
+
 
 
 

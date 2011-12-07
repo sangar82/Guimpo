@@ -1,6 +1,7 @@
 <?php
 
 include_once('error_logger.inc.php');
+include_once('cdeveloper_console.php');
 include_once('clocation.php');
 /**
  *
@@ -176,17 +177,32 @@ error_logger("NOCACHE_CONSULTA_PERRETORNAR: #$query#. VARIABLE PERRETORNAR: #".v
               break;
            case "mysql":
                $result=mysql_query($query);
-
+               
+               if (DEVELOPER_CONSOLE){
+		               	if (! $result){
+		               		Cdeveloper_console::add_query_to_developer_console($query, mysql_error());
+		               	} else {
+		               		Cdeveloper_console::add_query_to_developer_console($query, 'ok');
+		               	}
+               }
+              
                # Aixó retorna una línia, ha de retornar tota la taula.
                $perRetornar=array();
                
                $i=0;
                
-               while( $queryContent = mysql_fetch_array( $result ) )
+               while( $queryContent = mysql_fetch_assoc( $result ) )
                {
                    $perRetornar[$i]=$queryContent;
                    $i++;
                }
+               
+               if (DEVELOPER_CONSOLE){
+		               	if ( $perRetornar ){
+		               		Cdeveloper_console::add_result_to_developer_console($perRetornar);
+		               	}
+               }
+               
                unset ($i);
                break;
                
@@ -214,6 +230,19 @@ error_logger("NOCACHE_CONSULTA_PERRETORNAR: #$query#. VARIABLE PERRETORNAR: #".v
                 break;
             case "mysql":
                 $perRetornar=mysql_query($query);
+                
+	               if (DEVELOPER_CONSOLE){
+			               	if (! $perRetornar){
+			               		Cdeveloper_console::add_query_to_developer_console($query, mysql_error());
+			               	} else {
+			               		Cdeveloper_console::add_query_to_developer_console($query, 'ok');
+			               	}
+
+		               	if ( $perRetornar ){
+		               		Cdeveloper_console::add_result_to_developer_console($perRetornar);
+		               	}
+               }
+	               
                 if (!$perRetornar){
                 	$msgError = mysql_error();
 				error_logger("Error al ejecutar la consulta. CONSULTA: $query. ERROR: $msgError.","ERROR");
@@ -243,6 +272,17 @@ error_logger("NOCACHE_CONSULTA_PERRETORNAR: #$query#. VARIABLE PERRETORNAR: #".v
                 break;
             case "mysql":
                 $perRetornar=mysql_query($query);
+        	      if (DEVELOPER_CONSOLE){
+			               	if (! $perRetornar){
+			               		Cdeveloper_console::add_query_to_developer_console($query, mysql_error());
+			               	} else {
+			               		Cdeveloper_console::add_query_to_developer_console($query, 'ok');
+			               	}
+
+		               	if ( $perRetornar ){
+		               		Cdeveloper_console::add_result_to_developer_console($perRetornar);
+		               	}
+               }
                 if (!$perRetornar){
                 	$msgError = mysql_error();
 				error_logger("Error al ejecutar la consulta. CONSULTA: $query. ERROR: $msgError.","ERROR");
@@ -273,6 +313,17 @@ error_logger("NOCACHE_CONSULTA_PERRETORNAR: #$query#. VARIABLE PERRETORNAR: #".v
                 break;
             case "mysql":
                 $perRetornar=mysql_query($query);
+        	      if (DEVELOPER_CONSOLE){
+			               	if (! $perRetornar){
+			               		Cdeveloper_console::add_query_to_developer_console($query, mysql_error());
+			               	} else {
+			               		Cdeveloper_console::add_query_to_developer_console($query, 'ok');
+			               	}
+
+		               	if ( $perRetornar ){
+		               		Cdeveloper_console::add_result_to_developer_console($perRetornar);
+		               	}
+               }               
                 break;
             default:
                 $perRetornar=null;
@@ -298,6 +349,17 @@ error_logger("NOCACHE_CONSULTA_PERRETORNAR: #$query#. VARIABLE PERRETORNAR: #".v
                 break;
             case "mysql":
                 $perRetornar=mysql_query($query);
+        	      if (DEVELOPER_CONSOLE){
+			               	if (! $perRetornar){
+			               		Cdeveloper_console::add_query_to_developer_console($query, mysql_error());
+			               	} else {
+			               		Cdeveloper_console::add_query_to_developer_console($query, 'ok');
+			               	}
+
+		               	if ( $perRetornar ){
+		               		Cdeveloper_console::add_result_to_developer_console($perRetornar);
+		               	}
+               	}
                 break;
             default:
                 $perRetornar=null;
@@ -323,6 +385,17 @@ error_logger("NOCACHE_CONSULTA_PERRETORNAR: #$query#. VARIABLE PERRETORNAR: #".v
                 break;
             case "mysql":
                 $perRetornar=mysql_query($query);
+        	       if (DEVELOPER_CONSOLE){
+			               	if (! $perRetornar){
+			               		Cdeveloper_console::add_query_to_developer_console($query, mysql_error());
+			               	} else {
+			               		Cdeveloper_console::add_query_to_developer_console($query, 'ok');
+			               	}
+
+		               	if ( $perRetornar ){
+		               		Cdeveloper_console::add_result_to_developer_console($perRetornar);
+		               	}
+               	}
                 break;
             default:
                 $perRetornar=null;
@@ -375,6 +448,8 @@ error_logger("NOCACHE_CONSULTA_PERRETORNAR: #$query#. VARIABLE PERRETORNAR: #".v
         {
             $perRetornar = $resultat[0];
         }
+        
+        
         
         return $perRetornar;
     }
