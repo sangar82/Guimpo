@@ -25,8 +25,8 @@ define('EMAIL_DEVELOPER'		, "sangar1982@gmail.com");
 //Expires Cookie time
 define( "EXPIRE_COOKIES_MSG",  600000) ;
 
-//Developer Console
-define( "DEVELOPER_CONSOLE",  false) ;
+//Developer Console 
+define( "DEVELOPER_CONSOLE",  true) ;
 
 //PATHS - Don´t change this
 define( "PATH_ROOT"															, 	$_SERVER['DOCUMENT_ROOT'] . "/");
